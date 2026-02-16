@@ -1,0 +1,71 @@
+{
+  "extends": [
+    "github>nuxt/renovate-config-nuxt"
+  ],
+  "lockFileMaintenance": {
+    "enabled": true
+  },
+  "baseBranchPatterns": [
+    "v2",
+    "v3",
+    "v4"
+  ],
+  "ignoreDeps": [
+    "typescript",
+    "actions/stale"
+  ],
+  "packageRules": [
+    {
+      "groupName": "tailwindcss",
+      "matchPackageNames": [
+        "tailwindcss",
+        "@tailwindcss/postcss",
+        "@tailwindcss/vite"
+      ]
+    },
+    {
+      "groupName": "reka-ui",
+      "matchPackageNames": [
+        "reka-ui",
+        "vaul-vue"
+      ]
+    },
+    {
+      "groupName": "tiptap",
+      "matchPackageNames": [
+        "@tiptap/*"
+      ]
+    },
+    {
+      "groupName": "vite",
+      "matchPackageNames": [
+        "@vitejs/plugin-vue",
+        "vite",
+        "vue",
+        "vue-router"
+      ]
+    },
+    {
+      "groupName": "vue-tsc",
+      "matchPackageNames": [
+        "vue-tsc",
+        "vue-component-type-helpers"
+      ]
+    },
+    {
+      "matchDepTypes": [
+        "peerDependencies"
+      ],
+      "enabled": false
+    },
+    {
+      "matchDepTypes": [
+        "resolutions"
+      ],
+      "enabled": false
+    }
+  ],
+  "postUpdateOptions": [
+    "pnpmDedupe"
+  ]
+}
