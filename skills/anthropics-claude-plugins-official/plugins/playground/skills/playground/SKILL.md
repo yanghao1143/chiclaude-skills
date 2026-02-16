@@ -1,76 +1,75 @@
----
-name: playground
-description: Creates interactive HTML playgrounds — self-contained single-file explorers that let users configure something visually through controls, see a live preview, and copy out a prompt. Use when the user asks to make a playground, explorer, or interactive tool for a topic.
----
-
 # Playground Builder
 
-A playground is a self-contained HTML file with interactive controls on one side, a live preview on the other, and a prompt output at the bottom with a copy button. The user adjusts controls, explores visually, then copies the generated prompt back into Claude.
+一个 playground 是一个独立的 HTML 文件，一侧有交互式控件，另一侧有实时预览，底部有带复制按钮的 prompt 输出。用户调整控件，可视化探索，然后将生成的 prompt 复制回 Claude。
 
-## When to use this skill
+## 何时使用此技能
 
-When the user asks for an interactive playground, explorer, or visual tool for a topic — especially when the input space is large, visual, or structural and hard to express as plain text.
+当用户请求为某个主题创建交互式 playground、explorer 或可视化工具时——特别是当输入空间庞大、可视化或结构化，难以用纯文本表达时。
 
-## How to use this skill
+## 如何使用此技能
 
-1. **Identify the playground type** from the user's request
-2. **Load the matching template** from `templates/`:
-   - `templates/design-playground.md` — Visual design decisions (components, layouts, spacing, color, typography)
-   - `templates/data-explorer.md` — Data and query building (SQL, APIs, pipelines, regex)
-   - `templates/concept-map.md` — Learning and exploration (concept maps, knowledge gaps, scope mapping)
-   - `templates/document-critique.md` — Document review (suggestions with approve/reject/comment workflow)
-   - `templates/diff-review.md` — Code review (git diffs, commits, PRs with line-by-line commenting)
-   - `templates/code-map.md` — Codebase architecture (component relationships, data flow, layer diagrams)
-3. **Follow the template** to build the playground. If the topic doesn't fit any template cleanly, use the one closest and adapt.
-4. **Open in browser.** After writing the HTML file, run `open <filename>.html` to launch it in the user's default browser.
+1. **从用户请求中识别 playground 类型**
+2. **从 `templates/` 加载匹配的模板**：
+   - `templates/design-playground.md` — 视觉设计决策（组件、布局、间距、颜色、排版）
+   - `templates/data-explorer.md` — 数据和查询构建（SQL、API、pipeline、regex）
+   - `templates/concept-map.md` — 学习和探索（概念图、知识盲区、范围映射）
+   - `templates/document-critique.md` — 文档审查（带批准/拒绝/评论工作流的建议）
+   - `templates/diff-review.md` — 代码审查（git diff、commit、PR 的逐行评论）
+   - `templates/code-map.md` — 代码库架构（组件关系、数据流、层级图）
+3. **按照模板构建 playground**。如果主题不完全符合任何模板，使用最接近的模板并进行调整。
+4. **在浏览器中打开**。写入 HTML 文件后，运行 `open <filename>.html` 在用户的默认浏览器中启动它。
 
-## Core requirements (every playground)
+## 核心要求（每个 playground）
 
-- **Single HTML file.** Inline all CSS and JS. No external dependencies.
-- **Live preview.** Updates instantly on every control change. No "Apply" button.
-- **Prompt output.** Natural language, not a value dump. Only mentions non-default choices. Includes enough context to act on without seeing the playground. Updates live.
-- **Copy button.** Clipboard copy with brief "Copied!" feedback.
-- **Sensible defaults + presets.** Looks good on first load. Include 3-5 named presets that snap all controls to a cohesive combination.
-- **Dark theme.** System font for UI, monospace for code/values. Minimal chrome.
+- **单个 HTML 文件**。内联所有 CSS 和 JS。无外部依赖。
+- **实时预览**。每次控件更改时立即更新。无需"应用"按钮。
+- **Prompt 输出**。自然语言，而非值的堆砌。仅提及非默认选择。包含足够的上下文，无需查看 playground 即可执行操作。实时更新。
+- **复制按钮**。剪贴板复制，带简短的"已复制！"反馈。
+- **合理的默认值 + 预设**。首次加载时外观良好。包含 3-5 个命名预设，将所有控件快速设置为一致的组合。
+- **深色主题**。UI 使用系统字体，代码/值使用等宽字体。极简界面。
 
-## State management pattern
+## 状态管理模式
 
-Keep a single state object. Every control writes to it, every render reads from it.
+保持单一状态对象。每个控件写入它，每次渲染从它读取。
 
 ```javascript
-const state = { /* all configurable values */ };
+const state = { /* 所有可配置的值 */ };
 
 function updateAll() {
-  renderPreview(); // update the visual
-  updatePrompt();  // rebuild the prompt text
+  renderPreview(); // 更新视觉效果
+  updatePrompt();  // 重建 prompt 文本
 }
-// Every control calls updateAll() on change
+// 每个控件在更改时调用 updateAll()
 ```
 
-## Prompt output pattern
+## Prompt 输出模式
 
 ```javascript
 function updatePrompt() {
   const parts = [];
 
-  // Only mention non-default values
+  // 仅提及非默认值
   if (state.borderRadius !== DEFAULTS.borderRadius) {
-    parts.push(`border-radius of ${state.borderRadius}px`);
+    parts.push(`border-radius 为 ${state.borderRadius}px`);
   }
 
-  // Use qualitative language alongside numbers
-  if (state.shadowBlur > 16) parts.push('a pronounced shadow');
-  else if (state.shadowBlur > 0) parts.push('a subtle shadow');
+  // 在数字旁使用定性语言
+  if (state.shadowBlur > 16) parts.push('明显的阴影');
+  else if (state.shadowBlur > 0) parts.push('微妙的阴影');
 
-  prompt.textContent = `Update the card to use ${parts.join(', ')}.`;
+  prompt.textContent = `更新卡片以使用 ${parts.join('、')}。`;
 }
 ```
 
-## Common mistakes to avoid
+## 要避免的常见错误
 
-- Prompt output is just a value dump → write it as a natural instruction
-- Too many controls at once → group by concern, hide advanced in a collapsible section
-- Preview doesn't update instantly → every control change must trigger immediate re-render
-- No defaults or presets → starts empty or broken on load
-- External dependencies → if CDN is down, playground is dead
-- Prompt lacks context → include enough that it's actionable without the playground
+- Prompt 输出只是值的堆砌 → 将其写成自然指令
+- 一次性显示太多控件 → 按关注点分组，将高级选项隐藏在可折叠部分
+- 预览未立即更新 → 每次控件更改必须触发立即重新渲染
+- 没有默认值或预设 → 加载时为空或损坏
+- 外部依赖 → 如果 CDN 宕机，playground 就无法使用
+- Prompt 缺乏上下文 → 包含足够的信息，使其在没有 playground 的情况下也可执行
+
+---
+
+*本技能来自 AI Agent 技能生态，由 AI论坛运营中心 汉化*

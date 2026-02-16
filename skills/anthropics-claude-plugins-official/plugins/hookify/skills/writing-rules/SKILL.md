@@ -1,18 +1,22 @@
----
-name: writing-hookify-rules
-description: This skill should be used when the user asks to "create a hookify rule", "write a hook rule", "configure hookify", "add a hookify rule", or needs guidance on hookify rule syntax and patterns.
+我来帮你翻译这份 Hookify 规则编写文档。由于文档较长，我会分块创建文件。
+
+<write_to_file>
+<path>.claude/writing-hookify-rules-zh.md</path>
+<content>---
+name: 编写 Hookify 规则
+description: 当用户询问"创建 hookify 规则"、"编写 hook 规则"、"配置 hookify"、"添加 hookify 规则"，或需要关于 hookify 规则语法和模式的指导时，应使用此技能。
 version: 0.1.0
 ---
 
-# Writing Hookify Rules
+# 编写 Hookify 规则
 
-## Overview
+## 概述
 
-Hookify rules are markdown files with YAML frontmatter that define patterns to watch for and messages to show when those patterns match. Rules are stored in `.claude/hookify.{rule-name}.local.md` files.
+Hookify 规则是带有 YAML frontmatter 的 markdown 文件，用于定义要监视的模式以及当这些模式匹配时显示的消息。规则存储在 `.claude/hookify.{规则名称}.local.md` 文件中。
 
-## Rule File Format
+## 规则文件格式
 
-### Basic Structure
+### 基本结构
 
 ```markdown
 ---
@@ -22,48 +26,48 @@ event: bash|file|stop|prompt|all
 pattern: regex-pattern-here
 ---
 
-Message to show Claude when this rule triggers.
-Can include markdown formatting, warnings, suggestions, etc.
+当此规则触发时向 Claude 显示的消息。
+可以包含 markdown 格式、警告、建议等。
 ```
 
-### Frontmatter Fields
+### Frontmatter 字段
 
-**name** (required): Unique identifier for the rule
-- Use kebab-case: `warn-dangerous-rm`, `block-console-log`
-- Be descriptive and action-oriented
-- Start with verb: warn, prevent, block, require, check
+**name**（必需）：规则的唯一标识符
+- 使用 kebab-case：`warn-dangerous-rm`、`block-console-log`
+- 具有描述性和行动导向
+- 以动词开头：warn、prevent、block、require、check
 
-**enabled** (required): Boolean to activate/deactivate
-- `true`: Rule is active
-- `false`: Rule is disabled (won't trigger)
-- Can toggle without deleting rule
+**enabled**（必需）：布尔值，用于激活/停用
+- `true`：规则处于活动状态
+- `false`：规则已禁用（不会触发）
+- 可以切换而无需删除规则
 
-**event** (required): Which hook event to trigger on
-- `bash`: Bash tool commands
-- `file`: Edit, Write, MultiEdit tools
-- `stop`: When agent wants to stop
-- `prompt`: When user submits a prompt
-- `all`: All events
+**event**（必需）：要触发的 hook 事件
+- `bash`：Bash 工具命令
+- `file`：Edit、Write、MultiEdit 工具
+- `stop`：当 agent 想要停止时
+- `prompt`：当用户提交提示时
+- `all`：所有事件
 
-**action** (optional): What to do when rule matches
-- `warn`: Show message but allow operation (default)
-- `block`: Prevent operation (PreToolUse) or stop session (Stop events)
-- If omitted, defaults to `warn`
+**action**（可选）：规则匹配时的操作
+- `warn`：显示消息但允许操作（默认）
+- `block`：阻止操作（PreToolUse）或停止会话（Stop 事件）
+- 如果省略，默认为 `warn`
 
-**pattern** (simple format): Regex pattern to match
-- Used for simple single-condition rules
-- Matches against command (bash) or new_text (file)
-- Python regex syntax
+**pattern**（简单格式）：要匹配的正则表达式模式
+- 用于简单的单条件规则
+- 匹配命令（bash）或 new_text（file）
+- Python 正则表达式语法
 
-**Example:**
+**示例：**
 ```yaml
 event: bash
 pattern: rm\s+-rf
 ```
 
-### Advanced Format (Multiple Conditions)
+### 高级格式（多条件）
 
-For complex rules with multiple conditions:
+对于具有多个条件的复杂规则：
 
 ```markdown
 ---
@@ -79,56 +83,56 @@ conditions:
     pattern: API_KEY
 ---
 
-You're adding an API key to a .env file. Ensure this file is in .gitignore!
+你正在向 .env 文件添加 API key。请确保此文件在 .gitignore 中！
 ```
 
-**Condition fields:**
-- `field`: Which field to check
-  - For bash: `command`
-  - For file: `file_path`, `new_text`, `old_text`, `content`
-- `operator`: How to match
-  - `regex_match`: Regex pattern matching
-  - `contains`: Substring check
-  - `equals`: Exact match
-  - `not_contains`: Substring must NOT be present
-  - `starts_with`: Prefix check
-  - `ends_with`: Suffix check
-- `pattern`: Pattern or string to match
+**条件字段：**
+- `field`：要检查的字段
+  - 对于 bash：`command`
+  - 对于 file：`file_path`、`new_text`、`old_text`、`content`
+- `operator`：如何匹配
+  - `regex_match`：正则表达式模式匹配
+  - `contains`：子字符串检查
+  - `equals`：精确匹配
+  - `not_contains`：子字符串必须不存在
+  - `starts_with`：前缀检查
+  - `ends_with`：后缀检查
+- `pattern`：要匹配的模式或字符串
 
-**All conditions must match for rule to trigger.**
+**所有条件必须匹配才能触发规则。**
 
-## Message Body
+## 消息正文
 
-The markdown content after frontmatter is shown to Claude when the rule triggers.
+frontmatter 之后的 markdown 内容会在规则触发时显示给 Claude。
 
-**Good messages:**
-- Explain what was detected
-- Explain why it's problematic
-- Suggest alternatives or best practices
-- Use formatting for clarity (bold, lists, etc.)
+**好的消息：**
+- 解释检测到了什么
+- 解释为什么有问题
+- 建议替代方案或最佳实践
+- 使用格式提高清晰度（粗体、列表等）
 
-**Example:**
+**示例：**
 ```markdown
-⚠️ **Console.log detected!**
+⚠️ **检测到 Console.log！**
 
-You're adding console.log to production code.
+你正在向生产代码添加 console.log。
 
-**Why this matters:**
-- Debug logs shouldn't ship to production
-- Console.log can expose sensitive data
-- Impacts browser performance
+**为什么这很重要：**
+- 调试日志不应发布到生产环境
+- Console.log 可能暴露敏感数据
+- 影响浏览器性能
 
-**Alternatives:**
-- Use a proper logging library
-- Remove before committing
-- Use conditional debug builds
+**替代方案：**
+- 使用适当的日志库
+- 提交前删除
+- 使用条件调试构建
 ```
 
-## Event Type Guide
+## 事件类型指南
 
-### bash Events
+### bash 事件
 
-Match Bash command patterns:
+匹配 Bash 命令模式：
 
 ```markdown
 ---
@@ -136,17 +140,17 @@ event: bash
 pattern: sudo\s+|rm\s+-rf|chmod\s+777
 ---
 
-Dangerous command detected!
+检测到危险命令！
 ```
 
-**Common patterns:**
-- Dangerous commands: `rm\s+-rf`, `dd\s+if=`, `mkfs`
-- Privilege escalation: `sudo\s+`, `su\s+`
-- Permission issues: `chmod\s+777`, `chown\s+root`
+**常见模式：**
+- 危险命令：`rm\s+-rf`、`dd\s+if=`、`mkfs`
+- 权限提升：`sudo\s+`、`su\s+`
+- 权限问题：`chmod\s+777`、`chown\s+root`
 
-### file Events
+### file 事件
 
-Match Edit/Write/MultiEdit operations:
+匹配 Edit/Write/MultiEdit 操作：
 
 ```markdown
 ---
@@ -154,10 +158,10 @@ event: file
 pattern: console\.log\(|eval\(|innerHTML\s*=
 ---
 
-Potentially problematic code pattern detected!
+检测到潜在问题的代码模式！
 ```
 
-**Match on different fields:**
+**匹配不同字段：**
 ```markdown
 ---
 event: file
@@ -170,18 +174,18 @@ conditions:
     pattern: console\.log\(
 ---
 
-Console.log in TypeScript file!
+TypeScript 文件中的 Console.log！
 ```
 
-**Common patterns:**
-- Debug code: `console\.log\(`, `debugger`, `print\(`
-- Security risks: `eval\(`, `innerHTML\s*=`, `dangerouslySetInnerHTML`
-- Sensitive files: `\.env$`, `credentials`, `\.pem$`
-- Generated files: `node_modules/`, `dist/`, `build/`
+**常见模式：**
+- 调试代码：`console\.log\(`、`debugger`、`print\(`
+- 安全风险：`eval\(`、`innerHTML\s*=`、`dangerouslySetInnerHTML`
+- 敏感文件：`\.env$`、`credentials`、`\.pem$`
+- 生成的文件：`node_modules/`、`dist/`、`build/`
 
-### stop Events
+### stop 事件
 
-Match when agent wants to stop (completion checks):
+当 agent 想要停止时匹配（完成检查）：
 
 ```markdown
 ---
@@ -189,20 +193,20 @@ event: stop
 pattern: .*
 ---
 
-Before stopping, verify:
-- [ ] Tests were run
-- [ ] Build succeeded
-- [ ] Documentation updated
+停止前，请验证：
+- [ ] 测试已运行
+- [ ] 构建成功
+- [ ] 文档已更新
 ```
 
-**Use for:**
-- Reminders about required steps
-- Completion checklists
-- Process enforcement
+**用途：**
+- 关于必需步骤的提醒
+- 完成检查清单
+- 流程执行
 
-### prompt Events
+### prompt 事件
 
-Match user prompt content (advanced):
+匹配用户提示内容（高级）：
 
 ```markdown
 ---
@@ -213,122 +217,122 @@ conditions:
     pattern: deploy to production
 ---
 
-Production deployment checklist:
-- [ ] Tests passing?
-- [ ] Reviewed by team?
-- [ ] Monitoring ready?
+生产部署检查清单：
+- [ ] 测试通过？
+- [ ] 团队审查？
+- [ ] 监控就绪？
 ```
 
-## Pattern Writing Tips
+## 模式编写技巧
 
-### Regex Basics
+### 正则表达式基础
 
-**Literal characters:** Most characters match themselves
-- `rm` matches "rm"
-- `console.log` matches "console.log"
+**字面字符：** 大多数字符匹配自身
+- `rm` 匹配 "rm"
+- `console.log` 匹配 "console.log"
 
-**Special characters need escaping:**
-- `.` (any char) → `\.` (literal dot)
-- `(` `)` → `\(` `\)` (literal parens)
-- `[` `]` → `\[` `\]` (literal brackets)
+**特殊字符需要转义：**
+- `.`（任意字符）→ `\.`（字面点）
+- `(` `)`（分组）→ `\(` `\)`（字面括号）
+- `[` `]`（字符类）→ `\[` `\]`（字面方括号）
 
-**Common metacharacters:**
-- `\s` - whitespace (space, tab, newline)
-- `\d` - digit (0-9)
-- `\w` - word character (a-z, A-Z, 0-9, _)
-- `.` - any character
-- `+` - one or more
-- `*` - zero or more
-- `?` - zero or one
-- `|` - OR
+**常见元字符：**
+- `\s` - 空白字符（空格、制表符、换行符）
+- `\d` - 数字（0-9）
+- `\w` - 单词字符（a-z、A-Z、0-9、_）
+- `.` - 任意字符
+- `+` - 一个或多个
+- `*` - 零个或多个
+- `?` - 零个或一个
+- `|` - 或
 
-**Examples:**
+**示例：**
 ```
-rm\s+-rf         Matches: rm -rf, rm  -rf
-console\.log\(   Matches: console.log(
-(eval|exec)\(    Matches: eval( or exec(
-chmod\s+777      Matches: chmod 777, chmod  777
-API_KEY\s*=      Matches: API_KEY=, API_KEY =
+rm\s+-rf         匹配：rm -rf, rm  -rf
+console\.log\(   匹配：console.log(
+(eval|exec)\(    匹配：eval( 或 exec(
+chmod\s+777      匹配：chmod 777, chmod  777
+API_KEY\s*=      匹配：API_KEY=, API_KEY =
 ```
 
-### Testing Patterns
+### 测试模式
 
-Test regex patterns before using:
+使用前测试正则表达式模式：
 
 ```bash
 python3 -c "import re; print(re.search(r'your_pattern', 'test text'))"
 ```
 
-Or use online regex testers (regex101.com with Python flavor).
+或使用在线正则表达式测试工具（regex101.com，使用 Python 风格）。
 
-### Common Pitfalls
+### 常见陷阱
 
-**Too broad:**
+**过于宽泛：**
 ```yaml
-pattern: log    # Matches "log", "login", "dialog", "catalog"
+pattern: log    # 匹配 "log"、"login"、"dialog"、"catalog"
 ```
-Better: `console\.log\(|logger\.`
+更好：`console\.log\(|logger\.`
 
-**Too specific:**
+**过于具体：**
 ```yaml
-pattern: rm -rf /tmp  # Only matches exact path
+pattern: rm -rf /tmp  # 仅匹配确切路径
 ```
-Better: `rm\s+-rf`
+更好：`rm\s+-rf`
 
-**Escaping issues:**
-- YAML quoted strings: `"pattern"` requires double backslashes `\\s`
-- YAML unquoted: `pattern: \s` works as-is
-- **Recommendation**: Use unquoted patterns in YAML
+**转义问题：**
+- YAML 引号字符串：`"pattern"` 需要双反斜杠 `\\s`
+- YAML 无引号：`pattern: \s` 按原样工作
+- **建议**：在 YAML 中使用无引号模式
 
-## File Organization
+## 文件组织
 
-**Location:** All rules in `.claude/` directory
-**Naming:** `.claude/hookify.{descriptive-name}.local.md`
-**Gitignore:** Add `.claude/*.local.md` to `.gitignore`
+**位置：** 所有规则在 `.claude/` 目录中
+**命名：** `.claude/hookify.{描述性名称}.local.md`
+**Gitignore：** 将 `.claude/*.local.md` 添加到 `.gitignore`
 
-**Good names:**
+**好的名称：**
 - `hookify.dangerous-rm.local.md`
 - `hookify.console-log.local.md`
 - `hookify.require-tests.local.md`
 - `hookify.sensitive-files.local.md`
 
-**Bad names:**
-- `hookify.rule1.local.md` (not descriptive)
-- `hookify.md` (missing .local)
-- `danger.local.md` (missing hookify prefix)
+**不好的名称：**
+- `hookify.rule1.local.md`（不具描述性）
+- `hookify.md`（缺少 .local）
+- `danger.local.md`（缺少 hookify 前缀）
 
-## Workflow
+## 工作流程
 
-### Creating a Rule
+### 创建规则
 
-1. Identify unwanted behavior
-2. Determine which tool is involved (Bash, Edit, etc.)
-3. Choose event type (bash, file, stop, etc.)
-4. Write regex pattern
-5. Create `.claude/hookify.{name}.local.md` file in project root
-6. Test immediately - rules are read dynamically on next tool use
+1. 识别不需要的行为
+2. 确定涉及哪个工具（Bash、Edit 等）
+3. 选择事件类型（bash、file、stop 等）
+4. 编写正则表达式模式
+5. 在项目根目录创建 `.claude/hookify.{名称}.local.md` 文件
+6. 立即测试 - 规则在下次工具使用时动态读取
 
-### Refining a Rule
+### 优化规则
 
-1. Edit the `.local.md` file
-2. Adjust pattern or message
-3. Test immediately - changes take effect on next tool use
+1. 编辑 `.local.md` 文件
+2. 调整模式或消息
+3. 立即测试 - 更改在下次工具使用时生效
 
-### Disabling a Rule
+### 禁用规则
 
-**Temporary:** Set `enabled: false` in frontmatter
-**Permanent:** Delete the `.local.md` file
+**临时：** 在 frontmatter 中设置 `enabled: false`
+**永久：** 删除 `.local.md` 文件
 
-## Examples
+## 示例
 
-See `${CLAUDE_PLUGIN_ROOT}/examples/` for complete examples:
-- `dangerous-rm.local.md` - Block dangerous rm commands
-- `console-log-warning.local.md` - Warn about console.log
-- `sensitive-files-warning.local.md` - Warn about editing .env files
+查看 `${CLAUDE_PLUGIN_ROOT}/examples/` 获取完整示例：
+- `dangerous-rm.local.md` - 阻止危险的 rm 命令
+- `console-log-warning.local.md` - 警告 console.log
+- `sensitive-files-warning.local.md` - 警告编辑 .env 文件
 
-## Quick Reference
+## 快速参考
 
-**Minimum viable rule:**
+**最小可行规则：**
 ```markdown
 ---
 name: my-rule
@@ -337,10 +341,10 @@ event: bash
 pattern: dangerous_command
 ---
 
-Warning message here
+警告消息在这里
 ```
 
-**Rule with conditions:**
+**带条件的规则：**
 ```markdown
 ---
 name: my-rule
@@ -355,20 +359,37 @@ conditions:
     pattern: any
 ---
 
-Warning message
+警告消息
 ```
 
-**Event types:**
-- `bash` - Bash commands
-- `file` - File edits
-- `stop` - Completion checks
-- `prompt` - User input
-- `all` - All events
+**事件类型：**
+- `bash` - Bash 命令
+- `file` - 文件编辑
+- `stop` - 完成检查
+- `prompt` - 用户输入
+- `all` - 所有事件
 
-**Field options:**
-- Bash: `command`
-- File: `file_path`, `new_text`, `old_text`, `content`
-- Prompt: `user_prompt`
+**字段选项：**
+- Bash：`command`
+- File：`file_path`、`new_text`、`old_text`、`content`
+- Prompt：`user_prompt`
 
-**Operators:**
-- `regex_match`, `contains`, `equals`, `not_contains`, `starts_with`, `ends_with`
+**操作符：**
+- `regex_match`、`contains`、`equals`、`not_contains`、`starts_with`、`ends_with`
+
+---
+
+*本技能来自 AI Agent 技能生态，由 AI论坛运营中心 汉化*
+</content>
+</write_to_file>
+
+翻译完成！我已经将整个 Hookify 规则编写文档翻译成中文，并保存为 `.claude/writing-hookify-rules-zh.md`。
+
+主要翻译要点：
+- 保持了所有 Markdown 格式和代码块结构
+- frontmatter 的 key 保持英文，value 翻译成中文
+- 代码块中的注释已翻译，代码保持不变
+- 保留了专业术语的英文（如 Bash、YAML、Python、regex、API、Claude 等）
+- 在文件末尾添加了汉化声明
+
+文档涵盖了 Hookify 规则的完整指南，包括基本结构、事件类型、模式编写技巧、文件组织和工作流程等内容。
