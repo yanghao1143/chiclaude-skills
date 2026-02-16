@@ -1,21 +1,15 @@
-我来帮你翻译这份 Angular Directives 技能文档。我会分块写入以确保不超过限制。
-
-首先创建文件并写入前半部分：
-
-<write_to_file>
-<path>angular-directives-zh.md</path>
-<content>---
+---
 name: angular-directives
-description: 在 Angular v20+ 中创建自定义指令，用于 DOM 操作和行为扩展。适用于修改元素行为/外观的属性指令、用于 portals/overlays 的结构型指令，以及用于组合的宿主指令。当需要创建可复用的 DOM 行为、扩展元素功能或跨组件组合行为时触发。注意 - 使用原生 @if/@for/@switch 进行控制流，而非自定义结构型指令。
+description: Create custom directives in Angular v20+ for DOM manipulation and behavior extension. Use for attribute directives that modify element behavior/appearance, structural directives for portals/overlays, and host directives for composition. Triggers on creating reusable DOM behaviors, extending element functionality, or composing behaviors across components. Note - use native @if/@for/@switch for control flow, not custom structural directives.
 ---
 
 # Angular Directives
 
-在 Angular v20+ 中创建用于可复用 DOM 操作和行为的自定义指令。
+Create custom directives for reusable DOM manipulation and behavior in Angular v20+.
 
-## 属性指令
+## Attribute Directives
 
-修改元素的外观或行为：
+Modify the appearance or behavior of an element:
 
 ```typescript
 import { Directive, input, effect, inject, ElementRef } from '@angular/core';
@@ -26,7 +20,7 @@ import { Directive, input, effect, inject, ElementRef } from '@angular/core';
 export class Highlight {
   private el = inject(ElementRef<HTMLElement>);
   
-  // 使用与选择器匹配的别名输入
+  // Input with alias matching selector
   color = input('yellow', { alias: 'appHighlight' });
   
   constructor() {
@@ -36,13 +30,13 @@ export class Highlight {
   }
 }
 
-// 用法: <p appHighlight="lightblue">高亮文本</p>
-// 用法: <p appHighlight>默认黄色高亮</p>
+// Usage: <p appHighlight="lightblue">Highlighted text</p>
+// Usage: <p appHighlight>Default yellow highlight</p>
 ```
 
-### 使用 host 属性
+### Using host Property
 
-优先使用 `host` 而非 `@HostBinding`/`@HostListener`：
+Prefer `host` over `@HostBinding`/`@HostListener`:
 
 ```typescript
 @Directive({
@@ -77,14 +71,14 @@ export class Tooltip {
   }
   
   private positionTooltip() {
-    // 基于 this.position() 和 this.el 的定位逻辑
+    // Position logic based on this.position() and this.el
   }
 }
 
-// 用法: <button appTooltip="点击保存" position="bottom">保存</button>
+// Usage: <button appTooltip="Click to save" position="bottom">Save</button>
 ```
 
-### Class 和 Style 操作
+### Class and Style Manipulation
 
 ```typescript
 @Directive({
@@ -105,10 +99,10 @@ export class Button {
   disabled = input(false, { transform: booleanAttribute });
 }
 
-// 用法: <button appButton variant="primary" size="large">点击</button>
+// Usage: <button appButton variant="primary" size="large">Click</button>
 ```
 
-### 事件处理
+### Event Handling
 
 ```typescript
 @Directive({
@@ -129,10 +123,10 @@ export class ClickOutside {
   }
 }
 
-// 用法: <div appClickOutside (clickOutside)="closeMenu()">...</div>
+// Usage: <div appClickOutside (clickOutside)="closeMenu()">...</div>
 ```
 
-### 键盘快捷键
+### Keyboard Shortcuts
 
 ```typescript
 @Directive({
@@ -162,16 +156,16 @@ export class Shortcut {
   }
 }
 
-// 用法: <button appShortcut="s" ctrl (triggered)="save()">保存 (Ctrl+S)</button>
+// Usage: <button appShortcut="s" ctrl (triggered)="save()">Save (Ctrl+S)</button>
 ```
 
-## 结构型指令
+## Structural Directives
 
-使用结构型指令进行超越控制流的 DOM 操作（portals、overlays、动态插入点）。对于条件和循环，使用原生 `@if`、`@for`、`@switch`。
+Use structural directives for DOM manipulation beyond control flow (portals, overlays, dynamic insertion points). For conditionals and loops, use native `@if`, `@for`, `@switch`.
 
-### Portal 指令
+### Portal Directive
 
-在不同的 DOM 位置渲染内容：
+Render content in a different DOM location:
 
 ```typescript
 import { Directive, inject, TemplateRef, ViewContainerRef, OnInit, OnDestroy, input } from '@angular/core';
@@ -184,7 +178,7 @@ export class Portal implements OnInit, OnDestroy {
   private viewContainerRef = inject(ViewContainerRef);
   private viewRef: EmbeddedViewRef<any> | null = null;
   
-  // 目标容器选择器或元素
+  // Target container selector or element
   target = input<string | HTMLElement>('body', { alias: 'appPortal' });
   
   ngOnInit() {
@@ -208,15 +202,15 @@ export class Portal implements OnInit, OnDestroy {
   }
 }
 
-// 用法: 在 body 层级渲染模态框
+// Usage: Render modal at body level
 // <div *appPortal="'body'">
-//   <div class="modal">模态框内容</div>
+//   <div class="modal">Modal content</div>
 // </div>
 ```
 
-### 延迟渲染指令
+### Lazy Render Directive
 
-延迟渲染直到满足条件（一次性）：
+Defer rendering until condition is met (one-time):
 
 ```typescript
 @Directive({
@@ -231,7 +225,7 @@ export class LazyRender {
   
   constructor() {
     effect(() => {
-      // 仅在条件首次变为 true 时渲染一次
+      // Only render once when condition becomes true
       if (this.condition() && !this.rendered) {
         this.viewContainer.createEmbeddedView(this.templateRef);
         this.rendered = true;
@@ -240,13 +234,13 @@ export class LazyRender {
   }
 }
 
-// 用法: 仅在标签页首次激活时渲染重型组件
+// Usage: Render heavy component only when tab is first activated
 // <div *appLazyRender="activeTab() === 'reports'">
 //   <app-heavy-reports />
 // </div>
 ```
 
-### 带上下文的模板出口
+### Template Outlet with Context
 
 ```typescript
 interface TemplateContext<T> {
@@ -288,7 +282,7 @@ export class TemplateOutlet<T> {
   }
 }
 
-// 用法: 使用模板的自定义列表
+// Usage: Custom list with template
 // <ng-template #itemTemplate let-item let-i="index">
 //   <div>{{ i }}: {{ item.name }}</div>
 // </ng-template>
@@ -296,21 +290,13 @@ export class TemplateOutlet<T> {
 //   *appTemplateOutlet="itemTemplate; context: item; index: i"
 // />
 ```
-</content>
-</write_to_file>
 
-现在追加文档的后半部分：
+## Host Directives
 
-<append_to_file>
-<path>angular-directives-zh.md</path>
-<content>
-
-## 宿主指令
-
-在组件或其他指令上组合指令：
+Compose directives on components or other directives:
 
 ```typescript
-// 可复用的行为指令
+// Reusable behavior directives
 @Directive({
   selector: '[focusable]',
   host: {
@@ -338,7 +324,7 @@ export class Disableable {
   disabled = input(false, { transform: booleanAttribute });
 }
 
-// 使用宿主指令的组件
+// Component using host directives
 @Component({
   selector: 'app-custom-button',
   hostDirectives: [
@@ -368,10 +354,10 @@ export class CustomButton {
   }
 }
 
-// 用法: <app-custom-button disabled>点击我</app-custom-button>
+// Usage: <app-custom-button disabled>Click me</app-custom-button>
 ```
 
-### 暴露宿主指令输出
+### Exposing Host Directive Outputs
 
 ```typescript
 @Directive({
@@ -410,18 +396,18 @@ export class Hoverable {
 })
 export class Card {}
 
-// 用法: <app-card (hoverChange)="onHover($event)">...</app-card>
+// Usage: <app-card (hoverChange)="onHover($event)">...</app-card>
 ```
 
-## 指令组合 API
+## Directive Composition API
 
-组合多个行为：
+Combine multiple behaviors:
 
 ```typescript
-// 基础指令
+// Base directives
 @Directive({ selector: '[withRipple]' })
 export class Ripple {
-  // Ripple 效果实现
+  // Ripple effect implementation
 }
 
 @Directive({ selector: '[withElevation]' })
@@ -429,7 +415,7 @@ export class Elevation {
   elevation = input(2);
 }
 
-// 组合组件
+// Composed component
 @Component({
   selector: 'app-material-button',
   hostDirectives: [
@@ -448,19 +434,4 @@ export class Elevation {
 export class MaterialButton {}
 ```
 
-有关高级模式，请参阅 [references/directive-patterns.md](references/directive-patterns.md)。
-
----
-
-*本技能来自 AI Agent 技能生态，由 AI论坛运营中心 汉化*
-</content>
-</append_to_file>
-
-翻译完成！文档已保存为 `angular-directives-zh.md`。
-
-主要翻译要点：
-- 保持了所有 Markdown 格式和代码块结构
-- frontmatter 的 key 保持英文，value 翻译成中文
-- 代码注释已翻译，代码本身保持不变
-- 保留了专业术语的英文（MCP、API、Angular、DOM、portals、overlays 等）
-- 在文件末尾添加了汉化声明
+For advanced patterns, see [references/directive-patterns.md](references/directive-patterns.md).

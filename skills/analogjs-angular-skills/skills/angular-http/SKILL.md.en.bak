@@ -1,19 +1,15 @@
-我会帮你翻译这份 Angular HTTP 技能文档。由于文档较长，我会分块处理以确保质量和性能。
-
-<write_to_file>
-<path>angular-http-zh.md</path>
-<content>---
+---
 name: angular-http
-description: 在 Angular v20+ 中使用 resource()、httpResource() 和 HttpClient 实现 HTTP 数据获取。用于 API 调用、基于 signal 的数据加载、请求/响应处理和拦截器。适用于数据获取、API 集成、加载状态、错误处理，或将基于 Observable 的 HTTP 转换为基于 signal 的模式。
+description: Implement HTTP data fetching in Angular v20+ using resource(), httpResource(), and HttpClient. Use for API calls, data loading with signals, request/response handling, and interceptors. Triggers on data fetching, API integration, loading states, error handling, or converting Observable-based HTTP to signal-based patterns.
 ---
 
-# Angular HTTP 与数据获取
+# Angular HTTP & Data Fetching
 
-在 Angular 中使用基于 signal 的 `resource()`、`httpResource()` 和传统的 `HttpClient` 获取数据。
+Fetch data in Angular using signal-based `resource()`, `httpResource()`, and the traditional `HttpClient`.
 
-## httpResource() - 基于 Signal 的 HTTP
+## httpResource() - Signal-Based HTTP
 
-`httpResource()` 将 HttpClient 与基于 signal 的状态管理结合：
+`httpResource()` wraps HttpClient with signal-based state management:
 
 ```typescript
 import { Component, signal } from '@angular/core';
@@ -29,10 +25,10 @@ interface User {
   selector: 'app-user-profile',
   template: `
     @if (userResource.isLoading()) {
-      <p>加载中...</p>
+      <p>Loading...</p>
     } @else if (userResource.error()) {
-      <p>错误: {{ userResource.error()?.message }}</p>
-      <button (click)="userResource.reload()">重试</button>
+      <p>Error: {{ userResource.error()?.message }}</p>
+      <button (click)="userResource.reload()">Retry</button>
     } @else if (userResource.hasValue()) {
       <h1>{{ userResource.value().name }}</h1>
       <p>{{ userResource.value().email }}</p>
@@ -42,18 +38,18 @@ interface User {
 export class UserProfile {
   userId = signal('123');
   
-  // 响应式 HTTP resource - 当 userId 变化时自动重新获取
+  // Reactive HTTP resource - refetches when userId changes
   userResource = httpResource<User>(() => `/api/users/${this.userId()}`);
 }
 ```
 
-### httpResource 选项
+### httpResource Options
 
 ```typescript
-// 简单的 GET 请求
+// Simple GET request
 userResource = httpResource<User>(() => `/api/users/${this.userId()}`);
 
-// 完整的请求选项
+// With full request options
 userResource = httpResource<User>(() => ({
   url: `/api/users/${this.userId()}`,
   method: 'GET',
@@ -61,37 +57,37 @@ userResource = httpResource<User>(() => ({
   params: { include: 'profile' },
 }));
 
-// 带默认值
+// With default value
 usersResource = httpResource<User[]>(() => '/api/users', {
   defaultValue: [],
 });
 
-// 当参数未定义时跳过请求
+// Skip request when params undefined
 userResource = httpResource<User>(() => {
   const id = this.userId();
   return id ? `/api/users/${id}` : undefined;
 });
 ```
 
-### Resource 状态
+### Resource State
 
 ```typescript
-// 状态 signal
-userResource.value()      // 当前值或 undefined
-userResource.hasValue()   // Boolean - 是否有已解析的值
-userResource.error()      // 错误或 undefined
-userResource.isLoading()  // Boolean - 是否正在加载
+// Status signals
+userResource.value()      // Current value or undefined
+userResource.hasValue()   // Boolean - has resolved value
+userResource.error()      // Error or undefined
+userResource.isLoading()  // Boolean - currently loading
 userResource.status()     // 'idle' | 'loading' | 'reloading' | 'resolved' | 'error' | 'local'
 
-// 操作方法
-userResource.reload()     // 手动触发重新加载
-userResource.set(value)   // 设置本地值
-userResource.update(fn)   // 更新本地值
+// Actions
+userResource.reload()     // Manually trigger reload
+userResource.set(value)   // Set local value
+userResource.update(fn)   // Update local value
 ```
 
-## resource() - 通用异步数据
+## resource() - Generic Async Data
 
-用于非 HTTP 异步操作或自定义获取逻辑：
+For non-HTTP async operations or custom fetch logic:
 
 ```typescript
 import { resource, signal } from '@angular/core';
@@ -101,10 +97,10 @@ export class Search {
   query = signal('');
   
   searchResource = resource({
-    // 响应式参数 - 变化时触发重新加载
+    // Reactive params - triggers reload when changed
     params: () => ({ q: this.query() }),
     
-    // 异步加载函数
+    // Async loader function
     loader: async ({ params, abortSignal }) => {
       if (!params.q) return [];
       
@@ -117,7 +113,7 @@ export class Search {
 }
 ```
 
-### 带默认值的 Resource
+### Resource with Default Value
 
 ```typescript
 todosResource = resource({
@@ -129,10 +125,10 @@ todosResource = resource({
   },
 });
 
-// value() 返回 Todo[]（永远不会是 undefined）
+// value() returns Todo[] (never undefined)
 ```
 
-### 条件加载
+### Conditional Loading
 
 ```typescript
 const userId = signal<string | null>(null);
@@ -140,19 +136,19 @@ const userId = signal<string | null>(null);
 userResource = resource({
   params: () => {
     const id = userId();
-    // 返回 undefined 跳过加载
+    // Return undefined to skip loading
     return id ? { id } : undefined;
   },
   loader: async ({ params }) => {
     return fetch(`/api/users/${params.id}`).then(r => r.json());
   },
 });
-// 当 params 返回 undefined 时，状态为 'idle'
+// Status is 'idle' when params returns undefined
 ```
 
-## HttpClient - 传统方式
+## HttpClient - Traditional Approach
 
-用于复杂场景或需要 Observable 操作符时：
+For complex scenarios or when you need Observable operators:
 
 ```typescript
 import { Component, inject } from '@angular/core';
@@ -163,18 +159,18 @@ import { toSignal } from '@angular/core/rxjs-interop';
 export class Users {
   private http = inject(HttpClient);
   
-  // 将 Observable 转换为 Signal
+  // Convert Observable to Signal
   users = toSignal(
     this.http.get<User[]>('/api/users'),
     { initialValue: [] }
   );
   
-  // 或直接使用 Observable
+  // Or use Observable directly
   users$ = this.http.get<User[]>('/api/users');
 }
 ```
 
-### HTTP 方法
+### HTTP Methods
 
 ```typescript
 private http = inject(HttpClient);
@@ -205,7 +201,7 @@ deleteUser(id: string) {
 }
 ```
 
-### 请求选项
+### Request Options
 
 ```typescript
 this.http.get<User[]>('/api/users', {
@@ -218,14 +214,14 @@ this.http.get<User[]>('/api/users', {
     limit: '10',
     sort: 'name',
   },
-  observe: 'response', // 获取完整的 HttpResponse
+  observe: 'response', // Get full HttpResponse
   responseType: 'json',
 });
 ```
 
-## 拦截器
+## Interceptors
 
-### 函数式拦截器（推荐）
+### Functional Interceptor (Recommended)
 
 ```typescript
 // auth.interceptor.ts
@@ -263,13 +259,13 @@ export const loggingInterceptor: HttpInterceptorFn = (req, next) => {
   return next(req).pipe(
     tap({
       next: () => console.log(`${req.method} ${req.url} - ${Date.now() - started}ms`),
-      error: (err) => console.error(`${req.method} ${req.url} 失败`, err),
+      error: (err) => console.error(`${req.method} ${req.url} failed`, err),
     })
   );
 };
 ```
 
-### 注册拦截器
+### Register Interceptors
 
 ```typescript
 // app.config.ts
@@ -288,9 +284,9 @@ export const appConfig: ApplicationConfig = {
 };
 ```
 
-## 错误处理
+## Error Handling
 
-### 使用 httpResource
+### With httpResource
 
 ```typescript
 @Component({
@@ -298,7 +294,7 @@ export const appConfig: ApplicationConfig = {
     @if (userResource.error(); as error) {
       <div class="error">
         <p>{{ getErrorMessage(error) }}</p>
-        <button (click)="userResource.reload()">重试</button>
+        <button (click)="userResource.reload()">Retry</button>
       </div>
     }
   `,
@@ -308,37 +304,37 @@ export class UserCmpt {
   
   getErrorMessage(error: unknown): string {
     if (error instanceof HttpErrorResponse) {
-      return error.error?.message || `错误 ${error.status}: ${error.statusText}`;
+      return error.error?.message || `Error ${error.status}: ${error.statusText}`;
     }
-    return '发生了意外错误';
+    return 'An unexpected error occurred';
   }
 }
 ```
 
-### 使用 HttpClient
+### With HttpClient
 
 ```typescript
 import { catchError, retry } from 'rxjs';
 
 getUser(id: string) {
   return this.http.get<User>(`/api/users/${id}`).pipe(
-    retry(2), // 最多重试 2 次
+    retry(2), // Retry up to 2 times
     catchError((error: HttpErrorResponse) => {
-      console.error('获取用户错误:', error);
-      return throwError(() => new Error('加载用户失败'));
+      console.error('Error fetching user:', error);
+      return throwError(() => new Error('Failed to load user'));
     })
   );
 }
 ```
 
-## 加载状态模式
+## Loading States Pattern
 
 ```typescript
 @Component({
   template: `
     @switch (dataResource.status()) {
       @case ('idle') {
-        <p>请输入搜索词</p>
+        <p>Enter a search term</p>
       }
       @case ('loading') {
         <app-spinner />
@@ -367,20 +363,4 @@ export class Data {
 }
 ```
 
-更多高级模式，请参阅 [references/http-patterns.md](references/http-patterns.md)。
-
----
-
-*本技能来自 AI Agent 技能生态，由 AI论坛运营中心 汉化*
-</content>
-</write_to_file>
-
-翻译完成！我已经将 Angular HTTP 技能文档翻译成中文，并保持了以下要求：
-
-✅ 保持了 Markdown 格式
-✅ frontmatter 的 key 保持英文，value 翻译成中文
-✅ 代码块内的注释已翻译，代码保持不变
-✅ 专业术语保留英文（HttpClient、Observable、Signal、API、Angular 等）
-✅ 在文件末尾添加了汉化声明
-
-文档已保存为 `angular-http-zh.md`，可以直接使用。
+For advanced patterns, see [references/http-patterns.md](references/http-patterns.md).

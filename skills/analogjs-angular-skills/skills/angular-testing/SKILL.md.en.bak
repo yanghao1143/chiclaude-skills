@@ -1,21 +1,26 @@
+---
+name: angular-testing
+description: Write unit and integration tests for Angular v21+ applications using Vitest or Jasmine with TestBed, component harnesses, and modern testing patterns. Use for testing components with signals, OnPush change detection, services with inject(), and HTTP interactions. Triggers on test creation, testing signal-based components, mocking dependencies, or setting up test infrastructure.
+---
+
 # Angular Testing
 
-测试 Angular v21+ 应用程序，使用 Vitest（推荐）或 Jasmine，专注于基于 signal 的组件和现代模式。
+Test Angular v21+ applications with Vitest (recommended) or Jasmine, focusing on signal-based components and modern patterns.
 
-## Vitest 设置（Angular v20+）
+## Vitest Setup (Angular v20+)
 
-Angular v20+ 通过 `@angular/build` 包原生支持 Vitest。
+Angular v20+ has native Vitest support through the `@angular/build` package.
 
-### 安装
+### Installation
 
 ```bash
 npm install -D vitest jsdom
 ```
 
-### 配置
+### Configuration
 
 ```json
-// angular.json - 更新 test architect
+// angular.json - update test architect
 {
   "projects": {
     "your-app": {
@@ -44,20 +49,20 @@ npm install -D vitest jsdom
 }
 ```
 
-### 运行测试
+### Running Tests
 
 ```bash
-# 运行测试
+# Run tests
 ng test
 
-# 监听模式
+# Watch mode
 ng test --watch
 
-# 覆盖率
+# Coverage
 ng test --code-coverage
 ```
 
-### Vitest 测试示例
+### Vitest Test Example
 
 ```typescript
 import { describe, it, expect, beforeEach } from 'vitest';
@@ -92,7 +97,7 @@ describe('Counter', () => {
 });
 ```
 
-### Vitest Mock
+### Vitest Mocking
 
 ```typescript
 import { describe, it, expect, vi, beforeEach } from 'vitest';
@@ -125,7 +130,7 @@ describe('UserCmpt', () => {
 });
 ```
 
-### Vitest 与 HTTP 测试
+### Vitest with HTTP Testing
 
 ```typescript
 import { describe, it, expect, beforeEach, afterEach } from 'vitest';
@@ -168,7 +173,7 @@ describe('User', () => {
 
 ---
 
-## 基础组件测试
+## Basic Component Test
 
 ```typescript
 import { ComponentFixture, TestBed } from '@angular/core/testing';
@@ -180,7 +185,7 @@ describe('Counter', () => {
   
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Counter], // 独立组件
+      imports: [Counter], // Standalone component
     }).compileComponents();
     
     fixture = TestBed.createComponent(Counter);
@@ -210,9 +215,9 @@ describe('Counter', () => {
 });
 ```
 
-## 测试 Signal
+## Testing Signals
 
-### 直接 Signal 测试
+### Direct Signal Testing
 
 ```typescript
 import { signal, computed } from '@angular/core';
@@ -233,7 +238,7 @@ describe('Signal logic', () => {
 });
 ```
 
-### 测试组件 Signal
+### Testing Component Signals
 
 ```typescript
 @Component({
@@ -304,9 +309,9 @@ describe('TodoList', () => {
 });
 ```
 
-## 测试 OnPush 组件
+## Testing OnPush Components
 
-OnPush 组件需要显式变更检测：
+OnPush components require explicit change detection:
 
 ```typescript
 @Component({
@@ -321,13 +326,13 @@ describe('OnPush', () => {
   it('should update when input signal changes', () => {
     const fixture = TestBed.createComponent(OnPush);
     
-    // 使用 setInput 设置输入（用于 signal 输入）
+    // Set input using setInput (for signal inputs)
     fixture.componentRef.setInput('data', { name: 'Initial' });
     fixture.detectChanges();
     
     expect(fixture.nativeElement.textContent).toContain('Initial');
     
-    // 更新输入
+    // Update input
     fixture.componentRef.setInput('data', { name: 'Updated' });
     fixture.detectChanges();
     
@@ -336,9 +341,9 @@ describe('OnPush', () => {
 });
 ```
 
-## 测试 Service
+## Testing Services
 
-### 基础 Service 测试
+### Basic Service Test
 
 ```typescript
 import { TestBed } from '@angular/core/testing';
@@ -386,7 +391,7 @@ describe('CounterSvc', () => {
 });
 ```
 
-### 带依赖的 Service
+### Service with Dependencies
 
 ```typescript
 @Injectable({ providedIn: 'root' })
@@ -415,7 +420,7 @@ describe('User', () => {
   });
   
   afterEach(() => {
-    httpMock.verify(); // 验证没有未完成的请求
+    httpMock.verify(); // Verify no outstanding requests
   });
   
   it('should fetch user by id', () => {
@@ -432,9 +437,9 @@ describe('User', () => {
 });
 ```
 
-## Mock 依赖
+## Mocking Dependencies
 
-### 使用 Jasmine Spy
+### Using Jasmine Spies
 
 ```typescript
 describe('ComponentWithDependency', () => {
@@ -461,10 +466,10 @@ describe('ComponentWithDependency', () => {
 });
 ```
 
-### Mock 基于 Signal 的 Service
+### Mock Signal-Based Service
 
 ```typescript
-// 创建带 signal 的 mock
+// Create mock with signal
 const mockAuth = {
   user: signal<User | null>(null),
   isAuthenticated: computed(() => mockAuth.user() !== null),
@@ -491,7 +496,7 @@ it('should show content when authenticated', () => {
 });
 ```
 
-## 测试输入和输出
+## Testing Inputs and Outputs
 
 ```typescript
 @Component({
@@ -517,11 +522,11 @@ describe('Item', () => {
     fixture.componentRef.setInput('item', item);
     fixture.detectChanges();
     
-    // 订阅输出
+    // Subscribe to output
     let emittedItem: Item | undefined;
     fixture.componentInstance.selected.subscribe(i => emittedItem = i);
     
-    // 触发点击
+    // Trigger click
     fixture.nativeElement.querySelector('div').click();
     
     expect(emittedItem).toEqual(item);
@@ -529,9 +534,9 @@ describe('Item', () => {
 });
 ```
 
-## 测试异步操作
+## Testing Async Operations
 
-### 使用 fakeAsync
+### Using fakeAsync
 
 ```typescript
 import { fakeAsync, tick, flush } from '@angular/core/testing';
@@ -540,21 +545,21 @@ it('should debounce search', fakeAsync(() => {
   const fixture = TestBed.createComponent(Search);
   fixture.detectChanges();
   
-  // 输入搜索
+  // Type in search
   fixture.componentInstance.query.set('test');
   
-  // 推进防抖时间
+  // Advance time for debounce
   tick(300);
   fixture.detectChanges();
   
   expect(fixture.componentInstance.results().length).toBeGreaterThan(0);
   
-  // 清空剩余计时器
+  // Flush any remaining timers
   flush();
 }));
 ```
 
-### 使用 waitForAsync
+### Using waitForAsync
 
 ```typescript
 import { waitForAsync } from '@angular/core/testing';
@@ -570,7 +575,7 @@ it('should load data', waitForAsync(() => {
 }));
 ```
 
-## 测试 HTTP Resource
+## Testing HTTP Resources
 
 ```typescript
 @Component({
@@ -606,10 +611,10 @@ describe('UserCmpt', () => {
     const fixture = TestBed.createComponent(UserCmpt);
     fixture.detectChanges();
     
-    // 初始加载中
+    // Initially loading
     expect(fixture.nativeElement.textContent).toContain('Loading');
     
-    // 响应请求
+    // Respond to request
     const req = httpMock.expectOne('/api/users/1');
     req.flush({ id: '1', name: 'John Doe' });
     fixture.detectChanges();
@@ -619,18 +624,18 @@ describe('UserCmpt', () => {
 });
 ```
 
-## Vitest vs Jasmine 对比
+## Vitest vs Jasmine Comparison
 
-| 特性 | Vitest | Jasmine/Karma |
+| Feature | Vitest | Jasmine/Karma |
 |---------|--------|---------------|
-| 速度 | 更快（原生 ESM） | 较慢 |
-| 监听模式 | 即时反馈 | 重建较慢 |
-| Mock | `vi.fn()`, `vi.mock()` | `jasmine.createSpy()` |
-| 断言 | `expect()`（Chai 风格） | `expect()`（Jasmine） |
-| UI | 内置 UI 模式 | Karma 浏览器 |
-| 配置 | `angular.json` | `karma.conf.js` |
+| Speed | Faster (native ESM) | Slower |
+| Watch mode | Instant feedback | Slower rebuilds |
+| Mocking | `vi.fn()`, `vi.mock()` | `jasmine.createSpy()` |
+| Assertions | `expect()` (Chai-style) | `expect()` (Jasmine) |
+| UI | Built-in UI mode | Karma browser |
+| Config | `angular.json` | `karma.conf.js` |
 
-### 从 Jasmine 迁移到 Vitest
+### Migration from Jasmine to Vitest
 
 ```typescript
 // Jasmine
@@ -652,8 +657,4 @@ spyOn(service, 'method').and.returnValue(of(data));
 vi.spyOn(service, 'method').mockReturnValue(of(data));
 ```
 
-有关高级测试模式，请参阅 [references/testing-patterns.md](references/testing-patterns.md)。
-
----
-
-*本技能来自 AI Agent 技能生态，由 AI论坛运营中心 汉化*
+For advanced testing patterns, see [references/testing-patterns.md](references/testing-patterns.md).

@@ -1,37 +1,31 @@
-我来帮你翻译这份 Angular 工具文档。我会分块写入以避免超时。
-
-首先创建文件并写入前半部分：
-
-<write_to_file>
-<path>angular-tooling-zh.md</path>
-<content>---
+---
 name: angular-tooling
-description: 在 Angular v20+ 项目中有效使用 Angular CLI 和开发工具。用于项目设置、代码生成、构建、测试和配置。适用于创建新项目、生成组件/服务/模块、配置构建、运行测试或优化生产构建等场景。
+description: Use Angular CLI and development tools effectively in Angular v20+ projects. Use for project setup, code generation, building, testing, and configuration. Triggers on creating new projects, generating components/services/modules, configuring builds, running tests, or optimizing production builds.
 ---
 
-# Angular 工具
+# Angular Tooling
 
-使用 Angular CLI 和开发工具进行高效的 Angular v20+ 开发。
+Use Angular CLI and development tools for efficient Angular v20+ development.
 
-## 项目设置
+## Project Setup
 
-### 创建新项目
+### Create New Project
 
 ```bash
-# 创建新的独立项目（v20+ 中的默认方式）
+# Create new standalone project (default in v20+)
 ng new my-app
 
-# 使用特定选项
+# With specific options
 ng new my-app --style=scss --routing --ssr=false
 
-# 跳过测试
+# Skip tests
 ng new my-app --skip-tests
 
-# 最小化设置
+# Minimal setup
 ng new my-app --minimal --inline-style --inline-template
 ```
 
-### 项目结构
+### Project Structure
 
 ```
 my-app/
@@ -43,119 +37,119 @@ my-app/
 │   ├── index.html
 │   ├── main.ts
 │   └── styles.scss
-├── public/                  # 静态资源
-├── angular.json             # CLI 配置
+├── public/                  # Static assets
+├── angular.json             # CLI configuration
 ├── package.json
 ├── tsconfig.json
 └── tsconfig.app.json
 ```
 
-## 代码生成
+## Code Generation
 
-### 组件
+### Components
 
 ```bash
-# 生成组件
+# Generate component
 ng generate component features/user-profile
-ng g c features/user-profile  # 简写形式
+ng g c features/user-profile  # Short form
 
-# 使用选项
+# With options
 ng g c shared/button --inline-template --inline-style
 ng g c features/dashboard --skip-tests
 ng g c features/settings --change-detection=OnPush
 
-# 扁平化（不创建文件夹）
+# Flat (no folder)
 ng g c shared/icon --flat
 
-# 预演（预览）
+# Dry run (preview)
 ng g c features/checkout --dry-run
 ```
 
-### 服务
+### Services
 
 ```bash
-# 生成服务（默认 providedIn: 'root'）
+# Generate service (providedIn: 'root' by default)
 ng g service services/auth
 ng g s services/user
 
-# 跳过测试
+# Skip tests
 ng g s services/api --skip-tests
 ```
 
-### 其他原理图
+### Other Schematics
 
 ```bash
-# 指令
+# Directive
 ng g directive directives/highlight
 ng g d directives/tooltip
 
-# 管道
+# Pipe
 ng g pipe pipes/truncate
 ng g p pipes/date-format
 
-# 守卫（默认为函数式）
+# Guard (functional by default)
 ng g guard guards/auth
 
-# 拦截器（默认为函数式）
+# Interceptor (functional by default)
 ng g interceptor interceptors/auth
 
-# 接口
+# Interface
 ng g interface models/user
 
-# 枚举
+# Enum
 ng g enum models/status
 
-# 类
+# Class
 ng g class models/product
 ```
 
-### 使用路径别名生成
+### Generate with Path Alias
 
 ```bash
-# 在功能文件夹中生成组件
+# Components in feature folders
 ng g c @features/products/product-list
 ng g c @shared/ui/button
 ```
 
-## 开发服务器
+## Development Server
 
 ```bash
-# 启动开发服务器
+# Start dev server
 ng serve
-ng s  # 简写形式
+ng s  # Short form
 
-# 使用选项
+# With options
 ng serve --port 4201
-ng serve --open  # 打开浏览器
-ng serve --host 0.0.0.0  # 暴露到网络
+ng serve --open  # Open browser
+ng serve --host 0.0.0.0  # Expose to network
 
-# 本地生产模式
+# Production mode locally
 ng serve --configuration=production
 
-# 使用 SSL
+# With SSL
 ng serve --ssl --ssl-key ./ssl/key.pem --ssl-cert ./ssl/cert.pem
 ```
 
-## 构建
+## Building
 
-### 开发构建
+### Development Build
 
 ```bash
 ng build
 ```
 
-### 生产构建
+### Production Build
 
 ```bash
 ng build --configuration=production
-ng build -c production  # 简写形式
+ng build -c production  # Short form
 
-# 使用特定选项
+# With specific options
 ng build -c production --source-map=false
 ng build -c production --named-chunks
 ```
 
-### 构建输出
+### Build Output
 
 ```
 dist/my-app/
@@ -164,56 +158,49 @@ dist/my-app/
 │   ├── main-[hash].js
 │   ├── polyfills-[hash].js
 │   └── styles-[hash].css
-└── server/              # 如果启用了 SSR
+└── server/              # If SSR enabled
     └── main.js
 ```
 
-## 测试
+## Testing
 
-### 单元测试
+### Unit Tests
 
 ```bash
-# 运行测试
+# Run tests
 ng test
-ng t  # 简写形式
+ng t  # Short form
 
-# 单次运行（CI）
+# Single run (CI)
 ng test --watch=false --browsers=ChromeHeadless
 
-# 生成覆盖率报告
+# With coverage
 ng test --code-coverage
 
-# 测试特定文件
+# Specific file
 ng test --include=**/user.service.spec.ts
 ```
 
-### E2E 测试
+### E2E Tests
 
 ```bash
-# 运行 e2e（如果已配置）
+# Run e2e (if configured)
 ng e2e
 ```
 
-## 代码检查
+## Linting
 
 ```bash
-# 运行代码检查
+# Run linter
 ng lint
 
-# 自动修复可修复的问题
+# Fix auto-fixable issues
 ng lint --fix
 ```
-</content>
-</write_to_file>
 
-现在追加文件的后半部分：
+## Configuration
 
-<append_to_file>
-<path>angular-tooling-zh.md</path>
-<content>
-## 配置
-
-### angular.json 关键部分
+### angular.json Key Sections
 
 ```json
 {
@@ -256,7 +243,7 @@ ng lint --fix
 }
 ```
 
-### 环境配置
+### Environment Configuration
 
 ```typescript
 // src/environments/environment.ts
@@ -272,7 +259,7 @@ export const environment = {
 };
 ```
 
-在 angular.json 中配置：
+Configure in angular.json:
 
 ```json
 {
@@ -289,65 +276,65 @@ export const environment = {
 }
 ```
 
-## 添加库
+## Adding Libraries
 
-### Angular 库
+### Angular Libraries
 
 ```bash
-# 添加 Angular Material
+# Add Angular Material
 ng add @angular/material
 
-# 添加 Angular PWA
+# Add Angular PWA
 ng add @angular/pwa
 
-# 添加 Angular SSR
+# Add Angular SSR
 ng add @angular/ssr
 
-# 添加 Angular Localize
+# Add Angular Localize
 ng add @angular/localize
 ```
 
-### 第三方库
+### Third-Party Libraries
 
 ```bash
-# 安装和配置
+# Install and configure
 npm install @ngrx/signals
 
-# 某些库有原理图
+# Some libraries have schematics
 ng add @ngrx/store
 ```
 
-## 更新 Angular
+## Update Angular
 
 ```bash
-# 检查更新
+# Check for updates
 ng update
 
-# 更新 Angular 核心和 CLI
+# Update Angular core and CLI
 ng update @angular/core @angular/cli
 
-# 更新所有包
+# Update all packages
 ng update --all
 
-# 强制更新（跳过对等依赖检查）
+# Force update (skip peer dependency checks)
 ng update @angular/core @angular/cli --force
 ```
 
-## 性能分析
+## Performance Analysis
 
 ```bash
-# 构建并生成统计信息
+# Build with stats
 ng build -c production --stats-json
 
-# 分析打包结果（安装 esbuild-visualizer）
+# Analyze bundle (install esbuild-visualizer)
 npx esbuild-visualizer --metadata dist/my-app/browser/stats.json --open
 ```
 
-## 缓存
+## Caching
 
 ```bash
-# 启用持久化构建缓存（v20+ 中的默认设置）
-# 在 angular.json 中配置：
+# Enable persistent build cache (default in v20+)
+# Configured in angular.json:
 {
   "cli": {
     "cache": {
@@ -358,23 +345,8 @@ npx esbuild-visualizer --metadata dist/my-app/browser/stats.json --open
   }
 }
 
-# 清除缓存
+# Clear cache
 rm -rf .angular/cache
 ```
 
-有关高级配置，请参阅 [references/tooling-patterns.md](references/tooling-patterns.md)。
-
----
-
-*本技能来自 AI Agent 技能生态，由 AI论坛运营中心 汉化*
-</content>
-</append_to_file>
-
-翻译完成！文件已创建为 `angular-tooling-zh.md`。
-
-主要翻译要点：
-- frontmatter 的 key 保持英文，value 翻译成中文
-- 保留了所有技术术语的英文（Angular、CLI、API、SSR、PWA 等）
-- 代码块中的注释已翻译，代码保持不变
-- Markdown 格式完全保留
-- 在文件末尾添加了汉化声明
+For advanced configuration, see [references/tooling-patterns.md](references/tooling-patterns.md).

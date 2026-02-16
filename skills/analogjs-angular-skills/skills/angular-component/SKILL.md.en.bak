@@ -1,13 +1,13 @@
 ---
 name: angular-component
-description: 创建遵循 v20+ 最佳实践的现代 Angular 独立组件。用于构建具有基于 signal 的输入/输出、OnPush 变更检测、host 绑定、内容投影和生命周期钩子的 UI 组件。适用于组件创建、将基于类的输入重构为 signals、添加 host 绑定或实现可访问的交互式组件。
+description: Create modern Angular standalone components following v20+ best practices. Use for building UI components with signal-based inputs/outputs, OnPush change detection, host bindings, content projection, and lifecycle hooks. Triggers on component creation, refactoring class-based inputs to signals, adding host bindings, or implementing accessible interactive components.
 ---
 
 # Angular Component
 
-为 Angular v20+ 创建独立组件。组件默认是独立的——不要设置 `standalone: true`。
+Create standalone components for Angular v20+. Components are standalone by default—do NOT set `standalone: true`.
 
-## 组件结构
+## Component Structure
 
 ```typescript
 import { Component, ChangeDetectionStrategy, input, output, computed } from '@angular/core';
@@ -33,20 +33,20 @@ import { Component, ChangeDetectionStrategy, input, output, computed } from '@an
   `,
 })
 export class UserCard {
-  // 必需输入
+  // Required input
   name = input.required<string>();
   
-  // 带默认值的可选输入
+  // Optional input with default
   email = input<string>('');
   showEmail = input(false);
   
-  // 带转换的输入
+  // Input with transform
   isActive = input(false, { transform: booleanAttribute });
   
-  // 从输入计算
+  // Computed from inputs
   avatarUrl = computed(() => `https://api.example.com/avatar/${this.name()}`);
   
-  // 输出
+  // Output
   selected = output<string>();
   
   handleClick() {
@@ -55,70 +55,70 @@ export class UserCard {
 }
 ```
 
-## Signal 输入
+## Signal Inputs
 
 ```typescript
-// 必需 - 必须由父组件提供
+// Required - must be provided by parent
 name = input.required<string>();
 
-// 带默认值的可选输入
+// Optional with default value
 count = input(0);
 
-// 无默认值的可选输入（允许 undefined）
+// Optional without default (undefined allowed)
 label = input<string>();
 
-// 带别名用于模板绑定
+// With alias for template binding
 size = input('medium', { alias: 'buttonSize' });
 
-// 带转换函数
+// With transform function
 disabled = input(false, { transform: booleanAttribute });
 value = input(0, { transform: numberAttribute });
 ```
 
-## Signal 输出
+## Signal Outputs
 
 ```typescript
 import { output, outputFromObservable } from '@angular/core';
 
-// 基本输出
+// Basic output
 clicked = output<void>();
 selected = output<Item>();
 
-// 带别名
+// With alias
 valueChange = output<number>({ alias: 'change' });
 
-// 从 Observable 创建（用于 RxJS 互操作）
+// From Observable (for RxJS interop)
 scroll$ = new Subject<number>();
 scrolled = outputFromObservable(this.scroll$);
 
-// 发出值
+// Emit values
 this.clicked.emit();
 this.selected.emit(item);
 ```
 
-## Host 绑定
+## Host Bindings
 
-在 `@Component` 中使用 `host` 对象——不要使用 `@HostBinding` 或 `@HostListener` 装饰器。
+Use the `host` object in `@Component`—do NOT use `@HostBinding` or `@HostListener` decorators.
 
 ```typescript
 @Component({
   selector: 'app-button',
   host: {
-    // 静态属性
+    // Static attributes
     'role': 'button',
     
-    // 动态 class 绑定
+    // Dynamic class bindings
     '[class.primary]': 'variant() === "primary"',
     '[class.disabled]': 'disabled()',
     
-    // 动态 style 绑定
+    // Dynamic style bindings
     '[style.--btn-color]': 'color()',
     
-    // 属性绑定
+    // Attribute bindings
     '[attr.aria-disabled]': 'disabled()',
     '[attr.tabindex]': 'disabled() ? -1 : 0',
     
-    // 事件监听器
+    // Event listeners
     '(click)': 'onClick($event)',
     '(keydown.enter)': 'onClick($event)',
     '(keydown.space)': 'onClick($event)',
@@ -140,7 +140,7 @@ export class Button {
 }
 ```
 
-## 内容投影
+## Content Projection
 
 ```typescript
 @Component({
@@ -159,44 +159,44 @@ export class Button {
 })
 export class Card {}
 
-// 使用方式：
+// Usage:
 // <app-card>
-//   <h2 card-header>标题</h2>
-//   <p>主要内容</p>
-//   <button card-footer>操作</button>
+//   <h2 card-header>Title</h2>
+//   <p>Main content</p>
+//   <button card-footer>Action</button>
 // </app-card>
 ```
 
-## 生命周期钩子
+## Lifecycle Hooks
 
 ```typescript
 import { OnDestroy, OnInit, afterNextRender, afterRender } from '@angular/core';
 
 export class My implements OnInit, OnDestroy {
   constructor() {
-    // 用于渲染后的 DOM 操作（SSR 安全）
+    // For DOM manipulation after render (SSR-safe)
     afterNextRender(() => {
-      // 首次渲染后运行一次
+      // Runs once after first render
     });
 
     afterRender(() => {
-      // 每次渲染后运行
+      // Runs after every render
     });
   }
 
-  ngOnInit() { /* 组件已初始化 */ }
-  ngOnDestroy() { /* 清理 */ }
+  ngOnInit() { /* Component initialized */ }
+  ngOnDestroy() { /* Cleanup */ }
 }
 ```
 
-## 可访问性要求
+## Accessibility Requirements
 
-组件必须：
-- 通过 AXE 可访问性检查
-- 符合 WCAG AA 标准
-- 为交互元素包含适当的 ARIA 属性
-- 支持键盘导航
-- 保持可见的焦点指示器
+Components MUST:
+- Pass AXE accessibility checks
+- Meet WCAG AA standards
+- Include proper ARIA attributes for interactive elements
+- Support keyboard navigation
+- Maintain visible focus indicators
 
 ```typescript
 @Component({
@@ -223,12 +223,12 @@ export class Toggle {
 }
 ```
 
-## 模板语法
+## Template Syntax
 
-使用原生控制流——不要使用 `*ngIf`、`*ngFor`、`*ngSwitch`。
+Use native control flow—do NOT use `*ngIf`, `*ngFor`, `*ngSwitch`.
 
 ```html
-<!-- 条件语句 -->
+<!-- Conditionals -->
 @if (isLoading()) {
   <app-spinner />
 } @else if (error()) {
@@ -237,38 +237,38 @@ export class Toggle {
   <app-content [data]="data()" />
 }
 
-<!-- 循环 -->
+<!-- Loops -->
 @for (item of items(); track item.id) {
   <app-item [item]="item" />
 } @empty {
-  <p>未找到项目</p>
+  <p>No items found</p>
 }
 
 <!-- Switch -->
 @switch (status()) {
-  @case ('pending') { <span>待处理</span> }
-  @case ('active') { <span>活跃</span> }
-  @default { <span>未知</span> }
+  @case ('pending') { <span>Pending</span> }
+  @case ('active') { <span>Active</span> }
+  @default { <span>Unknown</span> }
 }
 ```
 
-## Class 和 Style 绑定
+## Class and Style Bindings
 
-不要使用 `ngClass` 或 `ngStyle`。使用直接绑定：
+Do NOT use `ngClass` or `ngStyle`. Use direct bindings:
 
 ```html
-<!-- Class 绑定 -->
-<div [class.active]="isActive()">单个 class</div>
-<div [class]="classString()">Class 字符串</div>
+<!-- Class bindings -->
+<div [class.active]="isActive()">Single class</div>
+<div [class]="classString()">Class string</div>
 
-<!-- Style 绑定 -->
-<div [style.color]="textColor()">样式文本</div>
-<div [style.width.px]="width()">带单位</div>
+<!-- Style bindings -->
+<div [style.color]="textColor()">Styled text</div>
+<div [style.width.px]="width()">With unit</div>
 ```
 
-## 图片
+## Images
 
-对静态图片使用 `NgOptimizedImage`：
+Use `NgOptimizedImage` for static images:
 
 ```typescript
 import { NgOptimizedImage } from '@angular/common';
@@ -285,8 +285,4 @@ export class Hero {
 }
 ```
 
-有关详细模式，请参阅 [references/component-patterns.md](references/component-patterns.md)。
-
----
-
-*本技能来自 AI Agent 技能生态，由 AI论坛运营中心 汉化*
+For detailed patterns, see [references/component-patterns.md](references/component-patterns.md).

@@ -1,19 +1,15 @@
-我会将这份 Angular Signal Forms 技能文档翻译成中文。让我开始翻译：
-
-<write_to_file>
-<path>angular-forms-zh.md</path>
-<content>---
+---
 name: angular-forms
-description: 在 Angular v21+ 中使用新的 Signal Forms API 构建基于信号的表单。用于创建具有自动双向绑定、基于模式的验证、字段状态管理和动态表单的表单。在实现表单、添加验证、创建多步骤表单或构建带条件字段的表单时触发。Signal Forms 是实验性的，但推荐用于新的 Angular 项目。
+description: Build signal-based forms in Angular v21+ using the new Signal Forms API. Use for form creation with automatic two-way binding, schema-based validation, field state management, and dynamic forms. Triggers on form implementation, adding validation, creating multi-step forms, or building forms with conditional fields. Signal Forms are experimental but recommended for new Angular projects.
 ---
 
 # Angular Signal Forms
 
-使用 Angular 的 Signal Forms API 构建类型安全的响应式表单。Signal Forms 提供自动双向绑定、基于模式的验证和响应式字段状态。
+Build type-safe, reactive forms using Angular's Signal Forms API. Signal Forms provide automatic two-way binding, schema-based validation, and reactive field state.
 
-**注意：** Signal Forms 在 Angular v21 中是实验性的。对于需要稳定性的生产应用，请参阅 [references/form-patterns.md](references/form-patterns.md) 了解 Reactive Forms 模式。
+**Note:** Signal Forms are experimental in Angular v21. For production apps requiring stability, see [references/form-patterns.md](references/form-patterns.md) for Reactive Forms patterns.
 
-## 基础设置
+## Basic Setup
 
 ```typescript
 import { Component, signal } from '@angular/core';
@@ -30,7 +26,7 @@ interface LoginData {
   template: `
     <form (submit)="onSubmit($event)">
       <label>
-        邮箱
+        Email
         <input type="email" [formField]="loginForm.email" />
       </label>
       @if (loginForm.email().touched() && loginForm.email().invalid()) {
@@ -38,47 +34,47 @@ interface LoginData {
       }
       
       <label>
-        密码
+        Password
         <input type="password" [formField]="loginForm.password" />
       </label>
       @if (loginForm.password().touched() && loginForm.password().invalid()) {
         <p class="error">{{ loginForm.password().errors()[0].message }}</p>
       }
       
-      <button type="submit" [disabled]="loginForm().invalid()">登录</button>
+      <button type="submit" [disabled]="loginForm().invalid()">Login</button>
     </form>
   `,
 })
 export class Login {
-  // 表单模型 - 一个可写信号
+  // Form model - a writable signal
   loginModel = signal<LoginData>({
     email: '',
     password: '',
   });
   
-  // 使用验证模式创建表单
+  // Create form with validation schema
   loginForm = form(this.loginModel, (schemaPath) => {
-    required(schemaPath.email, { message: '邮箱是必填项' });
-    email(schemaPath.email, { message: '请输入有效的邮箱地址' });
-    required(schemaPath.password, { message: '密码是必填项' });
+    required(schemaPath.email, { message: 'Email is required' });
+    email(schemaPath.email, { message: 'Enter a valid email address' });
+    required(schemaPath.password, { message: 'Password is required' });
   });
   
   onSubmit(event: Event) {
     event.preventDefault();
     if (this.loginForm().valid()) {
       const credentials = this.loginModel();
-      console.log('提交中:', credentials);
+      console.log('Submitting:', credentials);
     }
   }
 }
 ```
 
-## 表单模型
+## Form Models
 
-表单模型是可写信号，作为单一数据源：
+Form models are writable signals that serve as the single source of truth:
 
 ```typescript
-// 定义接口以确保类型安全
+// Define interface for type safety
 interface UserProfile {
   name: string;
   email: string;
@@ -89,7 +85,7 @@ interface UserProfile {
   };
 }
 
-// 使用初始值创建模型信号
+// Create model signal with initial values
 const userModel = signal<UserProfile>({
   name: '',
   email: '',
@@ -100,29 +96,29 @@ const userModel = signal<UserProfile>({
   },
 });
 
-// 从模型创建表单
+// Create form from model
 const userForm = form(userModel);
 
-// 通过点符号访问嵌套字段
+// Access nested fields via dot notation
 userForm.name                    // FieldTree<string>
 userForm.preferences.theme       // FieldTree<'light' | 'dark'>
 ```
 
-### 读取值
+### Reading Values
 
 ```typescript
-// 读取整个模型
+// Read entire model
 const data = this.userModel();
 
-// 通过字段状态读取字段值
+// Read field value via field state
 const name = this.userForm.name().value();
 const theme = this.userForm.preferences.theme().value();
 ```
 
-### 更新值
+### Updating Values
 
 ```typescript
-// 替换整个模型
+// Replace entire model
 this.userModel.set({
   name: 'Alice',
   email: 'alice@example.com',
@@ -130,55 +126,55 @@ this.userModel.set({
   preferences: { newsletter: true, theme: 'dark' },
 });
 
-// 更新单个字段
+// Update single field
 this.userForm.name().value.set('Bob');
 this.userForm.age().value.update(age => (age ?? 0) + 1);
 ```
 
-## 字段状态
+## Field State
 
-每个字段提供用于验证、交互和可用性的响应式信号：
+Each field provides reactive signals for validation, interaction, and availability:
 
 ```typescript
 const emailField = this.form.email();
 
-// 验证状态
-emailField.valid()      // 如果通过所有验证则为 true
-emailField.invalid()    // 如果有验证错误则为 true
-emailField.errors()     // 错误对象数组
-emailField.pending()    // 如果异步验证正在进行则为 true
+// Validation state
+emailField.valid()      // true if passes all validation
+emailField.invalid()    // true if has validation errors
+emailField.errors()     // array of error objects
+emailField.pending()    // true if async validation in progress
 
-// 交互状态
-emailField.touched()    // 在聚焦 + 失焦后为 true
-emailField.dirty()      // 在用户修改后为 true
+// Interaction state
+emailField.touched()    // true after focus + blur
+emailField.dirty()      // true after user modification
 
-// 可用性状态
-emailField.disabled()   // 如果字段被禁用则为 true
-emailField.hidden()     // 如果字段应该隐藏则为 true
-emailField.readonly()   // 如果字段是只读则为 true
+// Availability state
+emailField.disabled()   // true if field is disabled
+emailField.hidden()     // true if field should be hidden
+emailField.readonly()   // true if field is readonly
 
-// 值
-emailField.value()      // 当前字段值（信号）
+// Value
+emailField.value()      // current field value (signal)
 ```
 
-### 表单级状态
+### Form-Level State
 
-表单本身也是一个具有聚合状态的字段：
+The form itself is also a field with aggregated state:
 
 ```typescript
-// 当所有交互字段都有效时，表单有效
+// Form is valid when all interactive fields are valid
 this.form().valid()
 
-// 当任何字段被触摸时，表单被触摸
+// Form is touched when any field is touched
 this.form().touched()
 
-// 当任何字段被修改时，表单变脏
+// Form is dirty when any field is modified
 this.form().dirty()
 ```
 
-## 验证
+## Validation
 
-### 内置验证器
+### Built-in Validators
 
 ```typescript
 import { 
@@ -187,72 +183,72 @@ import {
 } from '@angular/forms/signals';
 
 const userForm = form(this.userModel, (schemaPath) => {
-  // 必填字段
-  required(schemaPath.name, { message: '姓名是必填项' });
+  // Required field
+  required(schemaPath.name, { message: 'Name is required' });
   
-  // 邮箱格式
-  email(schemaPath.email, { message: '无效的邮箱' });
+  // Email format
+  email(schemaPath.email, { message: 'Invalid email' });
   
-  // 数值范围
-  min(schemaPath.age, 18, { message: '必须年满 18 岁' });
-  max(schemaPath.age, 120, { message: '无效的年龄' });
+  // Numeric range
+  min(schemaPath.age, 18, { message: 'Must be 18+' });
+  max(schemaPath.age, 120, { message: 'Invalid age' });
   
-  // 字符串/数组长度
-  minLength(schemaPath.password, 8, { message: '最少 8 个字符' });
-  maxLength(schemaPath.bio, 500, { message: '最多 500 个字符' });
+  // String/array length
+  minLength(schemaPath.password, 8, { message: 'Min 8 characters' });
+  maxLength(schemaPath.bio, 500, { message: 'Max 500 characters' });
   
-  // 正则表达式模式
+  // Regex pattern
   pattern(schemaPath.phone, /^\d{3}-\d{3}-\d{4}$/, {
-    message: '格式：555-123-4567',
+    message: 'Format: 555-123-4567',
   });
 });
 ```
 
-### 条件验证
+### Conditional Validation
 
 ```typescript
 const orderForm = form(this.orderModel, (schemaPath) => {
   required(schemaPath.promoCode, {
-    message: '折扣需要促销代码',
+    message: 'Promo code required for discounts',
     when: ({ valueOf }) => valueOf(schemaPath.applyDiscount),
   });
 });
 ```
 
-### 自定义验证器
+### Custom Validators
 
 ```typescript
 import { validate } from '@angular/forms/signals';
 
 const signupForm = form(this.signupModel, (schemaPath) => {
-  // 自定义验证逻辑
+  // Custom validation logic
   validate(schemaPath.username, ({ value }) => {
     if (value().includes(' ')) {
-      return { kind: 'noSpaces', message: '用户名不能包含空格' };
+      return { kind: 'noSpaces', message: 'Username cannot contain spaces' };
     }
     return null;
   });
 });
 ```
 
-### 跨字段验证
+### Cross-Field Validation
 
 ```typescript
 const passwordForm = form(this.passwordModel, (schemaPath) => {
   required(schemaPath.password);
   required(schemaPath.confirmPassword);
   
-  // 比较字段
+  // Compare fields
   validate(schemaPath.confirmPassword, ({ value, valueOf }) => {
     if (value() !== valueOf(schemaPath.password)) {
-      return { kind: 'mismatch', message: '密码不匹配' };
+      return { kind: 'mismatch', message: 'Passwords do not match' };
     }
     return null;
   });
 });
 ```
 
-### 异步验证
+### Async Validation
 
 ```typescript
 import { validateHttp } from '@angular/forms/signals';
@@ -262,21 +258,21 @@ const signupForm = form(this.signupModel, (schemaPath) => {
     request: ({ value }) => `/api/check-username?u=${value()}`,
     onSuccess: (response: { taken: boolean }) => {
       if (response.taken) {
-        return { kind: 'taken', message: '用户名已被占用' };
+        return { kind: 'taken', message: 'Username already taken' };
       }
       return null;
     },
     onError: () => ({
       kind: 'networkError',
-      message: '无法验证用户名',
+      message: 'Could not verify username',
     }),
   });
 });
 ```
 
-## 条件字段
+## Conditional Fields
 
-### 隐藏字段
+### Hidden Fields
 
 ```typescript
 import { hidden } from '@angular/forms/signals';
@@ -292,7 +288,7 @@ const profileForm = form(this.profileModel, (schemaPath) => {
 }
 ```
 
-### 禁用字段
+### Disabled Fields
 
 ```typescript
 import { disabled } from '@angular/forms/signals';
@@ -302,17 +298,17 @@ const orderForm = form(this.orderModel, (schemaPath) => {
 });
 ```
 
-### 只读字段
+### Readonly Fields
 
 ```typescript
 import { readonly } from '@angular/forms/signals';
 
 const accountForm = form(this.accountModel, (schemaPath) => {
-  readonly(schemaPath.username); // 始终只读
+  readonly(schemaPath.username); // Always readonly
 });
 ```
 
-## 表单提交
+## Form Submission
 
 ```typescript
 import { submit } from '@angular/forms/signals';
@@ -322,7 +318,7 @@ import { submit } from '@angular/forms/signals';
     <form (submit)="onSubmit($event)">
       <input [formField]="form.email" />
       <input [formField]="form.password" />
-      <button type="submit" [disabled]="form().invalid()">提交</button>
+      <button type="submit" [disabled]="form().invalid()">Submit</button>
     </form>
   `,
 })
@@ -336,7 +332,7 @@ export class Login {
   onSubmit(event: Event) {
     event.preventDefault();
     
-    // submit() 标记所有字段为已触摸，如果有效则运行回调
+    // submit() marks all fields touched and runs callback if valid
     submit(this.form, async () => {
       await this.authService.login(this.model());
     });
@@ -344,7 +340,7 @@ export class Login {
 }
 ```
 
-## 数组和动态字段
+## Arrays and Dynamic Fields
 
 ```typescript
 interface Order {
@@ -355,12 +351,12 @@ interface Order {
   template: `
     @for (item of orderForm.items; track $index; let i = $index) {
       <div>
-        <input [formField]="item.product" placeholder="产品" />
+        <input [formField]="item.product" placeholder="Product" />
         <input [formField]="item.quantity" type="number" />
-        <button type="button" (click)="removeItem(i)">移除</button>
+        <button type="button" (click)="removeItem(i)">Remove</button>
       </div>
     }
-    <button type="button" (click)="addItem()">添加项目</button>
+    <button type="button" (click)="addItem()">Add Item</button>
   `,
 })
 export class Order {
@@ -370,8 +366,8 @@ export class Order {
   
   orderForm = form(this.orderModel, (schemaPath) => {
     applyEach(schemaPath.items, (item) => {
-      required(item.product, { message: '产品是必填项' });
-      min(item.quantity, 1, { message: '最小数量为 1' });
+      required(item.product, { message: 'Product required' });
+      min(item.quantity, 1, { message: 'Min quantity is 1' });
     });
   });
   
@@ -391,7 +387,7 @@ export class Order {
 }
 ```
 
-## 显示错误
+## Displaying Errors
 
 ```html
 <input [formField]="form.email" />
@@ -405,11 +401,11 @@ export class Order {
 }
 
 @if (form.email().pending()) {
-  <span>验证中...</span>
+  <span>Validating...</span>
 }
 ```
 
-## 基于状态的样式
+## Styling Based on State
 
 ```html
 <input
@@ -419,7 +415,7 @@ export class Order {
 />
 ```
 
-## 重置表单
+## Reset Form
 
 ```typescript
 async onSubmit() {
@@ -427,28 +423,12 @@ async onSubmit() {
   
   await this.api.submit(this.model());
   
-  // 清除交互状态
+  // Clear interaction state
   this.form().reset();
   
-  // 清除值
+  // Clear values
   this.model.set({ email: '', password: '' });
 }
 ```
 
-对于 Reactive Forms 模式（生产稳定版），请参阅 [references/form-patterns.md](references/form-patterns.md)。
-
----
-
-*本技能来自 AI Agent 技能生态，由 AI论坛运营中心 汉化*
-</content>
-</write_to_file>
-
-翻译完成！我已经将 Angular Signal Forms 技能文档翻译成中文，并保持了以下要求：
-
-1. ✅ 保持了 Markdown 格式不变
-2. ✅ frontmatter 的 key 保持英文，value 翻译成中文
-3. ✅ 代码块内的注释已翻译，代码保持不变
-4. ✅ 专业术语保留英文（如 Signal Forms、API、Angular、Reactive Forms 等）
-5. ✅ 在文件末尾添加了汉化声明
-
-文档已保存为 `angular-forms-zh.md`，可以直接使用。
+For Reactive Forms patterns (production-stable), see [references/form-patterns.md](references/form-patterns.md).

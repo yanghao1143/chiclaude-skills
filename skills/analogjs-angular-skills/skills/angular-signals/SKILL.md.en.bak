@@ -1,37 +1,37 @@
 ---
 name: angular-signals
-description: 在 Angular v20+ 中实现基于 signal 的响应式状态管理。用于通过 signal() 创建响应式状态、通过 computed() 创建派生状态、通过 linkedSignal() 创建依赖状态，以及通过 effect() 处理副作用。适用于状态管理问题、从 BehaviorSubject/Observable 模式转换到 signals，或实现响应式数据流。
+description: Implement signal-based reactive state management in Angular v20+. Use for creating reactive state with signal(), derived state with computed(), dependent state with linkedSignal(), and side effects with effect(). Triggers on state management questions, converting from BehaviorSubject/Observable patterns to signals, or implementing reactive data flows.
 ---
 
 # Angular Signals
 
-Signals 是 Angular 的响应式状态管理原语，提供同步、细粒度的响应式能力。
+Signals are Angular's reactive primitive for state management. They provide synchronous, fine-grained reactivity.
 
-## 核心 Signal APIs
+## Core Signal APIs
 
-### signal() - 可写状态
+### signal() - Writable State
 
 ```typescript
 import { signal } from '@angular/core';
 
-// 创建可写 signal
+// Create writable signal
 const count = signal(0);
 
-// 读取值
+// Read value
 console.log(count()); // 0
 
-// 设置新值
+// Set new value
 count.set(5);
 
-// 基于当前值更新
+// Update based on current value
 count.update(c => c + 1);
 
-// 显式类型声明
+// With explicit type
 const user = signal<User | null>(null);
 user.set({ id: 1, name: 'Alice' });
 ```
 
-### computed() - 派生状态
+### computed() - Derived State
 
 ```typescript
 import { signal, computed } from '@angular/core';
@@ -39,14 +39,14 @@ import { signal, computed } from '@angular/core';
 const firstName = signal('John');
 const lastName = signal('Doe');
 
-// 派生 signal - 依赖变化时自动更新
+// Derived signal - automatically updates when dependencies change
 const fullName = computed(() => `${firstName()} ${lastName()}`);
 
 console.log(fullName()); // "John Doe"
 firstName.set('Jane');
 console.log(fullName()); // "Jane Doe"
 
-// 复杂逻辑的 computed
+// Computed with complex logic
 const items = signal<Item[]>([]);
 const filter = signal('');
 
@@ -62,29 +62,29 @@ const totalPrice = computed(() =>
 );
 ```
 
-### linkedSignal() - 带重置的依赖状态
+### linkedSignal() - Dependent State with Reset
 
 ```typescript
 import { signal, linkedSignal } from '@angular/core';
 
 const options = signal(['A', 'B', 'C']);
 
-// 当 options 变化时重置为第一个选项
+// Resets to first option when options change
 const selected = linkedSignal(() => options()[0]);
 
 console.log(selected()); // "A"
-selected.set('B');       // 用户选择 B
+selected.set('B');       // User selects B
 console.log(selected()); // "B"
-options.set(['X', 'Y']); // options 变化
-console.log(selected()); // "X" - 自动重置为第一个
+options.set(['X', 'Y']); // Options change
+console.log(selected()); // "X" - auto-reset to first
 
-// 访问前一个值
+// With previous value access
 const items = signal<Item[]>([]);
 
 const selectedItem = linkedSignal<Item[], Item | null>({
   source: () => items(),
   computation: (newItems, previous) => {
-    // 如果项目仍存在，尝试保留选择
+    // Try to preserve selection if item still exists
     const prevItem = previous?.value;
     if (prevItem && newItems.some(i => i.id === prevItem.id)) {
       return prevItem;
@@ -94,7 +94,7 @@ const selectedItem = linkedSignal<Item[], Item | null>({
 });
 ```
 
-### effect() - 副作用
+### effect() - Side Effects
 
 ```typescript
 import { signal, effect, inject, DestroyRef } from '@angular/core';
@@ -104,12 +104,12 @@ export class Search {
   query = signal('');
   
   constructor() {
-    // query 变化时运行 effect
+    // Effect runs when query changes
     effect(() => {
       console.log('Search query:', this.query());
     });
     
-    // 带清理的 effect
+    // Effect with cleanup
     effect((onCleanup) => {
       const timer = setInterval(() => {
         console.log('Current query:', this.query());
@@ -121,11 +121,11 @@ export class Search {
 }
 ```
 
-**Effect 规则：**
-- 在注入上下文中运行（构造函数或使用 `runInInjectionContext`）
-- 组件销毁时自动清理
+**Effect rules:**
+- Run in injection context (constructor or with `runInInjectionContext`)
+- Automatically cleaned up when component destroys
 
-## 组件状态模式
+## Component State Pattern
 
 ```typescript
 @Component({
@@ -147,12 +147,12 @@ export class Search {
   `,
 })
 export class TodoList {
-  // 状态
+  // State
   todos = signal<Todo[]>([]);
   newTodo = signal('');
   filter = signal<'all' | 'active' | 'done'>('all');
   
-  // 派生状态
+  // Derived state
   canAdd = computed(() => this.newTodo().trim().length > 0);
   
   filteredTodos = computed(() => {
@@ -168,7 +168,7 @@ export class TodoList {
     this.todos().filter(t => !t.done).length
   );
   
-  // 操作
+  // Actions
   addTodo() {
     const text = this.newTodo().trim();
     if (text) {
@@ -188,9 +188,9 @@ export class TodoList {
 }
 ```
 
-## RxJS 互操作
+## RxJS Interop
 
-### toSignal() - Observable 转 Signal
+### toSignal() - Observable to Signal
 
 ```typescript
 import { toSignal } from '@angular/core/rxjs-interop';
@@ -200,19 +200,19 @@ import { interval } from 'rxjs';
 export class Timer {
   private http = inject(HttpClient);
   
-  // 从 observable 转换 - 需要初始值或 allowUndefined
+  // From observable - requires initial value or allowUndefined
   counter = toSignal(interval(1000), { initialValue: 0 });
   
-  // 从 HTTP - 加载前为 undefined
+  // From HTTP - undefined until loaded
   users = toSignal(this.http.get<User[]>('/api/users'));
   
-  // 对同步 observables (BehaviorSubject) 使用 requireSync
+  // With requireSync for synchronous observables (BehaviorSubject)
   private user$ = new BehaviorSubject<User | null>(null);
   currentUser = toSignal(this.user$, { requireSync: true });
 }
 ```
 
-### toObservable() - Signal 转 Observable
+### toObservable() - Signal to Observable
 
 ```typescript
 import { toObservable } from '@angular/core/rxjs-interop';
@@ -224,7 +224,7 @@ export class Search {
   
   private http = inject(HttpClient);
   
-  // 将 signal 转换为 observable 以使用 RxJS 操作符
+  // Convert signal to observable for RxJS operators
   results = toSignal(
     toObservable(this.query).pipe(
       debounceTime(300),
@@ -235,21 +235,21 @@ export class Search {
 }
 ```
 
-## Signal 相等性
+## Signal Equality
 
 ```typescript
-// 自定义相等函数
+// Custom equality function
 const user = signal<User>(
   { id: 1, name: 'Alice' },
   { equal: (a, b) => a.id === b.id }
 );
 
-// 仅当 ID 变化时触发更新
-user.set({ id: 1, name: 'Alice Updated' }); // 不更新
-user.set({ id: 2, name: 'Bob' }); // 触发更新
+// Only triggers updates when ID changes
+user.set({ id: 1, name: 'Alice Updated' }); // No update
+user.set({ id: 2, name: 'Bob' }); // Triggers update
 ```
 
-## 非追踪读取
+## Untracked Reads
 
 ```typescript
 import { untracked } from '@angular/core';
@@ -257,7 +257,7 @@ import { untracked } from '@angular/core';
 const a = signal(1);
 const b = signal(2);
 
-// 仅依赖 'a'，不依赖 'b'
+// Only depends on 'a', not 'b'
 const result = computed(() => {
   const aVal = a();
   const bVal = untracked(() => b());
@@ -265,16 +265,16 @@ const result = computed(() => {
 });
 ```
 
-## Service 状态模式
+## Service State Pattern
 
 ```typescript
 @Injectable({ providedIn: 'root' })
 export class Auth {
-  // 私有可写状态
+  // Private writable state
   private _user = signal<User | null>(null);
   private _loading = signal(false);
   
-  // 公共只读 signals
+  // Public read-only signals
   readonly user = this._user.asReadonly();
   readonly loading = this._loading.asReadonly();
   readonly isAuthenticated = computed(() => this._user() !== null);
@@ -299,8 +299,4 @@ export class Auth {
 }
 ```
 
-关于包括 resource() 在内的高级模式，请参阅 [references/signal-patterns.md](references/signal-patterns.md)。
-
----
-
-*本技能来自 AI Agent 技能生态，由 AI论坛运营中心 汉化*
+For advanced patterns including resource(), see [references/signal-patterns.md](references/signal-patterns.md).

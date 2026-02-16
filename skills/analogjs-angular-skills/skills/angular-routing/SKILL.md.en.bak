@@ -1,15 +1,13 @@
-我会将这份 Angular Routing 技能文档翻译成中文，保持格式和专业术语。
-
 ---
 name: angular-routing
-description: 在 Angular v20+ 应用中实现路由，包括懒加载、函数式守卫、解析器和路由参数。用于导航设置、受保护路由、基于路由的数据加载和嵌套路由。适用于路由配置、添加身份验证守卫、实现懒加载或使用 signal 读取路由参数等场景。
+description: Implement routing in Angular v20+ applications with lazy loading, functional guards, resolvers, and route parameters. Use for navigation setup, protected routes, route-based data loading, and nested routing. Triggers on route configuration, adding authentication guards, implementing lazy loading, or reading route parameters with signals.
 ---
 
 # Angular Routing
 
-在 Angular v20+ 中配置路由，支持懒加载、函数式守卫和基于 signal 的路由参数。
+Configure routing in Angular v20+ with lazy loading, functional guards, and signal-based route parameters.
 
-## 基础设置
+## Basic Setup
 
 ```typescript
 // app.routes.ts
@@ -42,8 +40,8 @@ import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
   imports: [RouterOutlet, RouterLink, RouterLinkActive],
   template: `
     <nav>
-      <a routerLink="/home" routerLinkActive="active">首页</a>
-      <a routerLink="/about" routerLinkActive="active">关于</a>
+      <a routerLink="/home" routerLinkActive="active">Home</a>
+      <a routerLink="/about" routerLinkActive="active">About</a>
     </nav>
     <router-outlet />
   `,
@@ -51,9 +49,9 @@ import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
 export class App {}
 ```
 
-## 懒加载
+## Lazy Loading
 
-按需加载功能模块：
+Load feature modules on demand:
 
 ```typescript
 // app.routes.ts
@@ -61,13 +59,13 @@ export const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: Home },
   
-  // 懒加载整个功能模块
+  // Lazy load entire feature
   {
     path: 'admin',
     loadChildren: () => import('./admin/admin.routes').then(m => m.adminRoutes),
   },
   
-  // 懒加载单个组件
+  // Lazy load single component
   {
     path: 'settings',
     loadComponent: () => import('./settings/settings.component').then(m => m.Settings),
@@ -82,33 +80,33 @@ export const adminRoutes: Routes = [
 ];
 ```
 
-## 路由参数
+## Route Parameters
 
-### 使用 Signal Inputs（推荐）
+### With Signal Inputs (Recommended)
 
 ```typescript
-// 路由配置
+// Route config
 { path: 'users/:id', component: UserDetail }
 
-// 组件 - 使用 input() 获取路由参数
+// Component - use input() for route params
 import { Component, input, computed } from '@angular/core';
 
 @Component({
   selector: 'app-user-detail',
   template: `
-    <h1>用户 {{ id() }}</h1>
+    <h1>User {{ id() }}</h1>
   `,
 })
 export class UserDetail {
-  // 路由参数作为 signal input
+  // Route param as signal input
   id = input.required<string>();
   
-  // 基于路由参数的计算属性
+  // Computed based on route param
   userId = computed(() => parseInt(this.id(), 10));
 }
 ```
 
-通过 `withComponentInputBinding()` 启用：
+Enable with `withComponentInputBinding()`:
 
 ```typescript
 // app.config.ts
@@ -121,14 +119,14 @@ export const appConfig: ApplicationConfig = {
 };
 ```
 
-### 查询参数
+### Query Parameters
 
 ```typescript
-// 路由: /search?q=angular&page=1
+// Route: /search?q=angular&page=1
 
 @Component({...})
 export class Search {
-  // 查询参数作为 inputs
+  // Query params as inputs
   q = input<string>('');
   page = input<string>('1');
   
@@ -136,7 +134,7 @@ export class Search {
 }
 ```
 
-### 使用 ActivatedRoute（替代方案）
+### With ActivatedRoute (Alternative)
 
 ```typescript
 import { Component, inject } from '@angular/core';
@@ -148,13 +146,13 @@ import { map } from 'rxjs';
 export class UserDetail {
   private route = inject(ActivatedRoute);
   
-  // 将路由参数转换为 signal
+  // Convert route params to signal
   id = toSignal(
     this.route.paramMap.pipe(map(params => params.get('id'))),
     { initialValue: null }
   );
   
-  // 查询参数
+  // Query params
   query = toSignal(
     this.route.queryParamMap.pipe(map(params => params.get('q'))),
     { initialValue: '' }
@@ -162,9 +160,9 @@ export class UserDetail {
 }
 ```
 
-## 函数式守卫
+## Functional Guards
 
-### 认证守卫
+### Auth Guard
 
 ```typescript
 // guards/auth.guard.ts
@@ -179,13 +177,13 @@ export const authGuard: CanActivateFn = (route, state) => {
     return true;
   }
   
-  // 重定向到登录页并携带返回 URL
+  // Redirect to login with return URL
   return router.createUrlTree(['/login'], {
     queryParams: { returnUrl: state.url },
   });
 };
 
-// 在路由中使用
+// Usage in routes
 {
   path: 'dashboard',
   component: Dashboard,
@@ -193,7 +191,7 @@ export const authGuard: CanActivateFn = (route, state) => {
 }
 ```
 
-### 角色守卫
+### Role Guard
 
 ```typescript
 export const roleGuard = (allowedRoles: string[]): CanActivateFn => {
@@ -211,7 +209,7 @@ export const roleGuard = (allowedRoles: string[]): CanActivateFn => {
   };
 };
 
-// 使用
+// Usage
 {
   path: 'admin',
   component: Admin,
@@ -219,7 +217,7 @@ export const roleGuard = (allowedRoles: string[]): CanActivateFn => {
 }
 ```
 
-### 离开守卫
+### Can Deactivate Guard
 
 ```typescript
 export interface CanDeactivate {
@@ -231,10 +229,10 @@ export const unsavedChangesGuard: CanDeactivateFn<CanDeactivate> = (component) =
     return true;
   }
   
-  return confirm('您有未保存的更改。确定要离开吗？');
+  return confirm('You have unsaved changes. Leave anyway?');
 };
 
-// 组件实现
+// Component implementation
 @Component({...})
 export class Edit implements CanDeactivate {
   form = inject(FormBuilder).group({...});
@@ -244,7 +242,7 @@ export class Edit implements CanDeactivate {
   }
 }
 
-// 路由
+// Route
 {
   path: 'edit/:id',
   component: Edit,
@@ -252,9 +250,9 @@ export class Edit implements CanDeactivate {
 }
 ```
 
-## 解析器
+## Resolvers
 
-在路由激活前预加载数据：
+Pre-fetch data before route activation:
 
 ```typescript
 // resolvers/user.resolver.ts
@@ -267,24 +265,24 @@ export const userResolver: ResolveFn<User> = (route) => {
   return userService.getById(id);
 };
 
-// 路由配置
+// Route config
 {
   path: 'users/:id',
   component: UserDetail,
   resolve: { user: userResolver },
 }
 
-// 组件 - 通过 input 访问解析的数据
+// Component - access resolved data via input
 @Component({...})
 export class UserDetail {
   user = input.required<User>();
 }
 ```
 
-## 嵌套路由
+## Nested Routes
 
 ```typescript
-// 带子路由的父路由
+// Parent route with children
 export const routes: Routes = [
   {
     path: 'products',
@@ -301,14 +299,14 @@ export const routes: Routes = [
 @Component({
   imports: [RouterOutlet],
   template: `
-    <h1>产品</h1>
-    <router-outlet /> <!-- 子路由在此渲染 -->
+    <h1>Products</h1>
+    <router-outlet /> <!-- Child routes render here -->
   `,
 })
 export class ProductsLayout {}
 ```
 
-## 编程式导航
+## Programmatic Navigation
 
 ```typescript
 import { Component, inject } from '@angular/core';
@@ -318,61 +316,61 @@ import { Router } from '@angular/router';
 export class Product {
   private router = inject(Router);
   
-  // 导航到路由
+  // Navigate to route
   goToProducts() {
     this.router.navigate(['/products']);
   }
   
-  // 带参数导航
+  // Navigate with params
   goToProduct(id: string) {
     this.router.navigate(['/products', id]);
   }
   
-  // 带查询参数导航
+  // Navigate with query params
   search(query: string) {
     this.router.navigate(['/search'], {
       queryParams: { q: query, page: 1 },
     });
   }
   
-  // 相对于当前路由导航
+  // Navigate relative to current route
   goToEdit() {
     this.router.navigate(['edit'], { relativeTo: this.route });
   }
   
-  // 替换当前历史记录
+  // Replace current history entry
   replaceUrl() {
     this.router.navigate(['/new-page'], { replaceUrl: true });
   }
 }
 ```
 
-## 路由数据
+## Route Data
 
 ```typescript
-// 静态路由数据
+// Static route data
 {
   path: 'admin',
   component: Admin,
   data: {
-    title: '管理员仪表板',
+    title: 'Admin Dashboard',
     roles: ['admin'],
   },
 }
 
-// 在组件中访问
+// Access in component
 @Component({...})
 export class AdminCmpt {
-  title = input<string>(); // 来自路由数据
-  roles = input<string[]>(); // 来自路由数据
+  title = input<string>(); // From route data
+  roles = input<string[]>(); // From route data
 }
 
-// 或通过 ActivatedRoute
+// Or via ActivatedRoute
 private route = inject(ActivatedRoute);
 data = toSignal(this.route.data);
 ```
 
-## Router 事件
+## Router Events
 
 ```typescript
 import { Router, NavigationStart, NavigationEnd } from '@angular/router';
@@ -394,8 +392,4 @@ export class AppMain {
 }
 ```
 
-更多高级模式，请参阅 [references/routing-patterns.md](references/routing-patterns.md)。
-
----
-
-*本技能来自 AI Agent 技能生态，由 AI论坛运营中心 汉化*
+For advanced patterns, see [references/routing-patterns.md](references/routing-patterns.md).

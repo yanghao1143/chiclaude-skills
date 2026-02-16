@@ -1,12 +1,17 @@
+---
+name: angular-di
+description: Implement dependency injection in Angular v20+ using inject(), injection tokens, and provider configuration. Use for service architecture, providing dependencies at different levels, creating injectable tokens, and managing singleton vs scoped services. Triggers on service creation, configuring providers, using injection tokens, or understanding DI hierarchy.
+---
+
 # Angular Dependency Injection
 
-在 Angular v20+ 中使用 `inject()` 和 providers 配置和使用依赖注入。
+Configure and use dependency injection in Angular v20+ with `inject()` and providers.
 
-## 基础注入
+## Basic Injection
 
-### 使用 inject()
+### Using inject()
 
-优先使用 `inject()` 而不是构造函数注入：
+Prefer `inject()` over constructor injection:
 
 ```typescript
 import { Component, inject } from '@angular/core';
@@ -18,23 +23,23 @@ import { User } from './user.service';
   template: `...`,
 })
 export class UserList {
-  // 注入依赖
+  // Inject dependencies
   private http = inject(HttpClient);
   private userService = inject(User);
   
-  // 可以立即使用
+  // Can use immediately
   users = this.userService.getUsers();
 }
 ```
 
-### 可注入服务
+### Injectable Services
 
 ```typescript
 import { Injectable, inject, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({
-  providedIn: 'root', // 根级别单例
+  providedIn: 'root', // Singleton at root level
 })
 export class User {
   private http = inject(HttpClient);
@@ -51,18 +56,18 @@ export class User {
 }
 ```
 
-## Provider 作用域
+## Provider Scopes
 
-### 根级别（单例）
+### Root Level (Singleton)
 
 ```typescript
-// 推荐：providedIn
+// Recommended: providedIn
 @Injectable({
   providedIn: 'root',
 })
 export class Auth {}
 
-// 替代方案：在 app.config.ts 中
+// Alternative: in app.config.ts
 export const appConfig: ApplicationConfig = {
   providers: [
     Auth,
@@ -70,12 +75,12 @@ export const appConfig: ApplicationConfig = {
 };
 ```
 
-### 组件级别（每个组件一个实例）
+### Component Level (Instance per Component)
 
 ```typescript
 @Component({
   selector: 'app-editor',
-  providers: [EditorState], // 每个组件创建新实例
+  providers: [EditorState], // New instance for each component
   template: `...`,
 })
 export class Editor {
@@ -83,13 +88,13 @@ export class Editor {
 }
 ```
 
-### 路由级别
+### Route Level
 
 ```typescript
 export const routes: Routes = [
   {
     path: 'admin',
-    providers: [Admin], // 在此路由树内共享
+    providers: [Admin], // Shared within this route tree
     children: [
       { path: '', component: AdminDashboard },
       { path: 'users', component: AdminUsers },
@@ -100,15 +105,15 @@ export const routes: Routes = [
 
 ## Injection Tokens
 
-### 创建 Tokens
+### Creating Tokens
 
 ```typescript
 import { InjectionToken } from '@angular/core';
 
-// 简单值 token
+// Simple value token
 export const API_URL = new InjectionToken<string>('API_URL');
 
-// 对象 token
+// Object token
 export interface AppConfig {
   apiUrl: string;
   features: {
@@ -119,7 +124,7 @@ export interface AppConfig {
 
 export const APP_CONFIG = new InjectionToken<AppConfig>('APP_CONFIG');
 
-// 带工厂的 token（自提供）
+// Token with factory (self-providing)
 export const WINDOW = new InjectionToken<Window>('Window', {
   providedIn: 'root',
   factory: () => window,
@@ -131,7 +136,7 @@ export const LOCAL_STORAGE = new InjectionToken<Storage>('LocalStorage', {
 });
 ```
 
-### 提供 Token 值
+### Providing Token Values
 
 ```typescript
 // app.config.ts
@@ -149,7 +154,7 @@ export const appConfig: ApplicationConfig = {
 };
 ```
 
-### 注入 Tokens
+### Injecting Tokens
 
 ```typescript
 @Injectable({ providedIn: 'root' })
@@ -164,15 +169,15 @@ export class Api {
 }
 ```
 
-## Provider 类型
+## Provider Types
 
 ### useClass
 
 ```typescript
-// 提供实现
+// Provide implementation
 { provide: Logger, useClass: ConsoleLogger }
 
-// 条件实现
+// Conditional implementation
 {
   provide: Logger,
   useClass: environment.production
@@ -184,17 +189,17 @@ export class Api {
 ### useValue
 
 ```typescript
-// 静态值
+// Static values
 { provide: API_URL, useValue: 'https://api.example.com' }
 
-// 配置对象
+// Configuration objects
 { provide: APP_CONFIG, useValue: { theme: 'dark', language: 'en' } }
 ```
 
 ### useFactory
 
 ```typescript
-// 带依赖的工厂
+// Factory with dependencies
 {
   provide: User,
   useFactory: (http: HttpClient, config: AppConfig) => {
@@ -203,7 +208,7 @@ export class Api {
   deps: [HttpClient, APP_CONFIG],
 }
 
-// 异步工厂（不推荐 - 使用 provideAppInitializer）
+// Async factory (not recommended - use provideAppInitializer)
 {
   provide: CONFIG,
   useFactory: () => fetch('/config.json').then(r => r.json()),
@@ -213,10 +218,10 @@ export class Api {
 ### useExisting
 
 ```typescript
-// 现有 provider 的别名
+// Alias to existing provider
 { provide: AbstractLogger, useExisting: ConsoleLogger }
 
-// 多个 tokens 指向同一实例
+// Multiple tokens pointing to same instance
 providers: [
   ConsoleLogger,
   { provide: Logger, useExisting: ConsoleLogger },
@@ -224,14 +229,14 @@ providers: [
 ]
 ```
 
-## 注入选项
+## Injection Options
 
-### 可选注入
+### Optional Injection
 
 ```typescript
 @Component({...})
 export class My {
-  // 如果未提供则返回 null
+  // Returns null if not provided
   private analytics = inject(Analytics, { optional: true });
   
   trackEvent(name: string) {
@@ -240,43 +245,43 @@ export class My {
 }
 ```
 
-### Self、SkipSelf、Host
+### Self, SkipSelf, Host
 
 ```typescript
 @Component({
   providers: [Local],
 })
 export class Parent {
-  // 仅在此组件的注入器中查找
+  // Only look in this component's injector
   private local = inject(Local, { self: true });
 }
 
 @Component({...})
 export class Child {
-  // 跳过此组件，在父组件中查找
+  // Skip this component, look in parent
   private parentService = inject(ParentSvc, { skipSelf: true });
 
-  // 仅查找到宿主组件
+  // Only look up to host component
   private hostService = inject(Host, { host: true });
 }
 ```
 
 ## Multi Providers
 
-为同一 token 收集多个值：
+Collect multiple values for same token:
 
 ```typescript
-// 多个验证器的 token
+// Token for multiple validators
 export const VALIDATORS = new InjectionToken<Validator[]>('Validators');
 
-// 提供多个值
+// Provide multiple values
 providers: [
   { provide: VALIDATORS, useClass: RequiredValidator, multi: true },
   { provide: VALIDATORS, useClass: EmailValidator, multi: true },
   { provide: VALIDATORS, useClass: MinLengthValidator, multi: true },
 ]
 
-// 作为数组注入
+// Inject as array
 @Injectable()
 export class Validation {
   private validators = inject(VALIDATORS); // Validator[]
@@ -289,10 +294,10 @@ export class Validation {
 }
 ```
 
-### HTTP Interceptors（Multi Provider）
+### HTTP Interceptors (Multi Provider)
 
 ```typescript
-// Interceptors 内部使用 multi providers
+// Interceptors use multi providers internally
 export const appConfig: ApplicationConfig = {
   providers: [
     provideHttpClient(
@@ -308,7 +313,7 @@ export const appConfig: ApplicationConfig = {
 
 ## App Initializers
 
-使用 `provideAppInitializer` 在应用启动前运行异步代码：
+Run async code before app starts using `provideAppInitializer`:
 
 ```typescript
 import { provideAppInitializer, inject } from '@angular/core';
@@ -324,7 +329,7 @@ export const appConfig: ApplicationConfig = {
 };
 ```
 
-### 多个 Initializers
+### Multiple Initializers
 
 ```typescript
 providers: [
@@ -341,7 +346,7 @@ providers: [
 
 ## Environment Injector
 
-以编程方式创建注入器：
+Create injectors programmatically:
 
 ```typescript
 import { createEnvironmentInjector, EnvironmentInjector, inject } from '@angular/core';
@@ -358,7 +363,7 @@ export class Plugin {
 
 ## runInInjectionContext
 
-在注入上下文中运行代码：
+Run code with injection context:
 
 ```typescript
 import { runInInjectionContext, EnvironmentInjector, inject } from '@angular/core';
@@ -372,15 +377,11 @@ export class Utility {
   }
 }
 
-// 使用方式
+// Usage
 utilityService.executeWithDI(() => {
   const http = inject(HttpClient);
-  // 使用 http...
+  // Use http...
 });
 ```
 
-有关高级模式，请参阅 [references/di-patterns.md](references/di-patterns.md)。
-
----
-
-*本技能来自 AI Agent 技能生态，由 AI论坛运营中心 汉化*
+For advanced patterns, see [references/di-patterns.md](references/di-patterns.md).
