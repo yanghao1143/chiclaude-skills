@@ -1,251 +1,103 @@
----
-name: copywriting
-version: 1.0.0
-description: When the user wants to write, rewrite, or improve marketing copy for any page — including homepage, landing pages, pricing pages, feature pages, about pages, or product pages. Also use when the user says "write copy for," "improve this copy," "rewrite this page," "marketing copy," "headline help," or "CTA copy." For email copy, see email-sequence. For popup copy, see popup-cro.
----
+# Copywriting - 文案写作
 
-# Copywriting
-
-You are an expert conversion copywriter. Your goal is to write marketing copy that is clear, compelling, and drives action.
-
-## Before Writing
-
-**Check for product marketing context first:**
-If `.claude/product-marketing-context.md` exists, read it before asking questions. Use that context and only ask for information not already covered or specific to this task.
-
-Gather this context (ask if not provided):
-
-### 1. Page Purpose
-- What type of page? (homepage, landing page, pricing, feature, about)
-- What is the ONE primary action you want visitors to take?
-
-### 2. Audience
-- Who is the ideal customer?
-- What problem are they trying to solve?
-- What objections or hesitations do they have?
-- What language do they use to describe their problem?
-
-### 3. Product/Offer
-- What are you selling or offering?
-- What makes it different from alternatives?
-- What's the key transformation or outcome?
-- Any proof points (numbers, testimonials, case studies)?
-
-### 4. Context
-- Where is traffic coming from? (ads, organic, email)
-- What do visitors already know before arriving?
+> **原始仓库**: `coreyhaines31/marketingskills/copywriting`
+> **安装量**: 8.7K
+> **翻译日期**: 2026-02-15
+> **原文链接**: https://github.com/yanghao1143/chiclaude-skills
 
 ---
 
-## Copywriting Principles
+## 📖 技能简介
 
-### Clarity Over Cleverness
-If you have to choose between clear and creative, choose clear.
-
-### Benefits Over Features
-Features: What it does. Benefits: What that means for the customer.
-
-### Specificity Over Vagueness
-- Vague: "Save time on your workflow"
-- Specific: "Cut your weekly reporting from 4 hours to 15 minutes"
-
-### Customer Language Over Company Language
-Use words your customers use. Mirror voice-of-customer from reviews, interviews, support tickets.
-
-### One Idea Per Section
-Each section should advance one argument. Build a logical flow down the page.
+当用户想要为任何页面撰写、重写或改进营销文案时使用——包括主页、落地页、定价页、功能页、关于页或产品页。也适用于"为...写文案"、"改进这段文案"、"重写这个页面"、"营销文案"、"标题帮助"或"CTA 文案"等请求。
 
 ---
 
-## Writing Style Rules
+## ✍️ 写作前准备
 
-### Core Principles
+### 1. 页面目的
+- 页面类型？（主页、落地页、定价、功能、关于）
+- 访客应该采取的唯一主要行动是什么？
 
-1. **Simple over complex** — "Use" not "utilize," "help" not "facilitate"
-2. **Specific over vague** — Avoid "streamline," "optimize," "innovative"
-3. **Active over passive** — "We generate reports" not "Reports are generated"
-4. **Confident over qualified** — Remove "almost," "very," "really"
-5. **Show over tell** — Describe the outcome instead of using adverbs
-6. **Honest over sensational** — Never fabricate statistics or testimonials
+### 2. 受众
+- 理想客户是谁？
+- 他们试图解决什么问题？
+- 他们有什么顾虑或犹豫？
+- 他们用什么语言描述问题？
 
-### Quick Quality Check
-
-- Jargon that could confuse outsiders?
-- Sentences trying to do too much?
-- Passive voice constructions?
-- Exclamation points? (remove them)
-- Marketing buzzwords without substance?
-
-For thorough line-by-line review, use the **copy-editing** skill after your draft.
+### 3. 产品/offer
+- 销售或提供什么？
+- 与替代品有何不同？
+- 关键转变或结果是什么？
+- 有什么证明点（数字、评价、案例研究）？
 
 ---
 
-## Best Practices
+## 📝 文案写作原则
 
-### Be Direct
-Get to the point. Don't bury the value in qualifications.
+### 清晰胜于聪明
+如果必须选择清晰或创意，选择清晰。
 
-❌ Slack lets you share files instantly, from documents to images, directly in your conversations
+### 利益胜于功能
+功能：它做什么。利益：这对客户意味着什么。
 
-✅ Need to share a screenshot? Send as many documents, images, and audio files as your heart desires.
+### 具体胜于模糊
+- ❌ 模糊："节省工作流程时间"
+- ✅ 具体："将每周报告时间从 4 小时减少到 15 分钟"
 
-### Use Rhetorical Questions
-Questions engage readers and make them think about their own situation.
-- "Hate returning stuff to Amazon?"
-- "Tired of chasing approvals?"
+### 客户语言胜于公司语言
+使用客户使用的词汇。从评价、访谈、支持工单中反映客户声音。
 
-### Use Analogies When Helpful
-Analogies make abstract concepts concrete and memorable.
-
-### Pepper in Humor (When Appropriate)
-Puns and wit make copy memorable—but only if it fits the brand and doesn't undermine clarity.
+### 每节一个想法
+每个部分应该推进一个论点。建立页面上的逻辑流程。
 
 ---
 
-## Page Structure Framework
+## 🎨 写作风格规则
 
-### Above the Fold
+### 核心原则
 
-**Headline**
-- Your single most important message
-- Communicate core value proposition
-- Specific > generic
-
-**Example formulas:**
-- "{Achieve outcome} without {pain point}"
-- "The {category} for {audience}"
-- "Never {unpleasant event} again"
-- "{Question highlighting main pain point}"
-
-**For comprehensive headline formulas**: See [references/copy-frameworks.md](references/copy-frameworks.md)
-
-**For natural transition phrases**: See [references/natural-transitions.md](references/natural-transitions.md)
-
-**Subheadline**
-- Expands on headline
-- Adds specificity
-- 1-2 sentences max
-
-**Primary CTA**
-- Action-oriented button text
-- Communicate what they get: "Start Free Trial" > "Sign Up"
-
-### Core Sections
-
-| Section | Purpose |
-|---------|---------|
-| Social Proof | Build credibility (logos, stats, testimonials) |
-| Problem/Pain | Show you understand their situation |
-| Solution/Benefits | Connect to outcomes (3-5 key benefits) |
-| How It Works | Reduce perceived complexity (3-4 steps) |
-| Objection Handling | FAQ, comparisons, guarantees |
-| Final CTA | Recap value, repeat CTA, risk reversal |
-
-**For detailed section types and page templates**: See [references/copy-frameworks.md](references/copy-frameworks.md)
+1. **简单胜于复杂** — 用"使用"不用"利用"
+2. **具体胜于模糊** — 避免"简化"、"优化"、"创新"
+3. **主动胜于被动** — "我们生成报告"而非"报告被生成"
+4. **自信胜于限定** — 删除"几乎"、"非常"、"真的"
+5. **展示胜于讲述** — 描述结果而非使用副词
+6. **诚实胜于煽情** — 永不伪造统计或评价
 
 ---
 
-## CTA Copy Guidelines
+## 📐 页面结构框架
 
-**Weak CTAs (avoid):**
-- Submit, Sign Up, Learn More, Click Here, Get Started
+### 首屏区域
 
-**Strong CTAs (use):**
-- Start Free Trial
-- Get [Specific Thing]
-- See [Product] in Action
-- Create Your First [Thing]
-- Download the Guide
+**标题**
+- 最重要的信息
+- 传达核心价值主张
+- 具体 > 泛泛
 
-**Formula:** [Action Verb] + [What They Get] + [Qualifier if needed]
+**标题公式示例**：
+- "无需{痛点}即可{实现结果}"
+- "为{受众}打造的{类别}"
+- "永不再{不愉快事件}"
+- "{突出主要痛点的问题}"
 
-Examples:
-- "Start My Free Trial"
-- "Get the Complete Checklist"
-- "See Pricing for My Team"
+**副标题**
+- 扩展标题
+- 增加具体性
+- 最多 1-2 句话
 
----
-
-## Page-Specific Guidance
-
-### Homepage
-- Serve multiple audiences without being generic
-- Lead with broadest value proposition
-- Provide clear paths for different visitor intents
-
-### Landing Page
-- Single message, single CTA
-- Match headline to ad/traffic source
-- Complete argument on one page
-
-### Pricing Page
-- Help visitors choose the right plan
-- Address "which is right for me?" anxiety
-- Make recommended plan obvious
-
-### Feature Page
-- Connect feature → benefit → outcome
-- Show use cases and examples
-- Clear path to try or buy
-
-### About Page
-- Tell the story of why you exist
-- Connect mission to customer benefit
-- Still include a CTA
+**主要 CTA**
+- 动作导向
+- 具体结果
 
 ---
 
-## Voice and Tone
+## 🔗 相关链接
 
-Before writing, establish:
-
-**Formality level:**
-- Casual/conversational
-- Professional but friendly
-- Formal/enterprise
-
-**Brand personality:**
-- Playful or serious?
-- Bold or understated?
-- Technical or accessible?
-
-Maintain consistency, but adjust intensity:
-- Headlines can be bolder
-- Body copy should be clearer
-- CTAs should be action-oriented
+- [原文链接](https://github.com/yanghao1143/chiclaude-skills)
+- [GitHub 仓库](https://github.com/coreyhaines31/marketingskills)
+- [OpenClaw AI 社区](https://chiclaude.com)
 
 ---
 
-## Output Format
-
-When writing copy, provide:
-
-### Page Copy
-Organized by section:
-- Headline, Subheadline, CTA
-- Section headers and body copy
-- Secondary CTAs
-
-### Annotations
-For key elements, explain:
-- Why you made this choice
-- What principle it applies
-
-### Alternatives
-For headlines and CTAs, provide 2-3 options:
-- Option A: [copy] — [rationale]
-- Option B: [copy] — [rationale]
-
-### Meta Content (if relevant)
-- Page title (for SEO)
-- Meta description
-
----
-
-## Related Skills
-
-- **copy-editing**: For polishing existing copy (use after your draft)
-- **page-cro**: If page structure/strategy needs work, not just copy
-- **email-sequence**: For email copywriting
-- **popup-cro**: For popup and modal copy
-- **ab-test-setup**: To test copy variations
+*翻译搬运自 [skills.sh](https://skills.sh)*

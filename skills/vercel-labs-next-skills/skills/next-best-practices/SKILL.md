@@ -1,153 +1,152 @@
+# Next.js 最佳实践
+
+> **原始仓库**: `vercel-labs/next-skills/next-best-practices`
+> **安装量**: 12.4K
+> **翻译日期**: 2026-02-15
+> **原文链接**: https://github.com/yanghao1143/chiclaude-skills
+
 ---
-name: next-best-practices
-description: Next.js best practices - file conventions, RSC boundaries, data patterns, async APIs, metadata, error handling, route handlers, image/font optimization, bundling
-user-invocable: false
+
+## 📖 技能简介
+
+在编写或审查 Next.js 代码时应用这些规则。
+
 ---
 
-# Next.js Best Practices
+## 📁 文件约定
 
-Apply these rules when writing or reviewing Next.js code.
+参见 [file-conventions.md](https://github.com/vercel-labs/next-skills/blob/HEAD/skills/next-best-practices/file-conventions.md) 了解：
 
-## File Conventions
+- 项目结构和特殊文件
+- 路由段（动态、捕获所有、分组）
+- 并行和拦截路由
+- v16 中的中间件重命名（middleware → proxy）
 
-See [file-conventions.md](./file-conventions.md) for:
-- Project structure and special files
-- Route segments (dynamic, catch-all, groups)
-- Parallel and intercepting routes
-- Middleware rename in v16 (middleware → proxy)
+---
 
-## RSC Boundaries
+## 🔄 RSC 边界
 
-Detect invalid React Server Component patterns.
+检测无效的 React Server Component 模式。
 
-See [rsc-boundaries.md](./rsc-boundaries.md) for:
-- Async client component detection (invalid)
-- Non-serializable props detection
-- Server Action exceptions
+参见 [rsc-boundaries.md](https://github.com/vercel-labs/next-skills/blob/HEAD/skills/next-best-practices/rsc-boundaries.md) 了解：
 
-## Async Patterns
+- 异步客户端组件检测（无效）
+- 不可序列化 props 检测
+- Server Action 异常
 
-Next.js 15+ async API changes.
+---
 
-See [async-patterns.md](./async-patterns.md) for:
-- Async `params` and `searchParams`
-- Async `cookies()` and `headers()`
-- Migration codemod
+## ⏡ 异步模式
 
-## Runtime Selection
+Next.js 15+ 异步 API 变更。
 
-See [runtime-selection.md](./runtime-selection.md) for:
-- Default to Node.js runtime
-- When Edge runtime is appropriate
+参见 [async-patterns.md](https://github.com/vercel-labs/next-skills/blob/HEAD/skills/next-best-practices/async-patterns.md) 了解：
 
-## Directives
+- 异步 params 和 searchParams
+- 异步 cookies() 和 headers()
+- 迁移代码修改
 
-See [directives.md](./directives.md) for:
-- `'use client'`, `'use server'` (React)
-- `'use cache'` (Next.js)
+---
 
-## Functions
+## 🖥️ 运行时选择
 
-See [functions.md](./functions.md) for:
-- Navigation hooks: `useRouter`, `usePathname`, `useSearchParams`, `useParams`
-- Server functions: `cookies`, `headers`, `draftMode`, `after`
-- Generate functions: `generateStaticParams`, `generateMetadata`
+参见 [runtime-selection.md](https://github.com/vercel-labs/next-skills/blob/HEAD/skills/next-best-practices/runtime-selection.md) 了解：
 
-## Error Handling
+- 默认使用 Node.js 运行时
+- 何时使用 Edge 运行时
 
-See [error-handling.md](./error-handling.md) for:
-- `error.tsx`, `global-error.tsx`, `not-found.tsx`
-- `redirect`, `permanentRedirect`, `notFound`
-- `forbidden`, `unauthorized` (auth errors)
-- `unstable_rethrow` for catch blocks
+---
 
-## Data Patterns
+## 📝 指令
 
-See [data-patterns.md](./data-patterns.md) for:
+参见 [directives.md](https://github.com/vercel-labs/next-skills/blob/HEAD/skills/next-best-practices/directives.md) 了解：
+
+- 'use client', 'use server' (React)
+- 'use cache' (Next.js)
+
+---
+
+## 🔧 函数
+
+参见 [functions.md](https://github.com/vercel-labs/next-skills/blob/HEAD/skills/next-best-practices/functions.md) 了解：
+
+- 导航钩子: useRouter, usePathname, useSearchParams, useParams
+- 服务端函数: cookies, headers, draftMode, after
+- 生成函数: generateStaticParams, generateMetadata
+
+---
+
+## ❌ 错误处理
+
+参见 [error-handling.md](https://github.com/vercel-labs/next-skills/blob/HEAD/skills/next-best-practices/error-handling.md) 了解：
+
+- error.tsx, global-error.tsx, not-found.tsx
+- redirect, permanentRedirect, notFound
+- forbidden, unauthorized (认证错误)
+- unstable_rethrow 用于 catch 块
+
+---
+
+## 📊 数据模式
+
+参见 [data-patterns.md](https://github.com/vercel-labs/next-skills/blob/HEAD/skills/next-best-practices/data-patterns.md) 了解：
+
 - Server Components vs Server Actions vs Route Handlers
-- Avoiding data waterfalls (`Promise.all`, Suspense, preload)
-- Client component data fetching
+- 避免数据瀑布（Promise.all, Suspense, preload）
+- 客户端组件数据获取
 
-## Route Handlers
+---
 
-See [route-handlers.md](./route-handlers.md) for:
-- `route.ts` basics
-- GET handler conflicts with `page.tsx`
-- Environment behavior (no React DOM)
-- When to use vs Server Actions
+## 🛣️ 路由处理器
 
-## Metadata & OG Images
+参见 [route-handlers.md](https://github.com/vercel-labs/next-skills/blob/HEAD/skills/next-best-practices/route-handlers.md) 了解：
 
-See [metadata.md](./metadata.md) for:
-- Static and dynamic metadata
-- `generateMetadata` function
-- OG image generation with `next/og`
-- File-based metadata conventions
+- route.ts 基础
+- GET 处理器与 page.tsx 冲突
+- 环境行为（无 React DOM）
+- 何时使用 vs Server Actions
 
-## Image Optimization
+---
 
-See [image.md](./image.md) for:
-- Always use `next/image` over `<img>`
-- Remote images configuration
-- Responsive `sizes` attribute
-- Blur placeholders
-- Priority loading for LCP
+## 🖼️ 图片优化
 
-## Font Optimization
+参见 [image.md](https://github.com/vercel-labs/next-skills/blob/HEAD/skills/next-best-practices/image.md) 了解：
 
-See [font.md](./font.md) for:
-- `next/font` setup
-- Google Fonts, local fonts
-- Tailwind CSS integration
-- Preloading subsets
+- 始终使用 next/image 而非原生 img
+- 远程图片配置
+- 响应式 sizes 属性
+- 模糊占位符
+- LCP 优先加载
 
-## Bundling
+---
 
-See [bundling.md](./bundling.md) for:
-- Server-incompatible packages
-- CSS imports (not link tags)
-- Polyfills (already included)
-- ESM/CommonJS issues
-- Bundle analysis
+## 🔤 字体优化
 
-## Scripts
+参见 [font.md](https://github.com/vercel-labs/next-skills/blob/HEAD/skills/next-best-practices/font.md) 了解：
 
-See [scripts.md](./scripts.md) for:
-- `next/script` vs native script tags
-- Inline scripts need `id`
-- Loading strategies
-- Google Analytics with `@next/third-parties`
+- next/font 设置
+- Google Fonts、本地字体
+- Tailwind CSS 集成
+- 预加载子集
 
-## Hydration Errors
+---
 
-See [hydration-error.md](./hydration-error.md) for:
-- Common causes (browser APIs, dates, invalid HTML)
-- Debugging with error overlay
-- Fixes for each cause
+## 📦 打包
 
-## Suspense Boundaries
+参见 [bundling.md](https://github.com/vercel-labs/next-skills/blob/HEAD/skills/next-best-practices/bundling.md) 了解：
 
-See [suspense-boundaries.md](./suspense-boundaries.md) for:
-- CSR bailout with `useSearchParams` and `usePathname`
-- Which hooks require Suspense boundaries
+- 服务端不兼容的包
+- CSS 导入（非 link 标签）
+- Polyfills（已包含）
+- ESM/CommonJS 问题
+- 打包分析
 
-## Parallel & Intercepting Routes
+---
 
-See [parallel-routes.md](./parallel-routes.md) for:
-- Modal patterns with `@slot` and `(.)` interceptors
-- `default.tsx` for fallbacks
-- Closing modals correctly with `router.back()`
+## 🔒 安全检查
 
-## Self-Hosting
+此技能不包含任何恶意代码。所有内容均为 Next.js 开发最佳实践指南。
 
-See [self-hosting.md](./self-hosting.md) for:
-- `output: 'standalone'` for Docker
-- Cache handlers for multi-instance ISR
-- What works vs needs extra setup
+---
 
-## Debug Tricks
-
-See [debug-tricks.md](./debug-tricks.md) for:
-- MCP endpoint for AI-assisted debugging
-- Rebuild specific routes with `--debug-build-paths`
-
+*翻译自: https://github.com/yanghao1143/chiclaude-skills

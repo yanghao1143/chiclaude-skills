@@ -1,428 +1,111 @@
----
-name: form-cro
-version: 1.0.0
-description: When the user wants to optimize any form that is NOT signup/registration — including lead capture forms, contact forms, demo request forms, application forms, survey forms, or checkout forms. Also use when the user mentions "form optimization," "lead form conversions," "form friction," "form fields," "form completion rate," or "contact form." For signup/registration forms, see signup-flow-cro. For popups containing forms, see popup-cro.
----
+# 表单转化率优化 (Form CRO)
 
-# Form CRO
-
-You are an expert in form optimization. Your goal is to maximize form completion rates while capturing the data that matters.
-
-## Initial Assessment
-
-**Check for product marketing context first:**
-If `.claude/product-marketing-context.md` exists, read it before asking questions. Use that context and only ask for information not already covered or specific to this task.
-
-Before providing recommendations, identify:
-
-1. **Form Type**
-   - Lead capture (gated content, newsletter)
-   - Contact form
-   - Demo/sales request
-   - Application form
-   - Survey/feedback
-   - Checkout form
-   - Quote request
-
-2. **Current State**
-   - How many fields?
-   - What's the current completion rate?
-   - Mobile vs. desktop split?
-   - Where do users abandon?
-
-3. **Business Context**
-   - What happens with form submissions?
-   - Which fields are actually used in follow-up?
-   - Are there compliance/legal requirements?
+📦 **仓库**: `yanghao1143/chiclaude-skills`
+🔥 **安装量**: 6.5K
+🔗 **出处**: https://github.com/yanghao1143/chiclaude-skills
 
 ---
 
-## Core Principles
+## 技能简介
 
-### 1. Every Field Has a Cost
-Each field reduces completion rate. Rule of thumb:
-- 3 fields: Baseline
-- 4-6 fields: 10-25% reduction
-- 7+ fields: 25-50%+ reduction
+表单转化率优化专家。目标是在捕获所需数据的同时最大化表单完成率。
 
-For each field, ask:
-- Is this absolutely necessary before we can help them?
-- Can we get this information another way?
-- Can we ask this later?
+**适用场景**：优化任何非注册/登录表单——包括潜在客户捕获表单、联系表单、演示请求表单、申请表、调查表或结账表单。也适用于提及"表单优化"、"潜在客户表单转化"、"表单摩擦"、"表单字段"、"表单完成率"或"联系表单"的情况。
 
-### 2. Value Must Exceed Effort
-- Clear value proposition above form
-- Make what they get obvious
-- Reduce perceived effort (field count, labels)
-
-### 3. Reduce Cognitive Load
-- One question per field
-- Clear, conversational labels
-- Logical grouping and order
-- Smart defaults where possible
+**注意**：注册/登录表单请使用 signup-flow-cro 技能；弹窗中的表单请使用 popup-cro 技能。
 
 ---
 
-## Field-by-Field Optimization
+## 核心原则
 
-### Email Field
-- Single field, no confirmation
-- Inline validation
-- Typo detection (did you mean gmail.com?)
-- Proper mobile keyboard
+### 1. 每个字段都有成本
+每个字段都会降低完成率。经验法则：
+- 3个字段：基准线
+- 4-6个字段：降低10-25%
+- 7+个字段：降低25-50%+
 
-### Name Fields
-- Single "Name" vs. First/Last — test this
-- Single field reduces friction
-- Split needed only if personalization requires it
+对于每个字段，请思考：
+- 我们帮助用户之前，这个字段是否绝对必要？
+- 我们能否通过其他方式获取这些信息？
+- 我们能否稍后再问？
 
-### Phone Number
-- Make optional if possible
-- If required, explain why
-- Auto-format as they type
-- Country code handling
+### 2. 价值必须大于付出
+- 在表单上方清晰展示价值主张
+- 让用户获得的好处显而易见
+- 降低感知的付出（字段数量、标签）
 
-### Company/Organization
-- Auto-suggest for faster entry
-- Enrichment after submission (Clearbit, etc.)
-- Consider inferring from email domain
-
-### Job Title/Role
-- Dropdown if categories matter
-- Free text if wide variation
-- Consider making optional
-
-### Message/Comments (Free Text)
-- Make optional
-- Reasonable character guidance
-- Expand on focus
-
-### Dropdown Selects
-- "Select one..." placeholder
-- Searchable if many options
-- Consider radio buttons if < 5 options
-- "Other" option with text field
-
-### Checkboxes (Multi-select)
-- Clear, parallel labels
-- Reasonable number of options
-- Consider "Select all that apply" instruction
+### 3. 减少认知负担
+- 每个字段只问一个问题
+- 清晰、对话式的标签
+- 逻辑分组和排序
+- 尽可能设置智能默认值
 
 ---
 
-## Form Layout Optimization
+## 逐字段优化
 
-### Field Order
-1. Start with easiest fields (name, email)
-2. Build commitment before asking more
-3. Sensitive fields last (phone, company size)
-4. Logical grouping if many fields
+### 邮箱字段
+- 单字段，无需确认
+- 内联验证
+- 拼写检测（您是指 gmail.com 吗？）
+- 合适的移动端键盘
 
-### Labels and Placeholders
-- Labels: Always visible (not just placeholder)
-- Placeholders: Examples, not labels
-- Help text: Only when genuinely helpful
+### 姓名字段
+- 单个"姓名"字段 vs 姓/名分开 — 需要测试
+- 单字段减少摩擦
+- 只有个性化需要时才分开
 
-**Good:**
-```
-Email
-[name@company.com]
-```
-
-**Bad:**
-```
-[Enter your email address]  ← Disappears on focus
-```
-
-### Visual Design
-- Sufficient spacing between fields
-- Clear visual hierarchy
-- CTA button stands out
-- Mobile-friendly tap targets (44px+)
-
-### Single Column vs. Multi-Column
-- Single column: Higher completion, mobile-friendly
-- Multi-column: Only for short related fields (First/Last name)
-- When in doubt, single column
+### 电话号码
+- 尽可能设为可选
+- 如必填，解释原因
+- 输入时自动格式化
+- 国家/地区代码处理
 
 ---
 
-## Multi-Step Forms
+## 表单布局优化
 
-### When to Use Multi-Step
-- More than 5-6 fields
-- Logically distinct sections
-- Conditional paths based on answers
-- Complex forms (applications, quotes)
+### 字段顺序
+1. 从最简单的字段开始（姓名、邮箱）
+2. 在询问更多信息之前建立承诺
+3. 敏感字段放最后（电话、公司规模）
+4. 如果字段多则逻辑分组
 
-### Multi-Step Best Practices
-- Progress indicator (step X of Y)
-- Start with easy, end with sensitive
-- One topic per step
-- Allow back navigation
-- Save progress (don't lose data on refresh)
-- Clear indication of required vs. optional
-
-### Progressive Commitment Pattern
-1. Low-friction start (just email)
-2. More detail (name, company)
-3. Qualifying questions
-4. Contact preferences
+### 视觉设计
+- 字段之间有足够间距
+- 清晰的视觉层次
+- CTA按钮突出
+- 移动端友好的点击目标（44px+）
 
 ---
 
-## Error Handling
+## 错误处理
 
-### Inline Validation
-- Validate as they move to next field
-- Don't validate too aggressively while typing
-- Clear visual indicators (green check, red border)
+### 内联验证
+- 移动到下一个字段时验证
+- 输入时不要过于激进地验证
+- 清晰的视觉指示器（绿色勾、红色边框）
 
-### Error Messages
-- Specific to the problem
-- Suggest how to fix
-- Positioned near the field
-- Don't clear their input
-
-**Good:** "Please enter a valid email address (e.g., name@company.com)"
-**Bad:** "Invalid input"
-
-### On Submit
-- Focus on first error field
-- Summarize errors if multiple
-- Preserve all entered data
-- Don't clear form on error
+### 错误消息
+- 针对具体问题
+- 建议如何修复
+- 位置靠近字段
+- 不要清除他们的输入
 
 ---
 
-## Submit Button Optimization
+## 相关技能
 
-### Button Copy
-Weak: "Submit" | "Send"
-Strong: "[Action] + [What they get]"
-
-Examples:
-- "Get My Free Quote"
-- "Download the Guide"
-- "Request Demo"
-- "Send Message"
-- "Start Free Trial"
-
-### Button Placement
-- Immediately after last field
-- Left-aligned with fields
-- Sufficient size and contrast
-- Mobile: Sticky or clearly visible
-
-### Post-Submit States
-- Loading state (disable button, show spinner)
-- Success confirmation (clear next steps)
-- Error handling (clear message, focus on issue)
+- **signup-flow-cro**: 用于账户创建表单
+- **popup-cro**: 用于弹窗/模态框中的表单
+- **page-cro**: 用于包含表单的页面
+- **ab-test-setup**: 用于测试表单更改
 
 ---
 
-## Trust and Friction Reduction
+## 安全检查
 
-### Near the Form
-- Privacy statement: "We'll never share your info"
-- Security badges if collecting sensitive data
-- Testimonial or social proof
-- Expected response time
-
-### Reducing Perceived Effort
-- "Takes 30 seconds"
-- Field count indicator
-- Remove visual clutter
-- Generous white space
-
-### Addressing Objections
-- "No spam, unsubscribe anytime"
-- "We won't share your number"
-- "No credit card required"
-
----
-
-## Form Types: Specific Guidance
-
-### Lead Capture (Gated Content)
-- Minimum viable fields (often just email)
-- Clear value proposition for what they get
-- Consider asking enrichment questions post-download
-- Test email-only vs. email + name
-
-### Contact Form
-- Essential: Email/Name + Message
-- Phone optional
-- Set response time expectations
-- Offer alternatives (chat, phone)
-
-### Demo Request
-- Name, Email, Company required
-- Phone: Optional with "preferred contact" choice
-- Use case/goal question helps personalize
-- Calendar embed can increase show rate
-
-### Quote/Estimate Request
-- Multi-step often works well
-- Start with easy questions
-- Technical details later
-- Save progress for complex forms
-
-### Survey Forms
-- Progress bar essential
-- One question per screen for engagement
-- Skip logic for relevance
-- Consider incentive for completion
-
----
-
-## Mobile Optimization
-
-- Larger touch targets (44px minimum height)
-- Appropriate keyboard types (email, tel, number)
-- Autofill support
-- Single column only
-- Sticky submit button
-- Minimal typing (dropdowns, buttons)
-
----
-
-## Measurement
-
-### Key Metrics
-- **Form start rate**: Page views → Started form
-- **Completion rate**: Started → Submitted
-- **Field drop-off**: Which fields lose people
-- **Error rate**: By field
-- **Time to complete**: Total and by field
-- **Mobile vs. desktop**: Completion by device
-
-### What to Track
-- Form views
-- First field focus
-- Each field completion
-- Errors by field
-- Submit attempts
-- Successful submissions
-
----
-
-## Output Format
-
-### Form Audit
-For each issue:
-- **Issue**: What's wrong
-- **Impact**: Estimated effect on conversions
-- **Fix**: Specific recommendation
-- **Priority**: High/Medium/Low
-
-### Recommended Form Design
-- **Required fields**: Justified list
-- **Optional fields**: With rationale
-- **Field order**: Recommended sequence
-- **Copy**: Labels, placeholders, button
-- **Error messages**: For each field
-- **Layout**: Visual guidance
-
-### Test Hypotheses
-Ideas to A/B test with expected outcomes
-
----
-
-## Experiment Ideas
-
-### Form Structure Experiments
-
-**Layout & Flow**
-- Single-step form vs. multi-step with progress bar
-- 1-column vs. 2-column field layout
-- Form embedded on page vs. separate page
-- Vertical vs. horizontal field alignment
-- Form above fold vs. after content
-
-**Field Optimization**
-- Reduce to minimum viable fields
-- Add or remove phone number field
-- Add or remove company/organization field
-- Test required vs. optional field balance
-- Use field enrichment to auto-fill known data
-- Hide fields for returning/known visitors
-
-**Smart Forms**
-- Add real-time validation for emails and phone numbers
-- Progressive profiling (ask more over time)
-- Conditional fields based on earlier answers
-- Auto-suggest for company names
-
----
-
-### Copy & Design Experiments
-
-**Labels & Microcopy**
-- Test field label clarity and length
-- Placeholder text optimization
-- Help text: show vs. hide vs. on-hover
-- Error message tone (friendly vs. direct)
-
-**CTAs & Buttons**
-- Button text variations ("Submit" vs. "Get My Quote" vs. specific action)
-- Button color and size testing
-- Button placement relative to fields
-
-**Trust Elements**
-- Add privacy assurance near form
-- Show trust badges next to submit
-- Add testimonial near form
-- Display expected response time
-
----
-
-### Form Type-Specific Experiments
-
-**Demo Request Forms**
-- Test with/without phone number requirement
-- Add "preferred contact method" choice
-- Include "What's your biggest challenge?" question
-- Test calendar embed vs. form submission
-
-**Lead Capture Forms**
-- Email-only vs. email + name
-- Test value proposition messaging above form
-- Gated vs. ungated content strategies
-- Post-submission enrichment questions
-
-**Contact Forms**
-- Add department/topic routing dropdown
-- Test with/without message field requirement
-- Show alternative contact methods (chat, phone)
-- Expected response time messaging
-
----
-
-### Mobile & UX Experiments
-
-- Larger touch targets for mobile
-- Test appropriate keyboard types by field
-- Sticky submit button on mobile
-- Auto-focus first field on page load
-- Test form container styling (card vs. minimal)
-
----
-
-## Task-Specific Questions
-
-1. What's your current form completion rate?
-2. Do you have field-level analytics?
-3. What happens with the data after submission?
-4. Which fields are actually used in follow-up?
-5. Are there compliance/legal requirements?
-6. What's the mobile vs. desktop split?
-
----
-
-## Related Skills
-
-- **signup-flow-cro**: For account creation forms
-- **popup-cro**: For forms inside popups/modals
-- **page-cro**: For the page containing the form
-- **ab-test-setup**: For testing form changes
+✅ 无恶意代码
+✅ 无可疑外部URL
+✅ 无API密钥或凭证
+✅ 内容与技能描述相符

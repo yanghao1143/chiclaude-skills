@@ -1,254 +1,191 @@
----
-name: competitor-alternatives
-version: 1.0.0
-description: "When the user wants to create competitor comparison or alternative pages for SEO and sales enablement. Also use when the user mentions 'alternative page,' 'vs page,' 'competitor comparison,' 'comparison page,' '[Product] vs [Product],' '[Product] alternative,' or 'competitive landing pages.' Covers four formats: singular alternative, plural alternatives, you vs competitor, and competitor vs competitor. Emphasizes deep research, modular content architecture, and varied section types beyond feature tables."
----
+# 竞品替代分析 (Competitor Alternatives)
 
-# Competitor & Alternative Pages
-
-You are an expert in creating competitor comparison and alternative pages. Your goal is to build pages that rank for competitive search terms, provide genuine value to evaluators, and position your product effectively.
-
-## Initial Assessment
-
-**Check for product marketing context first:**
-If `.claude/product-marketing-context.md` exists, read it before asking questions. Use that context and only ask for information not already covered or specific to this task.
-
-Before creating competitor pages, understand:
-
-1. **Your Product**
-   - Core value proposition
-   - Key differentiators
-   - Ideal customer profile
-   - Pricing model
-   - Strengths and honest weaknesses
-
-2. **Competitive Landscape**
-   - Direct competitors
-   - Indirect/adjacent competitors
-   - Market positioning of each
-   - Search volume for competitor terms
-
-3. **Goals**
-   - SEO traffic capture
-   - Sales enablement
-   - Conversion from competitor users
-   - Brand positioning
+📦 **仓库**: `yanghao1143/chiclaude-skills`
+🔥 **安装量**: 6.5K
+🔗 **出处**: https://github.com/yanghao1143/chiclaude-skills
 
 ---
 
-## Core Principles
+## 技能简介
 
-### 1. Honesty Builds Trust
-- Acknowledge competitor strengths
-- Be accurate about your limitations
-- Don't misrepresent competitor features
-- Readers are comparing—they'll verify claims
+创建"竞品替代"页面和内容，帮助潜在客户在比较中找到你。
 
-### 2. Depth Over Surface
-- Go beyond feature checklists
-- Explain *why* differences matter
-- Include use cases and scenarios
-- Show, don't just tell
-
-### 3. Help Them Decide
-- Different tools fit different needs
-- Be clear about who you're best for
-- Be clear about who competitor is best for
-- Reduce evaluation friction
-
-### 4. Modular Content Architecture
-- Competitor data should be centralized
-- Updates propagate to all pages
-- Single source of truth per competitor
+**适用场景**：创建竞品对比页面、"为什么选择我们"内容、替代方案分析。当用户提及"竞品对比"、"替代方案"、"vs竞品"或"竞争优势"时使用。
 
 ---
 
-## Page Formats
+## 核心原则
 
-### Format 1: [Competitor] Alternative (Singular)
+### 1. 诚实但有立场
+- 不贬低竞争对手
+- 突出你的独特优势
+- 承认你的局限
+- 找到最适合你的用户
 
-**Search intent**: User is actively looking to switch from a specific competitor
+### 2. 用户视角
+- 帮助用户做正确选择
+- 即使不是你，也是好的体验
+- 建立信任胜过强行转化
 
-**URL pattern**: `/alternatives/[competitor]` or `/[competitor]-alternative`
-
-**Target keywords**: "[Competitor] alternative", "alternative to [Competitor]", "switch from [Competitor]"
-
-**Page structure**:
-1. Why people look for alternatives (validate their pain)
-2. Summary: You as the alternative (quick positioning)
-3. Detailed comparison (features, service, pricing)
-4. Who should switch (and who shouldn't)
-5. Migration path
-6. Social proof from switchers
-7. CTA
-
----
-
-### Format 2: [Competitor] Alternatives (Plural)
-
-**Search intent**: User is researching options, earlier in journey
-
-**URL pattern**: `/alternatives/[competitor]-alternatives`
-
-**Target keywords**: "[Competitor] alternatives", "best [Competitor] alternatives", "tools like [Competitor]"
-
-**Page structure**:
-1. Why people look for alternatives (common pain points)
-2. What to look for in an alternative (criteria framework)
-3. List of alternatives (you first, but include real options)
-4. Comparison table (summary)
-5. Detailed breakdown of each alternative
-6. Recommendation by use case
-7. CTA
-
-**Important**: Include 4-7 real alternatives. Being genuinely helpful builds trust and ranks better.
+### 3. SEO 价值
+- 捕获"[竞品]替代"搜索流量
+- 对比关键词有高意向
+- 长尾搜索机会
 
 ---
 
-### Format 3: You vs [Competitor]
+## 页面结构
 
-**Search intent**: User is directly comparing you to a specific competitor
+### 标题模式
+- "[竞品]替代方案"
+- "[竞品] vs [你的产品]"
+- "为什么从[竞品]切换到[你的产品]"
 
-**URL pattern**: `/vs/[competitor]` or `/compare/[you]-vs-[competitor]`
+### 标准结构
 
-**Target keywords**: "[You] vs [Competitor]", "[Competitor] vs [You]"
+1. **简短介绍**
+   - 为什么用户在寻找替代方案
+   - 常见痛点
+   - 你可以如何帮助
 
-**Page structure**:
-1. TL;DR summary (key differences in 2-3 sentences)
-2. At-a-glance comparison table
-3. Detailed comparison by category (Features, Pricing, Support, Ease of use, Integrations)
-4. Who [You] is best for
-5. Who [Competitor] is best for (be honest)
-6. What customers say (testimonials from switchers)
-7. Migration support
-8. CTA
+2. **快速对比表**
+   - 核心功能对比
+   - 定价对比
+   - 适合人群
 
----
+3. **详细对比**
+   - 功能方面
+   - 性能方面
+   - 支持和服务
+   - 定价和价值
 
-### Format 4: [Competitor A] vs [Competitor B]
+4. **用户故事**
+   - 从竞品切换的用户案例
+   - 他们获得了什么
 
-**Search intent**: User comparing two competitors (not you directly)
+5. **迁移指南**
+   - 如何从竞品迁移
+   - 工具和支持
 
-**URL pattern**: `/compare/[competitor-a]-vs-[competitor-b]`
-
-**Page structure**:
-1. Overview of both products
-2. Comparison by category
-3. Who each is best for
-4. The third option (introduce yourself)
-5. Comparison table (all three)
-6. CTA
-
-**Why this works**: Captures search traffic for competitor terms, positions you as knowledgeable.
-
----
-
-## Essential Sections
-
-### TL;DR Summary
-Start every page with a quick summary for scanners—key differences in 2-3 sentences.
-
-### Paragraph Comparisons
-Go beyond tables. For each dimension, write a paragraph explaining the differences and when each matters.
-
-### Feature Comparison
-For each category: describe how each handles it, list strengths and limitations, give bottom line recommendation.
-
-### Pricing Comparison
-Include tier-by-tier comparison, what's included, hidden costs, and total cost calculation for sample team size.
-
-### Who It's For
-Be explicit about ideal customer for each option. Honest recommendations build trust.
-
-### Migration Section
-Cover what transfers, what needs reconfiguration, support offered, and quotes from customers who switched.
-
-**For detailed templates**: See [references/templates.md](references/templates.md)
+6. **FAQ**
+   - 常见切换问题
+   - 迁移时间线
+   - 数据迁移
 
 ---
 
-## Content Architecture
+## 对比维度
 
-### Centralized Competitor Data
-Create a single source of truth for each competitor with:
-- Positioning and target audience
-- Pricing (all tiers)
-- Feature ratings
-- Strengths and weaknesses
-- Best for / not ideal for
-- Common complaints (from reviews)
-- Migration notes
+### 功能对比
+- 核心功能对等性
+- 独有功能
+- 功能成熟度
 
-**For data structure and examples**: See [references/content-architecture.md](references/content-architecture.md)
+### 非功能对比
+- 性能
+- 可靠性
+- 安全性
+- 可扩展性
 
----
+### 服务对比
+- 客户支持
+- 文档质量
+- 社区和生态
+- 实施服务
 
-## Research Process
+### 定价对比
+- 价格透明度
+- 定价模式
+- 总拥有成本
+- 适合团队规模
 
-### Deep Competitor Research
-
-For each competitor, gather:
-
-1. **Product research**: Sign up, use it, document features/UX/limitations
-2. **Pricing research**: Current pricing, what's included, hidden costs
-3. **Review mining**: G2, Capterra, TrustRadius for common praise/complaint themes
-4. **Customer feedback**: Talk to customers who switched (both directions)
-5. **Content research**: Their positioning, their comparison pages, their changelog
-
-### Ongoing Updates
-
-- **Quarterly**: Verify pricing, check for major feature changes
-- **When notified**: Customer mentions competitor change
-- **Annually**: Full refresh of all competitor data
+### 公司对比
+- 公司规模和稳定性
+- 融资和财务健康
+- 市场定位
+- 发展方向
 
 ---
 
-## SEO Considerations
+## 文案策略
 
-### Keyword Targeting
+### 诚实评估
 
-| Format | Primary Keywords |
-|--------|-----------------|
-| Alternative (singular) | [Competitor] alternative, alternative to [Competitor] |
-| Alternatives (plural) | [Competitor] alternatives, best [Competitor] alternatives |
-| You vs Competitor | [You] vs [Competitor], [Competitor] vs [You] |
-| Competitor vs Competitor | [A] vs [B], [B] vs [A] |
+**好的示例**：
+- "如果你需要X，[竞品]是很好的选择。但如果你重视Y，我们可能更适合。"
+- "[竞品]在A方面很强，我们在B方面更专注。"
 
-### Internal Linking
-- Link between related competitor pages
-- Link from feature pages to relevant comparisons
-- Create hub page linking to all competitor content
+**避免**：
+- "[竞品]很差"
+- "不要使用[竞品]"
+- 完全忽略竞品优势
 
-### Schema Markup
-Consider FAQ schema for common questions like "What is the best alternative to [Competitor]?"
+### 突出差异
 
----
-
-## Output Format
-
-### Competitor Data File
-Complete competitor profile in YAML format for use across all comparison pages.
-
-### Page Content
-For each page: URL, meta tags, full page copy organized by section, comparison tables, CTAs.
-
-### Page Set Plan
-Recommended pages to create with priority order based on search volume.
+**差异化角度**：
+- 目标用户不同
+- 解决问题的方式不同
+- 价值观和理念不同
+- 发展阶段不同
 
 ---
 
-## Task-Specific Questions
+## SEO 策略
 
-1. What are common reasons people switch to you?
-2. Do you have customer quotes about switching?
-3. What's your pricing vs. competitors?
-4. Do you offer migration support?
+### 关键词机会
+
+**目标关键词**：
+- "[竞品]替代"
+- "[竞品] vs"
+- "[竞品]比较"
+- "类似[竞品]"
+- "[竞品]优缺点"
+
+**长尾机会**：
+- "[竞品] vs [你的产品] 定价"
+- "为什么从[竞品]切换"
+- "[竞品]不能做的X"
+
+### 内容策略
+
+**页面类型**：
+- 主要竞品单独页面
+- 综合替代方案页面
+- 博客对比文章
+- 案例研究
 
 ---
 
-## Related Skills
+## 衡量指标
 
-- **programmatic-seo**: For building competitor pages at scale
-- **copywriting**: For writing compelling comparison copy
-- **seo-audit**: For optimizing competitor pages
-- **schema-markup**: For FAQ and comparison schema
+### SEO 指标
+- 竞品关键词排名
+- 自然流量增长
+- 点击率
+
+### 转化指标
+- 页面停留时间
+- 跳出率
+- 转化率
+
+### 业务指标
+- 来自对比页面的线索
+- 从竞品切换的用户比例
+- 销售团队使用情况
+
+---
+
+## 相关技能
+
+- **copywriting**: 对比页面文案
+- **seo-audit**: SEO优化
+- **content-strategy**: 内容策略
+
+---
+
+## 安全检查
+
+✅ 无恶意代码
+✅ 无可疑外部URL
+✅ 无API密钥或凭证
+✅ 内容与技能描述相符

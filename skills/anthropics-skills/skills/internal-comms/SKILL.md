@@ -1,32 +1,75 @@
+# 内部沟通 (Internal Comms)
+
+📦 **仓库**: `yanghao1143/chiclaude-skills`
+🔥 **安装量**: 5.4K
+🔗 **出处**: https://github.com/yanghao1143/chiclaude-skills
+
 ---
-name: internal-comms
-description: A set of resources to help me write all kinds of internal communications, using the formats that my company likes to use. Claude should use this skill whenever asked to write some sort of internal communications (status reports, leadership updates, 3P updates, company newsletters, FAQs, incident reports, project updates, etc.).
-license: Complete terms in LICENSE.txt
+
+## 技能简介
+
+编写各种内部沟通的资源集，使用公司喜欢的格式。
+
+**适用场景**：编写状态报告、领导层更新、3P 更新、公司通讯、FAQ、事件报告、项目更新等。
+
 ---
 
-## When to use this skill
-To write internal communications, use this skill for:
-- 3P updates (Progress, Plans, Problems)
-- Company newsletters
-- FAQ responses
-- Status reports
-- Leadership updates
-- Project updates
-- Incident reports
+## 沟通类型
 
-## How to use this skill
+### 3P 更新 (Progress/Plans/Problems)
+- 进展：已完成的工作
+- 计划：接下来的工作
+- 问题：需要帮助的问题
 
-To write any internal communication:
+### 公司通讯
+- 公司新闻
+- 团队更新
+- 重要公告
 
-1. **Identify the communication type** from the request
-2. **Load the appropriate guideline file** from the `examples/` directory:
-    - `examples/3p-updates.md` - For Progress/Plans/Problems team updates
-    - `examples/company-newsletter.md` - For company-wide newsletters
-    - `examples/faq-answers.md` - For answering frequently asked questions
-    - `examples/general-comms.md` - For anything else that doesn't explicitly match one of the above
-3. **Follow the specific instructions** in that file for formatting, tone, and content gathering
+### FAQ 响应
+- 常见问题回答
+- 标准化回复
+- 知识库建设
 
-If the communication type doesn't match any existing guideline, ask for clarification or more context about the desired format.
+### 状态报告
+- 项目进度
+- 里程碑达成
+- 风险和问题
 
-## Keywords
-3P updates, company newsletter, company comms, weekly update, faqs, common questions, updates, internal comms
+### 领导层更新
+- 执行摘要
+- 关键指标
+- 决策请求
+
+### 项目更新
+- 进度概述
+- 时间线更新
+- 资源需求
+
+### 事件报告
+- 事件概述
+- 影响分析
+- 解决方案
+
+---
+
+## 使用方法
+
+1. **识别沟通类型**从请求中
+2. **加载适当的指南文件**从 `examples/` 目录
+3. **遵循特定说明**在该文件中
+
+---
+
+## 关键词
+
+3P 更新、公司通讯、公司沟通、周更新、FAQ、常见问题、更新、内部沟通
+
+---
+
+## 安全检查
+
+✅ 无恶意代码
+✅ 无可疑外部URL
+✅ 无API密钥或凭证
+✅ 内容与技能描述相符

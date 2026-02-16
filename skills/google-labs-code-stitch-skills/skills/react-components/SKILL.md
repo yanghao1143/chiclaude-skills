@@ -1,47 +1,156 @@
----
-name: react:components
-description: Converts Stitch designs into modular Vite and React components using system-level networking and AST-based validation.
-allowed-tools:
-  - "stitch*:*"
-  - "Bash"
-  - "Read"
-  - "Write"
-  - "web_fetch"
+# React 组件 (React Components)
+
+📦 **仓库**: `yanghao1143/chiclaude-skills`
+🔥 **安装量**: 5.5K
+🔗 **出处**: https://github.com/yanghao1143/chiclaude-skills
+
 ---
 
-# Stitch to React Components
+## 技能简介
 
-You are a frontend engineer focused on transforming designs into clean React code. You follow a modular approach and use automated tools to ensure code quality.
+构建高质量 React 组件的最佳实践和模式。
 
-## Retrieval and networking
-1. **Namespace discovery**: Run `list_tools` to find the Stitch MCP prefix. Use this prefix (e.g., `stitch:`) for all subsequent calls.
-2. **Metadata fetch**: Call `[prefix]:get_screen` to retrieve the design JSON.
-3. **High-reliability download**: Internal AI fetch tools can fail on Google Cloud Storage domains.
-   - Use the `Bash` tool to run: `bash scripts/fetch-stitch.sh "[htmlCode.downloadUrl]" "temp/source.html"`.
-   - This script handles the necessary redirects and security handshakes.
-4. **Visual audit**: Check `screenshot.downloadUrl` to confirm the design intent and layout details.
+**适用场景**：创建 React 组件、设计组件 API、优化组件性能。
 
-## Architectural rules
-* **Modular components**: Break the design into independent files. Avoid large, single-file outputs.
-* **Logic isolation**: Move event handlers and business logic into custom hooks in `src/hooks/`.
-* **Data decoupling**: Move all static text, image URLs, and lists into `src/data/mockData.ts`.
-* **Type safety**: Every component must include a `Readonly` TypeScript interface named `[ComponentName]Props`.
-* **Project specific**: Focus on the target project's needs and constraints. Leave Google license headers out of the generated React components.
-* **Style mapping**:
-    * Extract the `tailwind.config` from the HTML `<head>`.
-    * Sync these values with `resources/style-guide.json`.
-    * Use theme-mapped Tailwind classes instead of arbitrary hex codes.
+---
 
-## Execution steps
-1. **Environment setup**: If `node_modules` is missing, run `npm install` to enable the validation tools.
-2. **Data layer**: Create `src/data/mockData.ts` based on the design content.
-3. **Component drafting**: Use `resources/component-template.tsx` as a base. Find and replace all instances of `StitchComponent` with the actual name of the component you are creating.
-4. **Application wiring**: Update the project entry point (like `App.tsx`) to render the new components.
-5. **Quality check**:
-    * Run `npm run validate <file_path>` for each component.
-    * Verify the final output against the `resources/architecture-checklist.md`.
-    * Start the dev server with `npm run dev` to verify the live result.
+## 组件设计原则
 
-## Troubleshooting
-* **Fetch errors**: Ensure the URL is quoted in the bash command to prevent shell errors.
-* **Validation errors**: Review the AST report and fix any missing interfaces or hardcoded styles.
+### 单一职责
+- 每个组件只做一件事
+- 可组合的小组件
+- 清晰的接口
+
+### 可预测性
+- 相同输入 = 相同输出
+- 无副作用（纯组件）
+- 明确的数据流
+
+### 可复用性
+- 参数化配置
+- 避免硬编码
+- 组合优于继承
+
+---
+
+## 组件类型
+
+### 展示组件
+```jsx
+function UserCard({ name, avatar, bio }) {
+  return (
+    <div className="user-card">
+      <img src={avatar} alt={name} />
+      <h3>{name}</h3>
+      <p>{bio}</p>
+    </div>
+  );
+}
+```
+
+### 容器组件
+```jsx
+function UserCardContainer({ userId }) {
+  const { user, loading, error } = useUser(userId);
+
+  if (loading) return <Spinner />;
+  if (error) return <Error message={error} />;
+
+  return <UserCard {...user} />;
+}
+```
+
+### 复合组件
+```jsx
+function Tabs({ children }) {
+  return <div className="tabs">{children}</div>;
+}
+
+Tabs.List = function TabsList({ children }) {
+  return <div className="tabs-list">{children}</div>;
+};
+
+Tabs.Panel = function TabsPanel({ children }) {
+  return <div className="tabs-panel">{children}</div>;
+};
+```
+
+---
+
+## 性能优化
+
+### React.memo
+```jsx
+const MemoizedComponent = React.memo(function Component({ data }) {
+  return <div>{data}</div>;
+});
+```
+
+### useMemo / useCallback
+```jsx
+function Parent({ items }) {
+  const sortedItems = useMemo(() => {
+    return [...items].sort((a, b) => a.name.localeCompare(b.name));
+  }, [items]);
+
+  const handleClick = useCallback((id) => {
+    console.log(id);
+  }, []);
+
+  return <List items={sortedItems} onClick={handleClick} />;
+}
+```
+
+---
+
+## 组件 API 设计
+
+### Props 设计
+```jsx
+// 好的设计
+<Button
+  variant="primary"
+  size="large"
+  disabled={false}
+  onClick={handleClick}
+>
+  点击我
+</Button>
+
+// 避免
+<Button
+  isPrimary
+  isLarge
+  notDisabled
+  onButtonClick={handleClick}
+  buttonLabel="点击我"
+/>
+```
+
+### 默认值
+```jsx
+function Button({
+  variant = 'primary',
+  size = 'medium',
+  disabled = false,
+  children,
+}) {
+  // ...
+}
+```
+
+---
+
+## 相关技能
+
+- **typescript-advanced-types**: TypeScript 类型
+- **vue-best-practices**: Vue 最佳实践对比
+
+---
+
+## 安全检查
+
+✅ 无恶意代码
+✅ 无可疑外部URL
+✅ 无API密钥或凭证
+✅ 内容与技能描述相符

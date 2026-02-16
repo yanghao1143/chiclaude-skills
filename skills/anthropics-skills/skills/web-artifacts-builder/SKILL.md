@@ -1,74 +1,85 @@
+# Web 制品构建器 (Web Artifacts Builder)
+
+📦 **仓库**: `yanghao1143/chiclaude-skills`
+🔥 **安装量**: 6.2K
+🔗 **出处**: https://github.com/yanghao1143/chiclaude-skills
+
 ---
-name: web-artifacts-builder
-description: Suite of tools for creating elaborate, multi-component claude.ai HTML artifacts using modern frontend web technologies (React, Tailwind CSS, shadcn/ui). Use for complex artifacts requiring state management, routing, or shadcn/ui components - not for simple single-file HTML/JSX artifacts.
-license: Complete terms in LICENSE.txt
+
+## 技能简介
+
+使用现代前端 Web 技术（React、Tailwind CSS、shadcn/ui）创建复杂、多组件的 claude.ai HTML 制品套件。
+
+**适用场景**：需要状态管理、路由或 shadcn/ui 组件的复杂制品 - 不适用于简单的单文件 HTML/JSX 制品。
+
 ---
 
-# Web Artifacts Builder
+## 技术栈
 
-To build powerful frontend claude.ai artifacts, follow these steps:
-1. Initialize the frontend repo using `scripts/init-artifact.sh`
-2. Develop your artifact by editing the generated code
-3. Bundle all code into a single HTML file using `scripts/bundle-artifact.sh`
-4. Display artifact to user
-5. (Optional) Test the artifact
+React 18 + TypeScript + Vite + Parcel（打包） + Tailwind CSS + shadcn/ui
 
-**Stack**: React 18 + TypeScript + Vite + Parcel (bundling) + Tailwind CSS + shadcn/ui
+---
 
-## Design & Style Guidelines
+## 快速开始
 
-VERY IMPORTANT: To avoid what is often referred to as "AI slop", avoid using excessive centered layouts, purple gradients, uniform rounded corners, and Inter font.
+### 步骤 1：初始化项目
 
-## Quick Start
-
-### Step 1: Initialize Project
-
-Run the initialization script to create a new React project:
 ```bash
 bash scripts/init-artifact.sh <project-name>
 cd <project-name>
 ```
 
-This creates a fully configured project with:
-- ✅ React + TypeScript (via Vite)
-- ✅ Tailwind CSS 3.4.1 with shadcn/ui theming system
-- ✅ Path aliases (`@/`) configured
-- ✅ 40+ shadcn/ui components pre-installed
-- ✅ All Radix UI dependencies included
-- ✅ Parcel configured for bundling (via .parcelrc)
-- ✅ Node 18+ compatibility (auto-detects and pins Vite version)
+这将创建一个完全配置好的项目：
+- ✅ React + TypeScript（通过 Vite）
+- ✅ Tailwind CSS 3.4.1 带 shadcn/ui 主题系统
+- ✅ 路径别名（`@/`）已配置
+- ✅ 40+ shadcn/ui 组件预安装
+- ✅ 所有 Radix UI 依赖包含
+- ✅ Parcel 配置用于打包
+- ✅ Node 18+ 兼容
 
-### Step 2: Develop Your Artifact
+### 步骤 2：开发制品
 
-To build the artifact, edit the generated files. See **Common Development Tasks** below for guidance.
+编辑生成的文件来构建制品。
 
-### Step 3: Bundle to Single HTML File
+### 步骤 3：打包成单个 HTML 文件
 
-To bundle the React app into a single HTML artifact:
 ```bash
 bash scripts/bundle-artifact.sh
 ```
 
-This creates `bundle.html` - a self-contained artifact with all JavaScript, CSS, and dependencies inlined. This file can be directly shared in Claude conversations as an artifact.
+这会创建 `bundle.html` - 一个自包含的制品，所有 JavaScript、CSS 和依赖项都内联。
 
-**Requirements**: Your project must have an `index.html` in the root directory.
+### 步骤 4：与用户分享制品
 
-**What the script does**:
-- Installs bundling dependencies (parcel, @parcel/config-default, parcel-resolver-tspaths, html-inline)
-- Creates `.parcelrc` config with path alias support
-- Builds with Parcel (no source maps)
-- Inlines all assets into single HTML using html-inline
+在对话中分享打包的 HTML 文件，让用户可以查看为制品。
 
-### Step 4: Share Artifact with User
+---
 
-Finally, share the bundled HTML file in conversation with the user so they can view it as an artifact.
+## 设计和样式指南
 
-### Step 5: Testing/Visualizing the Artifact (Optional)
+**重要**：为了避免所谓的"AI 废话"，避免使用过度居中的布局、紫色渐变、统一的圆角和 Inter 字体。
 
-Note: This is a completely optional step. Only perform if necessary or requested.
+---
 
-To test/visualize the artifact, use available tools (including other Skills or built-in tools like Playwright or Puppeteer). In general, avoid testing the artifact upfront as it adds latency between the request and when the finished artifact can be seen. Test later, after presenting the artifact, if requested or if issues arise.
+## 打包脚本功能
 
-## Reference
+- 安装打包依赖（parcel、@parcel/config-default、parcel-resolver-tspaths、html-inline）
+- 创建带路径别名支持的 `.parcelrc` 配置
+- 使用 Parcel 构建（无源映射）
+- 使用 html-inline 将所有资源内联到单个 HTML
 
-- **shadcn/ui components**: https://ui.shadcn.com/docs/components
+---
+
+## 参考
+
+- **shadcn/ui 组件**: https://ui.shadcn.com/docs/components
+
+---
+
+## 安全检查
+
+✅ 无恶意代码
+✅ 无可疑外部URL
+✅ 无API密钥或凭证
+✅ 内容与技能描述相符

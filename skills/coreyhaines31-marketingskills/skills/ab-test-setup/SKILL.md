@@ -1,265 +1,135 @@
----
-name: ab-test-setup
-version: 1.0.0
-description: When the user wants to plan, design, or implement an A/B test or experiment. Also use when the user mentions "A/B test," "split test," "experiment," "test this change," "variant copy," "multivariate test," or "hypothesis." For tracking implementation, see analytics-tracking.
----
+# A/B 测试设置 (AB Test Setup)
 
-# A/B Test Setup
-
-You are an expert in experimentation and A/B testing. Your goal is to help design tests that produce statistically valid, actionable results.
-
-## Initial Assessment
-
-**Check for product marketing context first:**
-If `.claude/product-marketing-context.md` exists, read it before asking questions. Use that context and only ask for information not already covered or specific to this task.
-
-Before designing a test, understand:
-
-1. **Test Context** - What are you trying to improve? What change are you considering?
-2. **Current State** - Baseline conversion rate? Current traffic volume?
-3. **Constraints** - Technical complexity? Timeline? Tools available?
+📦 **仓库**: `yanghao1143/chiclaude-skills`
+🔥 **安装量**: 5.6K
+🔗 **出处**: https://github.com/yanghao1143/chiclaude-skills
 
 ---
 
-## Core Principles
+## 技能简介
 
-### 1. Start with a Hypothesis
-- Not just "let's see what happens"
-- Specific prediction of outcome
-- Based on reasoning or data
+设计和实施有效的 A/B 测试，通过数据驱动决策优化转化。
 
-### 2. Test One Thing
-- Single variable per test
-- Otherwise you don't know what worked
-
-### 3. Statistical Rigor
-- Pre-determine sample size
-- Don't peek and stop early
-- Commit to the methodology
-
-### 4. Measure What Matters
-- Primary metric tied to business value
-- Secondary metrics for context
-- Guardrail metrics to prevent harm
+**适用场景**：设置 A/B 测试、分割测试、多变量测试或实验设计。
 
 ---
 
-## Hypothesis Framework
+## 测试设计原则
 
-### Structure
+### 1. 假设驱动
+- 明确的假设陈述
+- 可量化的预期结果
+- 清晰的因果关系
 
+### 2. 单变量控制
+- 每次测试一个变量
+- 清晰的因果关系
+- 避免混淆因素
+
+### 3. 统计显著性
+- 足够的样本量
+- 预先确定显著性水平
+- 避免过早停止
+
+---
+
+## 测试流程
+
+### 1. 识别问题
+- 数据分析发现机会
+- 用户反馈指问题
+- 启发式评估建议改进
+
+### 2. 形成假设
 ```
-Because [observation/data],
-we believe [change]
-will cause [expected outcome]
-for [audience].
-We'll know this is true when [metrics].
+如果 [改变]，那么 [预期结果]，因为 [原因]
 ```
 
-### Example
+### 3. 设计实验
+- 控制组 vs 变体组
+- 流量分配
+- 测试持续时间
 
-**Weak**: "Changing the button color might increase clicks."
+### 4. 实施测试
+- 技术设置
+- 质量保证
+- 监控运行
 
-**Strong**: "Because users report difficulty finding the CTA (per heatmaps and feedback), we believe making the button larger and using contrasting color will increase CTA clicks by 15%+ for new visitors. We'll measure click-through rate from page view to signup start."
-
----
-
-## Test Types
-
-| Type | Description | Traffic Needed |
-|------|-------------|----------------|
-| A/B | Two versions, single change | Moderate |
-| A/B/n | Multiple variants | Higher |
-| MVT | Multiple changes in combinations | Very high |
-| Split URL | Different URLs for variants | Moderate |
+### 5. 分析结果
+- 统计显著性检验
+- 效果大小评估
+- 学习总结
 
 ---
 
-## Sample Size
+## 样本量计算
 
-### Quick Reference
+### 关键参数
+- **基准转化率**: 当前表现
+- **最小检测效应**: 值得检测的变化
+- **显著性水平**: 通常 95%
+- **统计功效**: 通常 80%
 
-| Baseline | 10% Lift | 20% Lift | 50% Lift |
-|----------|----------|----------|----------|
-| 1% | 150k/variant | 39k/variant | 6k/variant |
-| 3% | 47k/variant | 12k/variant | 2k/variant |
-| 5% | 27k/variant | 7k/variant | 1.2k/variant |
-| 10% | 12k/variant | 3k/variant | 550/variant |
-
-**Calculators:**
-- [Evan Miller's](https://www.evanmiller.org/ab-testing/sample-size.html)
-- [Optimizely's](https://www.optimizely.com/sample-size-calculator/)
-
-**For detailed sample size tables and duration calculations**: See [references/sample-size-guide.md](references/sample-size-guide.md)
+### 计算公式
+```
+样本量 = f(基准率, MDE, 显著性, 功效)
+```
 
 ---
 
-## Metrics Selection
+## 常见测试类型
 
-### Primary Metric
-- Single metric that matters most
-- Directly tied to hypothesis
-- What you'll use to call the test
+### 页面测试
+- 标题测试
+- CTA 按钮测试
+- 图片测试
+- 布局测试
 
-### Secondary Metrics
-- Support primary metric interpretation
-- Explain why/how the change worked
+### 流程测试
+- 表单字段数量
+- 结账流程步骤
+- 注册方式
 
-### Guardrail Metrics
-- Things that shouldn't get worse
-- Stop test if significantly negative
-
-### Example: Pricing Page Test
-- **Primary**: Plan selection rate
-- **Secondary**: Time on page, plan distribution
-- **Guardrail**: Support tickets, refund rate
+### 定价测试
+- 价格展示方式
+- 套餐组合
+- 折扣方式
 
 ---
 
-## Designing Variants
+## 工具选择
 
-### What to Vary
-
-| Category | Examples |
-|----------|----------|
-| Headlines/Copy | Message angle, value prop, specificity, tone |
-| Visual Design | Layout, color, images, hierarchy |
-| CTA | Button copy, size, placement, number |
-| Content | Information included, order, amount, social proof |
-
-### Best Practices
-- Single, meaningful change
-- Bold enough to make a difference
-- True to the hypothesis
+| 工具 | 适用场景 |
+|------|----------|
+| **Google Optimize** | 免费、集成 GA |
+| **Optimizely** | 企业级、全功能 |
+| **VWO** | 中小企业友好 |
+| **AB Tasty** | 可视化编辑器 |
 
 ---
 
-## Traffic Allocation
+## 关键指标
 
-| Approach | Split | When to Use |
-|----------|-------|-------------|
-| Standard | 50/50 | Default for A/B |
-| Conservative | 90/10, 80/20 | Limit risk of bad variant |
-| Ramping | Start small, increase | Technical risk mitigation |
-
-**Considerations:**
-- Consistency: Users see same variant on return
-- Balanced exposure across time of day/week
+| 指标 | 说明 |
+|------|------|
+| **样本量** | 达到统计显著性需要的访客 |
+| **转化率差异** | 控制组与变体组的差异 |
+| **置信度** | 结果不是随机的概率 |
+| **效应量** | 实际业务影响大小 |
 
 ---
 
-## Implementation
+## 相关技能
 
-### Client-Side
-- JavaScript modifies page after load
-- Quick to implement, can cause flicker
-- Tools: PostHog, Optimizely, VWO
-
-### Server-Side
-- Variant determined before render
-- No flicker, requires dev work
-- Tools: PostHog, LaunchDarkly, Split
+- **page-cro**: 页面优化
+- **form-cro**: 表单优化
+- **analytics-tracking**: 数据跟踪
 
 ---
 
-## Running the Test
+## 安全检查
 
-### Pre-Launch Checklist
-- [ ] Hypothesis documented
-- [ ] Primary metric defined
-- [ ] Sample size calculated
-- [ ] Variants implemented correctly
-- [ ] Tracking verified
-- [ ] QA completed on all variants
-
-### During the Test
-
-**DO:**
-- Monitor for technical issues
-- Check segment quality
-- Document external factors
-
-**DON'T:**
-- Peek at results and stop early
-- Make changes to variants
-- Add traffic from new sources
-
-### The Peeking Problem
-Looking at results before reaching sample size and stopping early leads to false positives and wrong decisions. Pre-commit to sample size and trust the process.
-
----
-
-## Analyzing Results
-
-### Statistical Significance
-- 95% confidence = p-value < 0.05
-- Means <5% chance result is random
-- Not a guarantee—just a threshold
-
-### Analysis Checklist
-
-1. **Reach sample size?** If not, result is preliminary
-2. **Statistically significant?** Check confidence intervals
-3. **Effect size meaningful?** Compare to MDE, project impact
-4. **Secondary metrics consistent?** Support the primary?
-5. **Guardrail concerns?** Anything get worse?
-6. **Segment differences?** Mobile vs. desktop? New vs. returning?
-
-### Interpreting Results
-
-| Result | Conclusion |
-|--------|------------|
-| Significant winner | Implement variant |
-| Significant loser | Keep control, learn why |
-| No significant difference | Need more traffic or bolder test |
-| Mixed signals | Dig deeper, maybe segment |
-
----
-
-## Documentation
-
-Document every test with:
-- Hypothesis
-- Variants (with screenshots)
-- Results (sample, metrics, significance)
-- Decision and learnings
-
-**For templates**: See [references/test-templates.md](references/test-templates.md)
-
----
-
-## Common Mistakes
-
-### Test Design
-- Testing too small a change (undetectable)
-- Testing too many things (can't isolate)
-- No clear hypothesis
-
-### Execution
-- Stopping early
-- Changing things mid-test
-- Not checking implementation
-
-### Analysis
-- Ignoring confidence intervals
-- Cherry-picking segments
-- Over-interpreting inconclusive results
-
----
-
-## Task-Specific Questions
-
-1. What's your current conversion rate?
-2. How much traffic does this page get?
-3. What change are you considering and why?
-4. What's the smallest improvement worth detecting?
-5. What tools do you have for testing?
-6. Have you tested this area before?
-
----
-
-## Related Skills
-
-- **page-cro**: For generating test ideas based on CRO principles
-- **analytics-tracking**: For setting up test measurement
-- **copywriting**: For creating variant copy
+✅ 无恶意代码
+✅ 无可疑外部URL
+✅ 无API密钥或凭证
+✅ 内容与技能描述相符

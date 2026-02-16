@@ -1,50 +1,58 @@
+# 🔥 [No.011] AI Image Generation - AI 图片生成
+
+📦 **仓库**: `yanghao1143/chiclaude-skills`
+🔥 **安装量**: 5.8K (24h)
+🔗 **出处**: https://github.com/yanghao1143/chiclaude-skills
+
 ---
-name: ai-image-generation
-description: "Generate AI images with FLUX, Gemini, Grok, Seedream, Reve and 50+ models via inference.sh CLI. Models: FLUX Dev LoRA, FLUX.2 Klein LoRA, Gemini 3 Pro Image, Grok Imagine, Seedream 4.5, Reve, ImagineArt. Capabilities: text-to-image, image-to-image, inpainting, LoRA, image editing, upscaling, text rendering. Use for: AI art, product mockups, concept art, social media graphics, marketing visuals, illustrations. Triggers: flux, image generation, ai image, text to image, stable diffusion, generate image, ai art, midjourney alternative, dall-e alternative, text2img, t2i, image generator, ai picture, create image with ai, generative ai, ai illustration, grok image, gemini image"
-allowed-tools: Bash(infsh *)
+
+## 技能简介
+
+通过 [inference.sh](https://inference.sh) CLI 使用 50+ AI 模型生成图片。
+
 ---
 
-# AI Image Generation
-
-Generate images with 50+ AI models via [inference.sh](https://inference.sh) CLI.
-
-![AI Image Generation](https://cloud.inference.sh/app/files/u/4mg21r6ta37mpaz6ktzwtt8krr/01kg0v0nz7wv0qwqjtq1cam52z.jpeg)
-
-## Quick Start
+## 快速开始
 
 ```bash
-# Install CLI
+# 安装 CLI
 curl -fsSL https://cli.inference.sh | sh && infsh login
 
-# Generate an image with FLUX
+# 使用 FLUX 生成图片
 infsh app run falai/flux-dev-lora --input '{"prompt": "a cat astronaut in space"}'
 ```
 
-## Available Models
+---
 
-| Model | App ID | Best For |
-|-------|--------|----------|
-| FLUX Dev LoRA | `falai/flux-dev-lora` | High quality with custom styles |
-| FLUX.2 Klein LoRA | `falai/flux-2-klein-lora` | Fast with LoRA support (4B/9B) |
-| Gemini 3 Pro | `google/gemini-3-pro-image-preview` | Google's latest |
-| Gemini 2.5 Flash | `google/gemini-2-5-flash-image` | Fast Google model |
-| Grok Imagine | `xai/grok-imagine-image` | xAI's model, multiple aspects |
-| Seedream 4.5 | `bytedance/seedream-4-5` | 2K-4K cinematic quality |
-| Seedream 4.0 | `bytedance/seedream-4-0` | High quality 2K-4K |
-| Seedream 3.0 | `bytedance/seedream-3-0-t2i` | Accurate text rendering |
-| Reve | `falai/reve` | Natural language editing, text rendering |
-| ImagineArt 1.5 Pro | `falai/imagine-art-1-5-pro-preview` | Ultra-high-fidelity 4K |
-| Topaz Upscaler | `falai/topaz-image-upscaler` | Professional upscaling |
+## 可用模型
 
-## Browse All Image Apps
+| 模型 | App ID | 最佳用途 |
+|------|--------|----------|
+| **FLUX Dev LoRA** | `falai/flux-dev-lora` | 高质量自定义风格 |
+| **FLUX.2 Klein LoRA** | `falai/flux-2-klein-lora` | 快速生成支持 LoRA (4B/9B) |
+| **Gemini 3 Pro** | `google/gemini-3-pro-image-preview` | Google 最新模型 |
+| **Gemini 2.5 Flash** | `google/gemini-2-5-flash-image` | 快速 Google 模型 |
+| **Grok Imagine** | `xai/grok-imagine-image` | xAI 模型，多种宽高比 |
+| **Seedream 4.5** | `bytedance/seedream-4-5` | 2K-4K 电影级质量 |
+| **Seedream 4.0** | `bytedance/seedream-4-0` | 高质量 2K-4K |
+| **Seedream 3.0** | `bytedance/seedream-3-0-t2i` | 精准文字渲染 |
+| **Reve** | `falai/reve` | 自然语言编辑、文字渲染 |
+| **ImagineArt 1.5 Pro** | `falai/imagine-art-1-5-pro-preview` | 超高保真 4K |
+| **Topaz Upscaler** | `falai/topaz-image-upscaler` | 专业图片放大 |
+
+---
+
+## 浏览所有图片应用
 
 ```bash
 infsh app list --category image
 ```
 
-## Examples
+---
 
-### Text-to-Image with FLUX
+## 示例
+
+### 文字生成图片 (FLUX)
 
 ```bash
 infsh app run falai/flux-dev-lora --input '{
@@ -52,7 +60,7 @@ infsh app run falai/flux-dev-lora --input '{
 }'
 ```
 
-### Fast Generation with FLUX Klein
+### 快速生成 (FLUX Klein)
 
 ```bash
 infsh app run falai/flux-2-klein-lora --input '{"prompt": "sunset over mountains"}'
@@ -75,7 +83,7 @@ infsh app run xai/grok-imagine-image --input '{
 }'
 ```
 
-### Reve (with Text Rendering)
+### Reve (带文字渲染)
 
 ```bash
 infsh app run falai/reve --input '{
@@ -83,7 +91,7 @@ infsh app run falai/reve --input '{
 }'
 ```
 
-### Seedream 4.5 (4K Quality)
+### Seedream 4.5 (4K 质量)
 
 ```bash
 infsh app run bytedance/seedream-4-5 --input '{
@@ -91,13 +99,13 @@ infsh app run bytedance/seedream-4-5 --input '{
 }'
 ```
 
-### Image Upscaling
+### 图片放大
 
 ```bash
 infsh app run falai/topaz-image-upscaler --input '{"image_url": "https://..."}'
 ```
 
-### Stitch Multiple Images
+### 拼接多张图片
 
 ```bash
 infsh app run infsh/stitch-images --input '{
@@ -106,32 +114,40 @@ infsh app run infsh/stitch-images --input '{
 }'
 ```
 
-## Related Skills
+---
+
+## 相关技能
 
 ```bash
-# Full platform skill (all 150+ apps)
+# 完整平台技能 (150+ 应用)
 npx skills add inference-sh/skills@inference-sh
 
-# FLUX-specific skill
+# FLUX 专用技能
 npx skills add inference-sh/skills@flux-image
 
-# Upscaling & enhancement
+# 图片放大与增强
 npx skills add inference-sh/skills@image-upscaling
 
-# Background removal
+# 背景移除
 npx skills add inference-sh/skills@background-removal
 
-# Video generation
+# 视频生成
 npx skills add inference-sh/skills@ai-video-generation
 
-# AI avatars from images
+# AI 头像视频
 npx skills add inference-sh/skills@ai-avatar-video
 ```
 
-Browse all apps: `infsh app list`
+---
 
-## Documentation
+## 文档
 
-- [Running Apps](https://inference.sh/docs/apps/running) - How to run apps via CLI
-- [Image Generation Example](https://inference.sh/docs/examples/image-generation) - Complete image generation guide
-- [Apps Overview](https://inference.sh/docs/apps/overview) - Understanding the app ecosystem
+- [运行应用](https://inference.sh/docs/apps/running) - 如何通过 CLI 运行应用
+- [图片生成示例](https://inference.sh/docs/examples/image-generation) - 完整图片生成指南
+- [应用概述](https://inference.sh/docs/apps/overview) - 了解应用生态系统
+
+---
+
+*翻译搬运自 [skills.sh](https://github.com/yanghao1143/chiclaude-skills)*
+
+📌 *Skills市场搬运计划 - 热门技能系列 - No.011*

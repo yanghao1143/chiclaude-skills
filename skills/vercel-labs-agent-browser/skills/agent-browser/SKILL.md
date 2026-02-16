@@ -1,74 +1,93 @@
+# Agent Browser - 浏览器自动化
+
+📦 **仓库**: `yanghao1143/chiclaude-skills`
+🔥 **安装量**: 36.7K
+🔗 **出处**: https://github.com/yanghao1143/chiclaude-skills
+
 ---
-name: agent-browser
-description: Browser automation CLI for AI agents. Use when the user needs to interact with websites, including navigating pages, filling forms, clicking buttons, taking screenshots, extracting data, testing web apps, or automating any browser task. Triggers include requests to "open a website", "fill out a form", "click a button", "take a screenshot", "scrape data from a page", "test this web app", "login to a site", "automate browser actions", or any task requiring programmatic web interaction.
-allowed-tools: Bash(agent-browser:*)
+
+## 技能简介
+
+使用 agent-browser 进行浏览器自动化。这是一个强大的命令行工具，用于控制浏览器、执行自动化任务、提取数据等。
+
 ---
 
-# Browser Automation with agent-browser
+## 核心工作流程
 
-## Core Workflow
+每个浏览器自动化都遵循此模式：
 
-Every browser automation follows this pattern:
-
-1. **Navigate**: `agent-browser open <url>`
-2. **Snapshot**: `agent-browser snapshot -i` (get element refs like `@e1`, `@e2`)
-3. **Interact**: Use refs to click, fill, select
-4. **Re-snapshot**: After navigation or DOM changes, get fresh refs
+1. **导航**: `agent-browser open`
+2. **快照**: `agent-browser snapshot -i` (获取元素引用如 @e1, @e2)
+3. **交互**: 使用引用进行点击、填充、选择
+4. **重新快照**: 导航或 DOM 更改后，获取新的引用
 
 ```bash
 agent-browser open https://example.com/form
 agent-browser snapshot -i
-# Output: @e1 [input type="email"], @e2 [input type="password"], @e3 [button] "Submit"
+# 输出: @e1 [input type="email"], @e2 [input type="password"], @e3 [button] "Submit"
 
 agent-browser fill @e1 "user@example.com"
 agent-browser fill @e2 "password123"
 agent-browser click @e3
 agent-browser wait --load networkidle
-agent-browser snapshot -i  # Check result
+agent-browser snapshot -i # 检查结果
 ```
 
-## Essential Commands
+---
 
+## 核心命令
+
+### 导航
 ```bash
-# Navigation
-agent-browser open <url>              # Navigate (aliases: goto, navigate)
-agent-browser close                   # Close browser
-
-# Snapshot
-agent-browser snapshot -i             # Interactive elements with refs (recommended)
-agent-browser snapshot -i -C          # Include cursor-interactive elements (divs with onclick, cursor:pointer)
-agent-browser snapshot -s "#selector" # Scope to CSS selector
-
-# Interaction (use @refs from snapshot)
-agent-browser click @e1               # Click element
-agent-browser fill @e2 "text"         # Clear and type text
-agent-browser type @e2 "text"         # Type without clearing
-agent-browser select @e1 "option"     # Select dropdown option
-agent-browser check @e1               # Check checkbox
-agent-browser press Enter             # Press key
-agent-browser scroll down 500         # Scroll page
-
-# Get information
-agent-browser get text @e1            # Get element text
-agent-browser get url                 # Get current URL
-agent-browser get title               # Get page title
-
-# Wait
-agent-browser wait @e1                # Wait for element
-agent-browser wait --load networkidle # Wait for network idle
-agent-browser wait --url "**/page"    # Wait for URL pattern
-agent-browser wait 2000               # Wait milliseconds
-
-# Capture
-agent-browser screenshot              # Screenshot to temp dir
-agent-browser screenshot --full       # Full page screenshot
-agent-browser pdf output.pdf          # Save as PDF
+agent-browser open <url>          # 导航 (别名: goto, navigate)
+agent-browser close               # 关闭浏览器
 ```
 
-## Common Patterns
+### 快照
+```bash
+agent-browser snapshot -i         # 带引用的交互元素 (推荐)
+agent-browser snapshot -i -C      # 包含光标交互元素 (带 onclick、cursor:pointer 的 div)
+agent-browser snapshot -s "#selector"  # 仅限 CSS 选择器范围
+```
 
-### Form Submission
+### 交互 (使用快照中的 @ 引用)
+```bash
+agent-browser click @e1           # 点击元素
+agent-browser fill @e2 "text"     # 清除并输入文本
+agent-browser type @e2 "text"     # 输入而不清除
+agent-browser select @e1 "option" # 选择下拉选项
+agent-browser check @e1           # 勾选复选框
+agent-browser press Enter         # 按键
+agent-browser scroll down 500     # 滚动页面
+```
 
+### 获取信息
+```bash
+agent-browser get text @e1        # 获取元素文本
+agent-browser get url             # 获取当前 URL
+agent-browser get title           # 获取页面标题
+```
+
+### 等待
+```bash
+agent-browser wait @e1            # 等待元素
+agent-browser wait --load networkidle        # 等待网络空闲
+agent-browser wait --url "**/page"           # 等待 URL 模式
+agent-browser wait 2000                      # 等待毫秒数
+```
+
+### 捕获
+```bash
+agent-browser screenshot          # 截图到临时目录
+agent-browser screenshot --full   # 全页截图
+agent-browser pdf output.pdf      # 保存为 PDF
+```
+
+---
+
+## 常见模式
+
+### 表单提交
 ```bash
 agent-browser open https://example.com/signup
 agent-browser snapshot -i
@@ -80,10 +99,9 @@ agent-browser click @e5
 agent-browser wait --load networkidle
 ```
 
-### Authentication with State Persistence
-
+### 带状态持久化的认证
 ```bash
-# Login once and save state
+# 登录一次并保存状态
 agent-browser open https://app.example.com/login
 agent-browser snapshot -i
 agent-browser fill @e1 "$USERNAME"
@@ -92,48 +110,45 @@ agent-browser click @e3
 agent-browser wait --url "**/dashboard"
 agent-browser state save auth.json
 
-# Reuse in future sessions
+# 在未来的会话中重用
 agent-browser state load auth.json
 agent-browser open https://app.example.com/dashboard
 ```
 
-### Session Persistence
-
+### 会话持久化
 ```bash
-# Auto-save/restore cookies and localStorage across browser restarts
+# 在浏览器重启之间自动保存/恢复 cookies 和 localStorage
 agent-browser --session-name myapp open https://app.example.com/login
-# ... login flow ...
-agent-browser close  # State auto-saved to ~/.agent-browser/sessions/
+# ... 登录流程 ...
+agent-browser close  # 状态自动保存到 ~/.agent-browser/sessions/
 
-# Next time, state is auto-loaded
+# 下次，状态自动加载
 agent-browser --session-name myapp open https://app.example.com/dashboard
 
-# Encrypt state at rest
+# 加密静态状态
 export AGENT_BROWSER_ENCRYPTION_KEY=$(openssl rand -hex 32)
 agent-browser --session-name secure open https://app.example.com
 
-# Manage saved states
+# 管理保存的状态
 agent-browser state list
 agent-browser state show myapp-default.json
 agent-browser state clear myapp
 agent-browser state clean --older-than 7
 ```
 
-### Data Extraction
-
+### 数据提取
 ```bash
 agent-browser open https://example.com/products
 agent-browser snapshot -i
-agent-browser get text @e5           # Get specific element text
-agent-browser get text body > page.txt  # Get all page text
+agent-browser get text @e5  # 获取特定元素文本
+agent-browser get text body > page.txt  # 获取所有页面文本
 
-# JSON output for parsing
+# JSON 输出用于解析
 agent-browser snapshot -i --json
 agent-browser get text @e1 --json
 ```
 
-### Parallel Sessions
-
+### 并行会话
 ```bash
 agent-browser --session site1 open https://site-a.com
 agent-browser --session site2 open https://site-b.com
@@ -144,77 +159,44 @@ agent-browser --session site2 snapshot -i
 agent-browser session list
 ```
 
-### Connect to Existing Chrome
-
+### 连接到现有 Chrome
 ```bash
-# Auto-discover running Chrome with remote debugging enabled
+# 自动发现启用远程调试的运行中 Chrome
 agent-browser --auto-connect open https://example.com
 agent-browser --auto-connect snapshot
 
-# Or with explicit CDP port
+# 或使用显式 CDP 端口
 agent-browser --cdp 9222 snapshot
 ```
 
-### Visual Browser (Debugging)
-
+### 可视化浏览器 (调试)
 ```bash
 agent-browser --headed open https://example.com
-agent-browser highlight @e1          # Highlight element
-agent-browser record start demo.webm # Record session
+agent-browser highlight @e1  # 高亮元素
+agent-browser record start demo.webm  # 记录会话
 ```
 
-### Local Files (PDFs, HTML)
+---
+
+## 引用生命周期 (重要)
+
+当页面更改时，引用 (@e1, @e2 等) 会失效。在以下操作后总是**重新快照**：
+
+- 点击导航的链接或按钮
+- 表单提交
+- 动态内容加载（下拉菜单、模态框）
 
 ```bash
-# Open local files with file:// URLs
-agent-browser --allow-file-access open file:///path/to/document.pdf
-agent-browser --allow-file-access open file:///path/to/page.html
-agent-browser screenshot output.png
+agent-browser click @e5  # 导航到新页面
+agent-browser snapshot -i  # 必须重新快照
+agent-browser click @e1  # 使用新的引用
 ```
 
-### iOS Simulator (Mobile Safari)
+---
 
-```bash
-# List available iOS simulators
-agent-browser device list
+## 语义定位器 (引用的替代方案)
 
-# Launch Safari on a specific device
-agent-browser -p ios --device "iPhone 16 Pro" open https://example.com
-
-# Same workflow as desktop - snapshot, interact, re-snapshot
-agent-browser -p ios snapshot -i
-agent-browser -p ios tap @e1          # Tap (alias for click)
-agent-browser -p ios fill @e2 "text"
-agent-browser -p ios swipe up         # Mobile-specific gesture
-
-# Take screenshot
-agent-browser -p ios screenshot mobile.png
-
-# Close session (shuts down simulator)
-agent-browser -p ios close
-```
-
-**Requirements:** macOS with Xcode, Appium (`npm install -g appium && appium driver install xcuitest`)
-
-**Real devices:** Works with physical iOS devices if pre-configured. Use `--device "<UDID>"` where UDID is from `xcrun xctrace list devices`.
-
-## Ref Lifecycle (Important)
-
-Refs (`@e1`, `@e2`, etc.) are invalidated when the page changes. Always re-snapshot after:
-
-- Clicking links or buttons that navigate
-- Form submissions
-- Dynamic content loading (dropdowns, modals)
-
-```bash
-agent-browser click @e5              # Navigates to new page
-agent-browser snapshot -i            # MUST re-snapshot
-agent-browser click @e1              # Use new refs
-```
-
-## Semantic Locators (Alternative to Refs)
-
-When refs are unavailable or unreliable, use semantic locators:
+当引用不可用或不可靠时，使用语义定位器：
 
 ```bash
 agent-browser find text "Sign In" click
@@ -224,16 +206,18 @@ agent-browser find placeholder "Search" type "query"
 agent-browser find testid "submit-btn" click
 ```
 
-## JavaScript Evaluation (eval)
+---
 
-Use `eval` to run JavaScript in the browser context. **Shell quoting can corrupt complex expressions** -- use `--stdin` or `-b` to avoid issues.
+## JavaScript 评估 (eval)
+
+使用 eval 在浏览器上下文中运行 JavaScript。Shell 引用可能会损坏复杂表达式 -- 使用 --stdin 或 -b 来避免问题。
 
 ```bash
-# Simple expressions work with regular quoting
+# 简单的表达式使用常规引号即可
 agent-browser eval 'document.title'
 agent-browser eval 'document.querySelectorAll("img").length'
 
-# Complex JS: use --stdin with heredoc (RECOMMENDED)
+# 复杂 JS：使用 --stdin 配合 heredoc (推荐)
 agent-browser eval --stdin <<'EVALEOF'
 JSON.stringify(
   Array.from(document.querySelectorAll("img"))
@@ -242,38 +226,58 @@ JSON.stringify(
 )
 EVALEOF
 
-# Alternative: base64 encoding (avoids all shell escaping issues)
+# 替代方案：base64 编码 (避免所有 shell 转义问题)
 agent-browser eval -b "$(echo -n 'Array.from(document.querySelectorAll("a")).map(a => a.href)' | base64)"
 ```
 
-**Why this matters:** When the shell processes your command, inner double quotes, `!` characters (history expansion), backticks, and `$()` can all corrupt the JavaScript before it reaches agent-browser. The `--stdin` and `-b` flags bypass shell interpretation entirely.
+**为什么这很重要**：当 shell 处理你的命令时，内部双引号、! 字符（历史扩展）、反引号和 $() 都可能在到达 agent-browser 之前损坏 JavaScript。--stdin 和 -b 标志完全绕过 shell 解释。
 
-**Rules of thumb:**
-- Single-line, no nested quotes -> regular `eval 'expression'` with single quotes is fine
-- Nested quotes, arrow functions, template literals, or multiline -> use `eval --stdin <<'EVALEOF'`
-- Programmatic/generated scripts -> use `eval -b` with base64
+**经验法则**：
+- 单行、无嵌套引号 → 常规 eval 'expression' 配合单引号即可
+- 嵌套引号、箭头函数、模板字面量或多行 → 使用 eval --stdin 或 eval -b 配合 base64
 
-## Deep-Dive Documentation
+---
 
-| Reference | When to Use |
-|-----------|-------------|
-| [references/commands.md](references/commands.md) | Full command reference with all options |
-| [references/snapshot-refs.md](references/snapshot-refs.md) | Ref lifecycle, invalidation rules, troubleshooting |
-| [references/session-management.md](references/session-management.md) | Parallel sessions, state persistence, concurrent scraping |
-| [references/authentication.md](references/authentication.md) | Login flows, OAuth, 2FA handling, state reuse |
-| [references/video-recording.md](references/video-recording.md) | Recording workflows for debugging and documentation |
-| [references/proxy-support.md](references/proxy-support.md) | Proxy configuration, geo-testing, rotating proxies |
+## 深入文档
 
-## Ready-to-Use Templates
+| 参考 | 何时使用 |
+|------|----------|
+| [commands.md](https://github.com/vercel-labs/agent-browser/blob/HEAD/skills/agent-browser/references/commands.md) | 完整命令参考及所有选项 |
+| [snapshot-refs.md](https://github.com/vercel-labs/agent-browser/blob/HEAD/skills/agent-browser/references/snapshot-refs.md) | 引用生命周期、失效规则、故障排除 |
+| [session-management.md](https://github.com/vercel-labs/agent-browser/blob/HEAD/skills/agent-browser/references/session-management.md) | 并行会话、状态持久化、并发抓取 |
+| [authentication.md](https://github.com/vercel-labs/agent-browser/blob/HEAD/skills/agent-browser/references/authentication.md) | 登录流程、OAuth、2FA 处理、状态重用 |
+| [video-recording.md](https://github.com/vercel-labs/agent-browser/blob/HEAD/skills/agent-browser/references/video-recording.md) | 记录工作流以进行调试和文档 |
+| [proxy-support.md](https://github.com/vercel-labs/agent-browser/blob/HEAD/skills/agent-browser/references/proxy-support.md) | 代理配置、地理位置测试、轮换代理 |
 
-| Template | Description |
-|----------|-------------|
-| [templates/form-automation.sh](templates/form-automation.sh) | Form filling with validation |
-| [templates/authenticated-session.sh](templates/authenticated-session.sh) | Login once, reuse state |
-| [templates/capture-workflow.sh](templates/capture-workflow.sh) | Content extraction with screenshots |
+---
+
+## 即用型模板
+
+| 模板 | 描述 |
+|------|------|
+| [form-automation.sh](https://github.com/vercel-labs/agent-browser/blob/HEAD/skills/agent-browser/templates/form-automation.sh) | 带验证的表单填充 |
+| [authenticated-session.sh](https://github.com/vercel-labs/agent-browser/blob/HEAD/skills/agent-browser/templates/authenticated-session.sh) | 登录一次，重用状态 |
+| [capture-workflow.sh](https://github.com/vercel-labs/agent-browser/blob/HEAD/skills/agent-browser/templates/capture-workflow.sh) | 带截图的内容提取 |
 
 ```bash
 ./templates/form-automation.sh https://example.com/form
 ./templates/authenticated-session.sh https://app.example.com/login
 ./templates/capture-workflow.sh https://example.com ./output
 ```
+
+---
+
+## 典型应用场景
+
+- Web 自动化测试
+- 数据抓取和采集
+- 表单自动填写
+- 定期报告生成
+- 网站监控
+- 竞品价格监控
+- SEO 数据收集
+- 社交媒体自动化
+
+---
+
+*翻译搬运自 [skills.sh](https://github.com/yanghao1143/chiclaude-skills)*

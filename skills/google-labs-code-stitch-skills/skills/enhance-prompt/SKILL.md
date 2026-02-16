@@ -1,204 +1,166 @@
+# 提示词增强 - Enhance Prompt for Stitch
+
+> **原始仓库**: `google-labs-code/stitch-skills/enhance-prompt`
+> **安装量**: 3.9K
+> **翻译日期**: 2026-02-15
+> **原文链接**: https://github.com/yanghao1143/chiclaude-skills
+
 ---
-name: enhance-prompt
-description: Transforms vague UI ideas into polished, Stitch-optimized prompts. Enhances specificity, adds UI/UX keywords, injects design system context, and structures output for better generation results.
-allowed-tools:
-  - "Read"
-  - "Write"
+
+## 📖 技能简介
+
+将模糊的 UI 想法转换为经过优化的、适合 Stitch 的提示词。增强具体性，添加 UI/UX 关键词，注入设计系统上下文，并构建输出结构以获得更好的生成结果。
+
 ---
 
-# Enhance Prompt for Stitch
+## 🎯 何时使用此技能
 
-You are a **Stitch Prompt Engineer**. Your job is to transform rough or vague UI generation ideas into polished, optimized prompts that produce better results from Stitch.
+当用户想要以下操作时使用：
 
-## Prerequisites
+- 在发送到 Stitch 之前润色 UI 提示词
+- 改进产生不佳结果的提示词
+- 为简单想法添加设计系统一致性
+- 将模糊概念构建为可操作的提示词
 
-Before enhancing prompts, consult the official Stitch documentation for the latest best practices:
-
-- **Stitch Effective Prompting Guide**: https://stitch.withgoogle.com/docs/learn/prompting/
-
-This guide contains up-to-date recommendations that may supersede or complement the patterns in this skill.
-
-## When to Use This Skill
-
-Activate when a user wants to:
-- Polish a UI prompt before sending to Stitch
-- Improve a prompt that produced poor results
-- Add design system consistency to a simple idea
-- Structure a vague concept into an actionable prompt
-
-## Enhancement Pipeline
-
-Follow these steps to enhance any prompt:
-
-### Step 1: Assess the Input
-
-Evaluate what's missing from the user's prompt:
-
-| Element | Check for | If missing... |
-|---------|-----------|---------------|
-| **Platform** | "web", "mobile", "desktop" | Add based on context or ask |
-| **Page type** | "landing page", "dashboard", "form" | Infer from description |
-| **Structure** | Numbered sections/components | Create logical page structure |
-| **Visual style** | Adjectives, mood, vibe | Add appropriate descriptors |
-| **Colors** | Specific values or roles | Add design system or suggest |
-| **Components** | UI-specific terms | Translate to proper keywords |
-
-### Step 2: Check for DESIGN.md
-
-Look for a `DESIGN.md` file in the current project:
-
-**If DESIGN.md exists:**
-1. Read the file to extract the design system block
-2. Include the color palette, typography, and component styles
-3. Format as a "DESIGN SYSTEM (REQUIRED)" section in the output
-
-**If DESIGN.md does not exist:**
-1. Add this note at the end of the enhanced prompt:
-
-```
 ---
-💡 **Tip:** For consistent designs across multiple screens, create a DESIGN.md 
-file using the `design-md` skill. This ensures all generated pages share the 
-same visual language.
-```
 
-### Step 3: Apply Enhancements
+## 🔄 增强流程
 
-Transform the input using these techniques:
+### 第 1 步：评估输入
 
-#### A. Add UI/UX Keywords
+评估用户提示词缺少什么：
 
-Replace vague terms with specific component names:
+| 元素 | 检查项 | 如果缺失... |
+|------|--------|-------------|
+| **平台** | "web", "mobile", "desktop" | 根据上下文添加或询问 |
+| **页面类型** | "landing page", "dashboard", "form" | 从描述推断 |
+| **结构** | 编号的章节/组件 | 创建逻辑页面结构 |
+| **视觉风格** | 形容词、情绪、氛围 | 添加适当的描述符 |
+| **颜色** | 具体值或角色 | 添加设计系统或建议 |
+| **组件** | UI 特定术语 | 转换为正确的关键词 |
 
-| Vague | Enhanced |
-|-------|----------|
-| "menu at the top" | "navigation bar with logo and menu items" |
-| "button" | "primary call-to-action button" |
-| "list of items" | "card grid layout" or "vertical list with thumbnails" |
-| "form" | "form with labeled input fields and submit button" |
-| "picture area" | "hero section with full-width image" |
+### 第 2 步：检查 DESIGN.md
 
-#### B. Amplify the Vibe
+查找项目中的 `DESIGN.md` 文件：
 
-Add descriptive adjectives to set the mood:
+**如果存在：**
+1. 读取文件提取设计系统块
+2. 包含调色板、排版和组件样式
 
-| Basic | Enhanced |
-|-------|----------|
-| "modern" | "clean, minimal, with generous whitespace" |
-| "professional" | "sophisticated, trustworthy, with subtle shadows" |
-| "fun" | "vibrant, playful, with rounded corners and bold colors" |
-| "dark mode" | "dark theme with high-contrast accents on deep backgrounds" |
+**如果不存在：**
+添加提示建议创建 DESIGN.md 以保持一致性
 
-#### C. Structure the Page
+---
 
-Organize content into numbered sections:
+## 🔧 增强技术
+
+### A. 添加 UI/UX 关键词
+
+| 模糊 | 增强 |
+|------|------|
+| "顶部菜单" | "带 logo 和菜单项的导航栏" |
+| "按钮" | "主要行动号召按钮" |
+| "项目列表" | "卡片网格布局" 或 "带缩略图的垂直列表" |
+| "表单" | "带标签输入字段和提交按钮的表单" |
+| "图片区域" | "全宽度图片的英雄区域" |
+
+### B. 放大氛围
+
+| 基本 | 增强 |
+|------|------|
+| "现代" | "干净、极简、有充足的留白" |
+| "专业" | "精致、可信赖、有微妙的阴影" |
+| "有趣" | "充满活力、有趣、有圆角和大胆的颜色" |
+| "深色模式" | "深色主题、深色背景上的高对比度强调色" |
+
+### C. 结构化页面
 
 ```markdown
-**Page Structure:**
-1. **Header:** Navigation with logo and menu items
-2. **Hero Section:** Headline, subtext, and primary CTA
-3. **Content Area:** [Describe the main content]
-4. **Footer:** Links, social icons, copyright
+**页面结构：**
+1. **头部：** 带 logo 和菜单项的导航
+2. **英雄区域：** 标题、副标题和主要 CTA
+3. **内容区域：** [描述主要内容]
+4. **页脚：** 链接、社交图标、版权
 ```
 
-#### D. Format Colors Properly
+### D. 正确格式化颜色
 
-When colors are mentioned, format them as:
 ```
-Descriptive Name (#hexcode) for functional role
+描述性名称 (#hexcode) 用于功能角色
 ```
 
-Examples:
-- "Deep Ocean Blue (#1a365d) for primary buttons and links"
-- "Warm Cream (#faf5f0) for page background"
-- "Soft Gray (#6b7280) for secondary text"
+示例：
+- "深海蓝 (#1a365d) 用于主要按钮和链接"
+- "暖奶油色 (#faf5f0) 用于页面背景"
+- "柔灰色 (#6b7280) 用于次要文本"
 
-### Step 4: Format the Output
+---
 
-Structure the enhanced prompt in this order:
+## 📝 输出格式
 
 ```markdown
-[One-line description of the page purpose and vibe]
+[一行描述页面目的和氛围]
 
-**DESIGN SYSTEM (REQUIRED):**
-- Platform: [Web/Mobile], [Desktop/Mobile]-first
-- Theme: [Light/Dark], [style descriptors]
-- Background: [Color description] (#hex)
-- Primary Accent: [Color description] (#hex) for [role]
-- Text Primary: [Color description] (#hex)
-- [Additional design tokens...]
+**设计系统（必需）：**
+- 平台：[Web/Mobile], [Desktop/Mobile]-first
+- 主题：[Light/Dark], [风格描述]
+- 背景：[颜色描述] (#hex)
+- 主要强调色：[颜色描述] (#hex) 用于 [角色]
+- 主文本：[颜色描述] (#hex)
 
-**Page Structure:**
-1. **[Section]:** [Description]
-2. **[Section]:** [Description]
+**页面结构：**
+1. **[部分]：** [描述]
+2. **[部分]：** [描述]
 ...
 ```
 
-## Output Options
+---
 
-**Default:** Return the enhanced prompt as text for the user to copy.
+## 💡 示例
 
-**Optional file output:** If the user requests, write to a file:
-- `next-prompt.md` — for use with the `stitch-loop` skill
-- Custom filename specified by user
+### 输入 → 结构化提示词
 
-## Examples
+**用户输入：**
+> "给我做一个登录页面"
 
-### Example 1: Vague Input → Structured Prompt
-
-**User input:**
-> "make me a login page"
-
-**Enhanced output:**
+**增强输出：**
 ```markdown
-A clean, trustworthy login page with a centered form and subtle branding.
+一个干净、可信赖的登录页面，带有居中表单和微妙的品牌元素。
 
-**DESIGN SYSTEM (REQUIRED):**
-- Platform: Web, Desktop-first
-- Theme: Light, minimal, professional
-- Background: Clean White (#ffffff)
-- Surface: Soft Gray (#f9fafb) for form card
-- Primary Accent: Deep Blue (#2563eb) for submit button and links
-- Text Primary: Near Black (#111827) for headings
-- Text Secondary: Medium Gray (#6b7280) for labels
-- Buttons: Subtly rounded (8px), full-width on form
-- Cards: Gently rounded (12px), soft shadow for elevation
+**设计系统（必需）：**
+- 平台：Web, Desktop-first
+- 主题：浅色、极简、专业
+- 背景：纯净白 (#ffffff)
+- 表面：柔灰色 (#f9fafb) 用于表单卡片
+- 主要强调色：深蓝色 (#2563eb) 用于提交按钮和链接
+- 主文本：近黑色 (#111827) 用于标题
+- 次要文本：中灰色 (#6b7280) 用于标签
 
-**Page Structure:**
-1. **Header:** Minimal logo, centered
-2. **Login Card:** Centered form with email, password fields, "Forgot password?" link
-3. **Submit Button:** Primary blue "Sign In" button
-4. **Footer:** "Don't have an account? Sign up" link
+**页面结构：**
+1. **头部：** 极简 logo，居中
+2. **登录卡片：** 居中表单，包含邮箱、密码字段和"忘记密码？"链接
+3. **提交按钮：** 主要蓝色"登录"按钮
+4. **页脚：** "还没有账号？注册"链接
+```
 
 ---
-💡 **Tip:** For consistent designs across multiple screens, create a DESIGN.md 
-file using the `design-md` skill.
-```
 
-### Example 2: Feature Request → Targeted Edit
+## ✅ 最佳实践提示
 
-**User input:**
-> "add a search bar"
+1. **尽早具体化** - 模糊输入需要更多增强
+2. **匹配用户意图** - 如果他们想要简单，不要过度设计
+3. **保持结构化** - 编号部分帮助 Stitch 理解层次结构
+4. **包含设计系统** - 一致性是多页面项目的关键
+5. **编辑时一次一个更改** - 不要捆绑不相关的更改
 
-**Enhanced output:**
-```markdown
-Add a search bar to the header navigation.
+---
 
-**Specific changes:**
-- Location: Header, right side before user avatar
-- Style: Pill-shaped input with subtle gray background (#f3f4f6)
-- Icon: Magnifying glass icon on the left, inside the input
-- Placeholder: "Search..." in light gray (#9ca3af)
-- Behavior: Expands on focus with subtle shadow
-- Width: 240px default, 320px on focus
+## 🔗 相关链接
 
-**Context:** This is a targeted edit. Make only this change while preserving all existing elements.
-```
+- [原文链接](https://github.com/yanghao1143/chiclaude-skills)
+- [Stitch 官方文档](https://stitch.withgoogle.com/docs/learn/prompting/)
+- [OpenClaw AI 社区](https://chiclaude.com)
 
-## Tips for Best Results
+---
 
-1. **Be specific early** — Vague inputs need more enhancement
-2. **Match the user's intent** — Don't over-design if they want simple
-3. **Keep it structured** — Numbered sections help Stitch understand hierarchy
-4. **Include the design system** — Consistency is key for multi-page projects
-5. **One change at a time for edits** — Don't bundle unrelated changes
+*翻译搬运自 [skills.sh](https://skills.sh)*

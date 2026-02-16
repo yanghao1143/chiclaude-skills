@@ -1,105 +1,105 @@
+# Requesting Code Review - 请求代码审查
+
+> **原始仓库**: `obra/superpowers/requesting-code-review`
+> **安装量**: 5.2K
+> **翻译日期**: 2026-02-15
+> **原文链接**: https://github.com/yanghao1143/chiclaude-skills
+
 ---
-name: requesting-code-review
-description: Use when completing tasks, implementing major features, or before merging to verify work meets requirements
+
+## 📖 技能简介
+
+完成任务、实现主要功能或在合并前使用，以验证工作满足需求。
+
 ---
 
-# Requesting Code Review
+## 🔒 核心原则
 
-Dispatch superpowers:code-reviewer subagent to catch issues before they cascade.
+**审查要早，审查要勤。**
 
-**Core principle:** Review early, review often.
+---
 
-## When to Request Review
+## 📋 何时请求审查
 
-**Mandatory:**
-- After each task in subagent-driven development
-- After completing major feature
-- Before merge to main
+### 强制
+- 子代理驱动开发中每个任务后
+- 完成主要功能后
+- 合并到主分支前
 
-**Optional but valuable:**
-- When stuck (fresh perspective)
-- Before refactoring (baseline check)
-- After fixing complex bug
+### 可选但有价值
+- 卡住时（新鲜视角）
+- 重构前（基线检查）
+- 修复复杂 bug 后
 
-## How to Request
+---
 
-**1. Get git SHAs:**
+## 🔧 如何请求
+
+### 1. 获取 git SHAs
+
 ```bash
-BASE_SHA=$(git rev-parse HEAD~1)  # or origin/main
+BASE_SHA=$(git rev-parse HEAD~1)  # 或 origin/main
 HEAD_SHA=$(git rev-parse HEAD)
 ```
 
-**2. Dispatch code-reviewer subagent:**
+### 2. 分派 code-reviewer 子代理
 
-Use Task tool with superpowers:code-reviewer type, fill template at `code-reviewer.md`
+使用 Task 工具，填写模板
 
-**Placeholders:**
-- `{WHAT_WAS_IMPLEMENTED}` - What you just built
-- `{PLAN_OR_REQUIREMENTS}` - What it should do
-- `{BASE_SHA}` - Starting commit
-- `{HEAD_SHA}` - Ending commit
-- `{DESCRIPTION}` - Brief summary
+**占位符：**
+- `{WHAT_WAS_IMPLEMENTED}` - 你刚构建了什么
+- `{PLAN_OR_REQUIREMENTS}` - 它应该做什么
+- `{BASE_SHA}` - 起始提交
+- `{HEAD_SHA}` - 结束提交
+- `{DESCRIPTION}` - 简要摘要
 
-**3. Act on feedback:**
-- Fix Critical issues immediately
-- Fix Important issues before proceeding
-- Note Minor issues for later
-- Push back if reviewer is wrong (with reasoning)
+### 3. 根据反馈行动
 
-## Example
+- **立即修复** Critical 问题
+- **继续前修复** Important 问题
+- **稍后记录** Minor 问题
+- 如果审查者错误则反驳（附理由）
 
-```
-[Just completed Task 2: Add verification function]
+---
 
-You: Let me request code review before proceeding.
+## 📐 工作流集成
 
-BASE_SHA=$(git log --oneline | grep "Task 1" | head -1 | awk '{print $1}')
-HEAD_SHA=$(git rev-parse HEAD)
+### 子代理驱动开发
+- 每个任务后审查
+- 在问题叠加前捕获
+- 修复后再移到下一个任务
 
-[Dispatch superpowers:code-reviewer subagent]
-  WHAT_WAS_IMPLEMENTED: Verification and repair functions for conversation index
-  PLAN_OR_REQUIREMENTS: Task 2 from docs/plans/deployment-plan.md
-  BASE_SHA: a7981ec
-  HEAD_SHA: 3df7661
-  DESCRIPTION: Added verifyIndex() and repairIndex() with 4 issue types
+### 执行计划
+- 每批后审查（3 个任务）
+- 获取反馈、应用、继续
 
-[Subagent returns]:
-  Strengths: Clean architecture, real tests
-  Issues:
-    Important: Missing progress indicators
-    Minor: Magic number (100) for reporting interval
-  Assessment: Ready to proceed
+### 临时开发
+- 合并前审查
+- 卡住时审查
 
-You: [Fix progress indicators]
-[Continue to Task 3]
-```
+---
 
-## Integration with Workflows
+## 🚩 红旗警告
 
-**Subagent-Driven Development:**
-- Review after EACH task
-- Catch issues before they compound
-- Fix before moving to next task
+**永远不要：**
+- 跳过审查因为"它很简单"
+- 忽略 Critical 问题
+- 带着未修复的 Important 问题继续
+- 与有效的技术反馈争论
 
-**Executing Plans:**
-- Review after each batch (3 tasks)
-- Get feedback, apply, continue
+**如果审查者错了：**
+- 用技术推理反驳
+- 展示证明它有效的代码/测试
+- 请求澄清
 
-**Ad-Hoc Development:**
-- Review before merge
-- Review when stuck
+---
 
-## Red Flags
+## 🔗 相关链接
 
-**Never:**
-- Skip review because "it's simple"
-- Ignore Critical issues
-- Proceed with unfixed Important issues
-- Argue with valid technical feedback
+- [原文链接](https://github.com/yanghao1143/chiclaude-skills)
+- [GitHub 仓库](https://github.com/obra/superpowers)
+- [OpenClaw AI 社区](https://chiclaude.com)
 
-**If reviewer wrong:**
-- Push back with technical reasoning
-- Show code/tests that prove it works
-- Request clarification
+---
 
-See template at: requesting-code-review/code-reviewer.md
+*翻译搬运自 [skills.sh](https://skills.sh)*

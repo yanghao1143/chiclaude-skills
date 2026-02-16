@@ -1,480 +1,226 @@
+# 提示工程模式 - Prompt Engineering Patterns
+
+> **原始仓库**: `wshobson/agents/prompt-engineering-patterns`
+> **安装量**: 3.3K
+> **翻译日期**: 2026-02-15
+> **原文链接**: https://github.com/yanghao1143/chiclaude-skills
+
 ---
-name: prompt-engineering-patterns
-description: Master advanced prompt engineering techniques to maximize LLM performance, reliability, and controllability in production. Use when optimizing prompts, improving LLM outputs, or designing production prompt templates.
+
+## 📖 技能简介
+
+系统化的提示工程技术，包括角色设定、少样本学习、思维链、结构化输出和提示优化策略。适用于设计有效的 AI 提示、优化 LLM 输出质量。
+
 ---
 
-# Prompt Engineering Patterns
+## 🎯 何时使用此技能
 
-Master advanced prompt engineering techniques to maximize LLM performance, reliability, and controllability.
+当用户进行以下工作时使用：
 
-## When to Use This Skill
+- 设计 AI 提示词
+- 优化 LLM 输出质量
+- 构建提示工程流程
+- 调试提示问题
+- 实现结构化输出
 
-- Designing complex prompts for production LLM applications
-- Optimizing prompt performance and consistency
-- Implementing structured reasoning patterns (chain-of-thought, tree-of-thought)
-- Building few-shot learning systems with dynamic example selection
-- Creating reusable prompt templates with variable interpolation
-- Debugging and refining prompts that produce inconsistent outputs
-- Implementing system prompts for specialized AI assistants
-- Using structured outputs (JSON mode) for reliable parsing
+---
 
-## Core Capabilities
+## 🎭 核心模式
 
-### 1. Few-Shot Learning
+### 1. 角色设定 (Role Playing)
 
-- Example selection strategies (semantic similarity, diversity sampling)
-- Balancing example count with context window constraints
-- Constructing effective demonstrations with input-output pairs
-- Dynamic example retrieval from knowledge bases
-- Handling edge cases through strategic example selection
+```
+你是一位经验丰富的 Python 开发专家，专注于代码质量和性能优化。
+你有 15 年的软件开发经验，精通设计模式和最佳实践。
 
-### 2. Chain-of-Thought Prompting
-
-- Step-by-step reasoning elicitation
-- Zero-shot CoT with "Let's think step by step"
-- Few-shot CoT with reasoning traces
-- Self-consistency techniques (sampling multiple reasoning paths)
-- Verification and validation steps
-
-### 3. Structured Outputs
-
-- JSON mode for reliable parsing
-- Pydantic schema enforcement
-- Type-safe response handling
-- Error handling for malformed outputs
-
-### 4. Prompt Optimization
-
-- Iterative refinement workflows
-- A/B testing prompt variations
-- Measuring prompt performance metrics (accuracy, consistency, latency)
-- Reducing token usage while maintaining quality
-- Handling edge cases and failure modes
-
-### 5. Template Systems
-
-- Variable interpolation and formatting
-- Conditional prompt sections
-- Multi-turn conversation templates
-- Role-based prompt composition
-- Modular prompt components
-
-### 6. System Prompt Design
-
-- Setting model behavior and constraints
-- Defining output formats and structure
-- Establishing role and expertise
-- Safety guidelines and content policies
-- Context setting and background information
-
-## Quick Start
-
-```python
-from langchain_anthropic import ChatAnthropic
-from langchain_core.prompts import ChatPromptTemplate
-from pydantic import BaseModel, Field
-
-# Define structured output schema
-class SQLQuery(BaseModel):
-    query: str = Field(description="The SQL query")
-    explanation: str = Field(description="Brief explanation of what the query does")
-    tables_used: list[str] = Field(description="List of tables referenced")
-
-# Initialize model with structured output
-llm = ChatAnthropic(model="claude-sonnet-4-5")
-structured_llm = llm.with_structured_output(SQLQuery)
-
-# Create prompt template
-prompt = ChatPromptTemplate.from_messages([
-    ("system", """You are an expert SQL developer. Generate efficient, secure SQL queries.
-    Always use parameterized queries to prevent SQL injection.
-    Explain your reasoning briefly."""),
-    ("user", "Convert this to SQL: {query}")
-])
-
-# Create chain
-chain = prompt | structured_llm
-
-# Use
-result = await chain.ainvoke({
-    "query": "Find all users who registered in the last 30 days"
-})
-print(result.query)
-print(result.explanation)
+请审查以下代码并提供改进建议：
 ```
 
-## Key Patterns
+### 2. 少样本学习 (Few-Shot Learning)
 
-### Pattern 1: Structured Output with Pydantic
+```
+将以下句子转换为正式的商务邮件：
 
-```python
-from anthropic import Anthropic
-from pydantic import BaseModel, Field
-from typing import Literal
-import json
+示例 1:
+输入: 会议改到明天
+输出: 尊敬的各位，由于日程调整，我们的会议将改期至明天举行。感谢您的理解。
 
-class SentimentAnalysis(BaseModel):
-    sentiment: Literal["positive", "negative", "neutral"]
-    confidence: float = Field(ge=0, le=1)
-    key_phrases: list[str]
-    reasoning: str
+示例 2:
+输入: 项目延期了
+输出: 尊敬的客户，由于技术原因，项目交付时间需要相应调整。我们深表歉意。
 
-async def analyze_sentiment(text: str) -> SentimentAnalysis:
-    """Analyze sentiment with structured output."""
-    client = Anthropic()
-
-    message = client.messages.create(
-        model="claude-sonnet-4-5",
-        max_tokens=500,
-        messages=[{
-            "role": "user",
-            "content": f"""Analyze the sentiment of this text.
-
-Text: {text}
-
-Respond with JSON matching this schema:
-{{
-    "sentiment": "positive" | "negative" | "neutral",
-    "confidence": 0.0-1.0,
-    "key_phrases": ["phrase1", "phrase2"],
-    "reasoning": "brief explanation"
-}}"""
-        }]
-    )
-
-    return SentimentAnalysis(**json.loads(message.content[0].text))
+现在请转换:
+输入: 需要增加预算
 ```
 
-### Pattern 2: Chain-of-Thought with Self-Verification
+### 3. 思维链 (Chain of Thought)
 
-```python
-from langchain_core.prompts import ChatPromptTemplate
+```
+请一步步思考以下问题：
 
-cot_prompt = ChatPromptTemplate.from_template("""
-Solve this problem step by step.
+问题：一个农场有鸡和兔子共 35 只头，94 只脚，问鸡和兔子各多少只？
 
-Problem: {problem}
+思考过程：
+1. 设鸡有 x 只，兔子有 y 只
+2. 根据头数：x + y = 35
+3. 根据脚数：2x + 4y = 94
+4. 从第一个方程：x = 35 - y
+5. 代入第二个方程：2(35-y) + 4y = 94
+6. 展开：70 - 2y + 4y = 94
+7. 简化：2y = 24
+8. 解得：y = 12（兔子），x = 23（鸡）
 
-Instructions:
-1. Break down the problem into clear steps
-2. Work through each step showing your reasoning
-3. State your final answer
-4. Verify your answer by checking it against the original problem
-
-Format your response as:
-## Steps
-[Your step-by-step reasoning]
-
-## Answer
-[Your final answer]
-
-## Verification
-[Check that your answer is correct]
-""")
+答案：鸡 23 只，兔子 12 只
 ```
 
-### Pattern 3: Few-Shot with Dynamic Example Selection
+### 4. 结构化输出
 
-```python
-from langchain_voyageai import VoyageAIEmbeddings
-from langchain_core.example_selectors import SemanticSimilarityExampleSelector
-from langchain_chroma import Chroma
-
-# Create example selector with semantic similarity
-example_selector = SemanticSimilarityExampleSelector.from_examples(
-    examples=[
-        {"input": "How do I reset my password?", "output": "Go to Settings > Security > Reset Password"},
-        {"input": "Where can I see my order history?", "output": "Navigate to Account > Orders"},
-        {"input": "How do I contact support?", "output": "Click Help > Contact Us or email support@example.com"},
-    ],
-    embeddings=VoyageAIEmbeddings(model="voyage-3-large"),
-    vectorstore_cls=Chroma,
-    k=2  # Select 2 most similar examples
-)
-
-async def get_few_shot_prompt(query: str) -> str:
-    """Build prompt with dynamically selected examples."""
-    examples = await example_selector.aselect_examples({"input": query})
-
-    examples_text = "\n".join(
-        f"User: {ex['input']}\nAssistant: {ex['output']}"
-        for ex in examples
-    )
-
-    return f"""You are a helpful customer support assistant.
-
-Here are some example interactions:
-{examples_text}
-
-Now respond to this query:
-User: {query}
-Assistant:"""
 ```
+请分析以下文本的情感，以 JSON 格式输出：
 
-### Pattern 4: Progressive Disclosure
+文本：这款产品真的很好用，物流也很快，但是价格稍微有点贵。
 
-Start with simple prompts, add complexity only when needed:
-
-```python
-PROMPT_LEVELS = {
-    # Level 1: Direct instruction
-    "simple": "Summarize this article: {text}",
-
-    # Level 2: Add constraints
-    "constrained": """Summarize this article in 3 bullet points, focusing on:
-- Key findings
-- Main conclusions
-- Practical implications
-
-Article: {text}""",
-
-    # Level 3: Add reasoning
-    "reasoning": """Read this article carefully.
-1. First, identify the main topic and thesis
-2. Then, extract the key supporting points
-3. Finally, summarize in 3 bullet points
-
-Article: {text}
-
-Summary:""",
-
-    # Level 4: Add examples
-    "few_shot": """Read articles and provide concise summaries.
-
-Example:
-Article: "New research shows that regular exercise can reduce anxiety by up to 40%..."
-Summary:
-• Regular exercise reduces anxiety by up to 40%
-• 30 minutes of moderate activity 3x/week is sufficient
-• Benefits appear within 2 weeks of starting
-
-Now summarize this article:
-Article: {text}
-
-Summary:"""
+输出格式：
+{
+  "overall_sentiment": "positive/neutral/negative",
+  "sentiment_score": 0.0-1.0,
+  "aspects": [
+    {
+      "aspect": "产品",
+      "sentiment": "positive",
+      "keywords": ["好用"]
+    }
+  ]
 }
 ```
 
-### Pattern 5: Error Recovery and Fallback
+---
 
-```python
-from pydantic import BaseModel, ValidationError
-import json
+## 📝 提示优化策略
 
-class ResponseWithConfidence(BaseModel):
-    answer: str
-    confidence: float
-    sources: list[str]
-    alternative_interpretations: list[str] = []
+### 清晰性原则
 
-ERROR_RECOVERY_PROMPT = """
-Answer the question based on the context provided.
+```
+# 不好的提示
+写一个函数
 
-Context: {context}
-Question: {question}
-
-Instructions:
-1. If you can answer confidently (>0.8), provide a direct answer
-2. If you're somewhat confident (0.5-0.8), provide your best answer with caveats
-3. If you're uncertain (<0.5), explain what information is missing
-4. Always provide alternative interpretations if the question is ambiguous
-
-Respond in JSON:
-{{
-    "answer": "your answer or 'I cannot determine this from the context'",
-    "confidence": 0.0-1.0,
-    "sources": ["relevant context excerpts"],
-    "alternative_interpretations": ["if question is ambiguous"]
-}}
-"""
-
-async def answer_with_fallback(
-    context: str,
-    question: str,
-    llm
-) -> ResponseWithConfidence:
-    """Answer with error recovery and fallback."""
-    prompt = ERROR_RECOVERY_PROMPT.format(context=context, question=question)
-
-    try:
-        response = await llm.ainvoke(prompt)
-        return ResponseWithConfidence(**json.loads(response.content))
-    except (json.JSONDecodeError, ValidationError) as e:
-        # Fallback: try to extract answer without structure
-        simple_prompt = f"Based on: {context}\n\nAnswer: {question}"
-        simple_response = await llm.ainvoke(simple_prompt)
-        return ResponseWithConfidence(
-            answer=simple_response.content,
-            confidence=0.5,
-            sources=["fallback extraction"],
-            alternative_interpretations=[]
-        )
+# 好的提示
+请用 Python 编写一个函数，功能如下：
+- 函数名：calculate_average
+- 参数：一个数字列表
+- 返回值：列表中所有数字的平均值（浮点数）
+- 如果列表为空，返回 None
+- 添加类型提示和文档字符串
 ```
 
-### Pattern 6: Role-Based System Prompts
+### 分步指令
 
-```python
-SYSTEM_PROMPTS = {
-    "analyst": """You are a senior data analyst with expertise in SQL, Python, and business intelligence.
+```
+请按以下步骤完成任务：
 
-Your responsibilities:
-- Write efficient, well-documented queries
-- Explain your analysis methodology
-- Highlight key insights and recommendations
-- Flag any data quality concerns
+第 1 步：阅读并理解需求
+[需求内容]
 
-Communication style:
-- Be precise and technical when discussing methodology
-- Translate technical findings into business impact
-- Use clear visualizations when helpful""",
+第 2 步：设计解决方案
+[输出设计方案]
 
-    "assistant": """You are a helpful AI assistant focused on accuracy and clarity.
+第 3 步：实现代码
+[输出代码]
 
-Core principles:
-- Always cite sources when making factual claims
-- Acknowledge uncertainty rather than guessing
-- Ask clarifying questions when the request is ambiguous
-- Provide step-by-step explanations for complex topics
-
-Constraints:
-- Do not provide medical, legal, or financial advice
-- Redirect harmful requests appropriately
-- Protect user privacy""",
-
-    "code_reviewer": """You are a senior software engineer conducting code reviews.
-
-Review criteria:
-- Correctness: Does the code work as intended?
-- Security: Are there any vulnerabilities?
-- Performance: Are there efficiency concerns?
-- Maintainability: Is the code readable and well-structured?
-- Best practices: Does it follow language idioms?
-
-Output format:
-1. Summary assessment (approve/request changes)
-2. Critical issues (must fix)
-3. Suggestions (nice to have)
-4. Positive feedback (what's done well)"""
-}
+第 4 步：编写测试用例
+[输出测试]
 ```
 
-## Integration Patterns
+### 约束条件
 
-### With RAG Systems
+```
+请编写代码，遵循以下约束：
 
-```python
-RAG_PROMPT = """You are a knowledgeable assistant that answers questions based on provided context.
-
-Context (retrieved from knowledge base):
-{context}
-
-Instructions:
-1. Answer ONLY based on the provided context
-2. If the context doesn't contain the answer, say "I don't have information about that in my knowledge base"
-3. Cite specific passages using [1], [2] notation
-4. If the question is ambiguous, ask for clarification
-
-Question: {question}
-
-Answer:"""
+约束：
+1. 代码必须兼容 Python 3.9+
+2. 不使用任何第三方库
+3. 时间复杂度不超过 O(n log n)
+4. 包含完整的错误处理
+5. 添加中文注释
 ```
 
-### With Validation and Verification
+---
 
-```python
-VALIDATED_PROMPT = """Complete the following task:
+## 🔧 高级技术
 
-Task: {task}
+### 自我修正
 
-After generating your response, verify it meets ALL these criteria:
-✓ Directly addresses the original request
-✓ Contains no factual errors
-✓ Is appropriately detailed (not too brief, not too verbose)
-✓ Uses proper formatting
-✓ Is safe and appropriate
+```
+请先给出答案，然后检查你的答案是否正确：
 
-If verification fails on any criterion, revise before responding.
+问题：[问题内容]
 
-Response:"""
+你的答案：[答案]
+
+自我检查：
+- 答案是否完整？
+- 是否有遗漏的边界情况？
+- 格式是否正确？
+
+修正后的答案：[最终答案]
 ```
 
-## Performance Optimization
+### 提示组合
 
-### Token Efficiency
+```
+# 角色 + 任务 + 格式 + 约束
+你是一位专业的技术文档撰写专家。[角色]
 
-```python
-# Before: Verbose prompt (150+ tokens)
-verbose_prompt = """
-I would like you to please take the following text and provide me with a comprehensive
-summary of the main points. The summary should capture the key ideas and important details
-while being concise and easy to understand.
-"""
+请为以下 API 编写文档：[任务]
 
-# After: Concise prompt (30 tokens)
-concise_prompt = """Summarize the key points concisely:
+文档格式：
+## 概述
+## 参数
+## 返回值
+## 示例
+## 注意事项
 
-{text}
-
-Summary:"""
+要求：
+- 使用中文
+- 每个参数包含类型和默认值
+- 提供至少 2 个使用示例
 ```
 
-### Caching Common Prefixes
+### 迭代优化
 
-```python
-from anthropic import Anthropic
+```
+我对上一次的输出不满意，请按以下方式改进：
 
-client = Anthropic()
+原输出：[之前的输出]
 
-# Use prompt caching for repeated system prompts
-response = client.messages.create(
-    model="claude-sonnet-4-5",
-    max_tokens=1000,
-    system=[
-        {
-            "type": "text",
-            "text": LONG_SYSTEM_PROMPT,
-            "cache_control": {"type": "ephemeral"}
-        }
-    ],
-    messages=[{"role": "user", "content": user_query}]
-)
+改进要求：
+1. 增加更多细节
+2. 使用更专业术语
+3. 添加代码注释
+
+请重新生成：
 ```
 
-## Best Practices
+---
 
-1. **Be Specific**: Vague prompts produce inconsistent results
-2. **Show, Don't Tell**: Examples are more effective than descriptions
-3. **Use Structured Outputs**: Enforce schemas with Pydantic for reliability
-4. **Test Extensively**: Evaluate on diverse, representative inputs
-5. **Iterate Rapidly**: Small changes can have large impacts
-6. **Monitor Performance**: Track metrics in production
-7. **Version Control**: Treat prompts as code with proper versioning
-8. **Document Intent**: Explain why prompts are structured as they are
+## 📋 检查清单
 
-## Common Pitfalls
+- [ ] 是否明确设定了角色？
+- [ ] 是否提供了足够的上下文？
+- [ ] 是否指定了输出格式？
+- [ ] 是否设定了约束条件？
+- [ ] 是否提供了示例（如适用）？
+- [ ] 是否使用了分步指令？
+- [ ] 是否考虑了边界情况？
 
-- **Over-engineering**: Starting with complex prompts before trying simple ones
-- **Example pollution**: Using examples that don't match the target task
-- **Context overflow**: Exceeding token limits with excessive examples
-- **Ambiguous instructions**: Leaving room for multiple interpretations
-- **Ignoring edge cases**: Not testing on unusual or boundary inputs
-- **No error handling**: Assuming outputs will always be well-formed
-- **Hardcoded values**: Not parameterizing prompts for reuse
+---
 
-## Success Metrics
+## 🔗 相关链接
 
-Track these KPIs for your prompts:
+- [原文链接](https://github.com/yanghao1143/chiclaude-skills)
+- [GitHub 仓库](https://github.com/wshobson/agents)
+- [OpenClaw AI 社区](https://chiclaude.com)
 
-- **Accuracy**: Correctness of outputs
-- **Consistency**: Reproducibility across similar inputs
-- **Latency**: Response time (P50, P95, P99)
-- **Token Usage**: Average tokens per request
-- **Success Rate**: Percentage of valid, parseable outputs
-- **User Satisfaction**: Ratings and feedback
+---
 
-## Resources
-
-- [Anthropic Prompt Engineering Guide](https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering)
-- [Claude Prompt Caching](https://docs.anthropic.com/en/docs/build-with-claude/prompt-caching)
-- [OpenAI Prompt Engineering](https://platform.openai.com/docs/guides/prompt-engineering)
-- [LangChain Prompts](https://python.langchain.com/docs/concepts/prompts/)
+*翻译搬运自 [skills.sh](https://skills.sh)*

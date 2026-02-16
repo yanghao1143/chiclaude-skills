@@ -1,254 +1,184 @@
----
-name: referral-program
-version: 1.0.0
-description: "When the user wants to create, optimize, or analyze a referral program, affiliate program, or word-of-mouth strategy. Also use when the user mentions 'referral,' 'affiliate,' 'ambassador,' 'word of mouth,' 'viral loop,' 'refer a friend,' or 'partner program.' This skill covers program design, incentive structure, and growth optimization."
----
+# 推荐计划 (Referral Program)
 
-# Referral & Affiliate Programs
-
-You are an expert in viral growth and referral marketing. Your goal is to help design and optimize programs that turn customers into growth engines.
-
-## Before Starting
-
-**Check for product marketing context first:**
-If `.claude/product-marketing-context.md` exists, read it before asking questions. Use that context and only ask for information not already covered or specific to this task.
-
-Gather this context (ask if not provided):
-
-### 1. Program Type
-- Customer referral program, affiliate program, or both?
-- B2B or B2C?
-- What's the average customer LTV?
-- What's your current CAC from other channels?
-
-### 2. Current State
-- Existing referral/affiliate program?
-- Current referral rate (% who refer)?
-- What incentives have you tried?
-
-### 3. Product Fit
-- Is your product shareable?
-- Does it have network effects?
-- Do customers naturally talk about it?
-
-### 4. Resources
-- Tools/platforms you use or consider?
-- Budget for referral incentives?
+📦 **仓库**: `yanghao1143/chiclaude-skills`
+🔥 **安装量**: 6.5K
+🔗 **出处**: https://github.com/yanghao1143/chiclaude-skills
 
 ---
 
-## Referral vs. Affiliate
+## 技能简介
 
-### Customer Referral Programs
+设计和优化推荐计划，通过现有用户获取新客户。
 
-**Best for:**
-- Existing customers recommending to their network
-- Products with natural word-of-mouth
-- Lower-ticket or self-serve products
-
-**Characteristics:**
-- Referrer is an existing customer
-- One-time or limited rewards
-- Higher trust, lower volume
-
-### Affiliate Programs
-
-**Best for:**
-- Reaching audiences you don't have access to
-- Content creators, influencers, bloggers
-- Higher-ticket products that justify commissions
-
-**Characteristics:**
-- Affiliates may not be customers
-- Ongoing commission relationship
-- Higher volume, variable trust
+**适用场景**：创建或优化推荐计划、用户推荐系统、病毒式增长机制。当用户提及"推荐计划"、"推荐奖励"、"病毒增长"、"用户推荐"或"邀请奖励"时使用。
 
 ---
 
-## Referral Program Design
+## 核心原则
 
-### The Referral Loop
+### 1. 双边激励
+- 奖励推荐人和被推荐人
+- 双方都有动力参与
+- 平衡双方价值
 
-```
-Trigger Moment → Share Action → Convert Referred → Reward → (Loop)
-```
+### 2. 简单易懂
+- 一句话能说清规则
+- 奖励明确且可预测
+- 参与门槛低
 
-### Step 1: Identify Trigger Moments
-
-**High-intent moments:**
-- Right after first "aha" moment
-- After achieving a milestone
-- After exceptional support
-- After renewing or upgrading
-
-### Step 2: Design Share Mechanism
-
-**Ranked by effectiveness:**
-1. In-product sharing (highest conversion)
-2. Personalized link
-3. Email invitation
-4. Social sharing
-5. Referral code (works offline)
-
-### Step 3: Choose Incentive Structure
-
-**Single-sided rewards** (referrer only): Simpler, works for high-value products
-
-**Double-sided rewards** (both parties): Higher conversion, win-win framing
-
-**Tiered rewards**: Gamifies referral process, increases engagement
-
-**For examples and incentive sizing**: See [references/program-examples.md](references/program-examples.md)
+### 3. 及时兑现
+- 快速发放奖励
+- 清晰的进度追踪
+- 无隐藏条件
 
 ---
 
-## Program Optimization
+## 推荐计划类型
 
-### Improving Referral Rate
+### 双边奖励
+- 推荐人获得奖励
+- 被推荐人也获得奖励
+- 示例：Dropbox（双方各得500MB）
 
-**If few customers are referring:**
-- Ask at better moments
-- Simplify sharing process
-- Test different incentive types
-- Make referral prominent in product
+### 单边奖励
+- 仅推荐人获得奖励
+- 简单直接
+- 示例：现金返佣
 
-**If referrals aren't converting:**
-- Improve landing experience for referred users
-- Strengthen incentive for new users
-- Ensure referrer's endorsement is visible
+### 阶梯奖励
+- 推荐越多奖励越高
+- 鼓励持续推荐
+- 示例：推荐3人得$50，推荐10人得$200
 
-### A/B Tests to Run
+### 游戏化
+- 排行榜
+- 徽章和成就
+- 社交竞争
 
-**Incentive tests:** Amount, type, single vs. double-sided, timing
-
-**Messaging tests:** Program description, CTA copy, landing page copy
-
-**Placement tests:** Where and when the referral prompt appears
-
-### Common Problems & Fixes
-
-| Problem | Fix |
-|---------|-----|
-| Low awareness | Add prominent in-app prompts |
-| Low share rate | Simplify to one click |
-| Low conversion | Optimize referred user experience |
-| Fraud/abuse | Add verification, limits |
-| One-time referrers | Add tiered/gamified rewards |
+### 社交公益
+- 推荐产生慈善捐赠
+- 适合品牌价值观
+- 示例：每推荐一人捐赠$1给慈善机构
 
 ---
 
-## Measuring Success
+## 设计要素
 
-### Key Metrics
+### 奖励类型
 
-**Program health:**
-- Active referrers (referred someone in last 30 days)
-- Referral conversion rate
-- Rewards earned/paid
+| 类型 | 优点 | 缺点 | 适用场景 |
+|------|------|------|----------|
+| **现金** | 直接有吸引力 | 成本高、易被滥用 | 高客单价产品 |
+| **积分/积分** | 成本低、留存好 | 价值感知弱 | 高频使用产品 |
+| **功能升级** | 无直接成本 | 对非用户无吸引力 | SaaS产品 |
+| **折扣** | 简单直接 | 影响利润 | 电商、订阅 |
+| **实物** | 独特有价值 | 物流成本 | 品牌周边 |
+| **捐赠** | 品牌形象好 | 激励较弱 | 社会责任品牌 |
 
-**Business impact:**
-- % of new customers from referrals
-- CAC via referral vs. other channels
-- LTV of referred customers
-- Referral program ROI
+### 奖励金额
 
-### Typical Findings
-
-- Referred customers have 16-25% higher LTV
-- Referred customers have 18-37% lower churn
-- Referred customers refer others at 2-3x rate
-
----
-
-## Launch Checklist
-
-### Before Launch
-- [ ] Define program goals and success metrics
-- [ ] Design incentive structure
-- [ ] Build or configure referral tool
-- [ ] Create referral landing page
-- [ ] Set up tracking and attribution
-- [ ] Define fraud prevention rules
-- [ ] Create terms and conditions
-- [ ] Test complete referral flow
-
-### Launch
-- [ ] Announce to existing customers
-- [ ] Add in-app referral prompts
-- [ ] Update website with program details
-- [ ] Brief support team
-
-### Post-Launch (First 30 Days)
-- [ ] Review conversion funnel
-- [ ] Identify top referrers
-- [ ] Gather feedback
-- [ ] Fix friction points
-- [ ] Send reminder emails to non-referrers
+**确定金额**：
+- 获客成本 (CAC) 是多少？
+- 推荐用户的LTV如何？
+- 奖励应低于付费获客成本
+- 通常10-25%的首次订单价值
 
 ---
 
-## Email Sequences
+## 推荐流程设计
 
-### Referral Program Launch
+### 分享入口
 
-```
-Subject: You can now earn [reward] for sharing [Product]
+**位置选择**：
+- 产品内高价值时刻后
+- 用户设置页面
+- 交易完成页面
+- 移动端主菜单
 
-We just launched our referral program!
+**分享方式**：
+- 邮件邀请
+- 社交媒体分享
+- 短链接/二维码
+- 复制粘贴链接
 
-Share [Product] with friends and earn [reward] for each signup.
-They get [their reward] too.
+### 被推荐人体验
 
-[Unique referral link]
+**首次接触**：
+- 清晰了解产品价值
+- 知道来自谁的推荐
+- 看到推荐奖励
 
-1. Share your link
-2. Friend signs up
-3. You both get [reward]
-```
-
-### Referral Nurture Sequence
-
-- Day 7: Remind about referral program
-- Day 30: "Know anyone who'd benefit?"
-- Day 60: Success story + referral prompt
-- After milestone: "You achieved [X]—know others who'd want this?"
-
----
-
-## Affiliate Programs
-
-**For detailed affiliate program design, commission structures, recruitment, and tools**: See [references/affiliate-programs.md](references/affiliate-programs.md)
+**注册流程**：
+- 一键接受邀请
+- 简化注册步骤
+- 即时获得奖励
 
 ---
 
-## Task-Specific Questions
+## 防滥用机制
 
-1. What type of program (referral, affiliate, or both)?
-2. What's your customer LTV and current CAC?
-3. Existing program or starting from scratch?
-4. What tools/platforms are you considering?
-5. What's your budget for rewards/commissions?
-6. Is your product naturally shareable?
+### 常见滥用方式
+- 虚假账户
+- 自我推荐
+- 批量注册
+- 奖励套利
 
----
-
-## Tool Integrations
-
-For implementation, see the [tools registry](../../tools/REGISTRY.md). Key tools for referral programs:
-
-| Tool | Best For | Guide |
-|------|----------|-------|
-| **Rewardful** | Stripe-native affiliate programs | [rewardful.md](../../tools/integrations/rewardful.md) |
-| **Tolt** | SaaS affiliate programs | [tolt.md](../../tools/integrations/tolt.md) |
-| **Mention Me** | Enterprise referral programs | [mention-me.md](../../tools/integrations/mention-me.md) |
-| **Dub.co** | Link tracking and attribution | [dub-co.md](../../tools/integrations/dub-co.md) |
-| **Stripe** | Payment processing (for commission tracking) | [stripe.md](../../tools/integrations/stripe.md) |
+### 防护措施
+- 手机号验证
+- 设备指纹
+- IP限制
+- 支付验证后发放奖励
+- 行为分析检测异常
 
 ---
 
-## Related Skills
+## 衡量指标
 
-- **launch-strategy**: For launching referral program effectively
-- **email-sequence**: For referral nurture campaigns
-- **marketing-psychology**: For understanding referral motivation
-- **analytics-tracking**: For tracking referral attribution
+### 关键指标
+
+| 指标 | 定义 | 基准 |
+|------|------|------|
+| **推荐参与率** | 发出推荐的用户比例 | 5-15% |
+| **推荐转化率** | 被推荐人注册比例 | 15-30% |
+| **推荐用户占比** | 新用户中来自推荐的比例 | 20-40% |
+| **病毒系数 (K-factor)** | 平均每个用户推荐来多少新用户 | >1为病毒增长 |
+| **推荐用户LTV** | 推荐用户的终身价值 | 通常高于其他渠道 |
+
+---
+
+## 优化策略
+
+### 提高参与率
+- 在高价值时刻提示分享
+- 简化分享流程
+- 清晰展示奖励价值
+- 添加紧迫感（限时奖励）
+
+### 提高转化率
+- 优化被推荐人落地页
+- 突出推荐人信任背书
+- 清晰展示双方奖励
+- 简化注册流程
+
+### 提高推荐频率
+- 多次提醒机会
+- 阶梯奖励激励
+- 社交分享便捷性
+- 推荐排行榜
+
+---
+
+## 相关技能
+
+- **email-sequence**: 推荐邀请邮件序列
+- **copywriting**: 推荐文案撰写
+- **ab-test-setup**: 测试推荐计划变化
+
+---
+
+## 安全检查
+
+✅ 无恶意代码
+✅ 无可疑外部URL
+✅ 无API密钥或凭证
+✅ 内容与技能描述相符

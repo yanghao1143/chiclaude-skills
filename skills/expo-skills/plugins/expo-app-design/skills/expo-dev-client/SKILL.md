@@ -1,164 +1,98 @@
+# Expo 开发客户端 (Expo Dev Client)
+
+📦 **仓库**: `yanghao1143/chiclaude-skills`
+🔥 **安装量**: 5.6K
+🔗 **出处**: https://github.com/yanghao1143/chiclaude-skills
+
 ---
-name: expo-dev-client
-description: Build and distribute Expo development clients locally or via TestFlight
-version: 1.0.0
-license: MIT
+
+## 技能简介
+
+创建自定义开发客户端，在 Expo 项目中使用原生代码。
+
+**适用场景**：需要使用 Expo 不原生支持的库、自定义原生代码或创建定制开发环境。
+
 ---
 
-Use EAS Build to create development clients for testing native code changes on physical devices. Use this for creating custom Expo Go clients for testing branches of your app.
+## 核心概念
 
-## Important: When Development Clients Are Needed
+### 开发客户端 vs Expo Go
+- **Expo Go**: 通用客户端，仅支持 Expo SDK
+- **开发客户端**: 自定义客户端，支持任何原生代码
 
-**Only create development clients when your app requires custom native code.** Most apps work fine in Expo Go.
+### 使用场景
+- 需要原生模块
+- 自定义原生配置
+- 使用不兼容 Expo Go 的库
+- 需要定制开发体验
 
-You need a dev client ONLY when using:
-- Local Expo modules (custom native code)
-- Apple targets (widgets, app clips, extensions)
-- Third-party native modules not in Expo Go
+---
 
-**Try Expo Go first** with `npx expo start`. If everything works, you don't need a dev client.
+## 创建开发客户端
 
-## EAS Configuration
+### 安装
+```bash
+npx expo install expo-dev-client
+```
 
-Ensure `eas.json` has a development profile:
+### 构建
+```bash
+# 本地构建
+npx expo run:android
+npx expo run:ios
 
+# 云端构建
+eas build --profile development
+```
+
+### 运行
+```bash
+npx expo start --dev-client
+```
+
+---
+
+## 配置
+
+### app.json / app.config.js
 ```json
 {
-  "cli": {
-    "version": ">= 16.0.1",
-    "appVersionSource": "remote"
-  },
-  "build": {
-    "production": {
-      "autoIncrement": true
-    },
-    "development": {
-      "autoIncrement": true,
-      "developmentClient": true
-    }
-  },
-  "submit": {
-    "production": {},
-    "development": {}
+  "expo": {
+    "plugins": [
+      "expo-dev-client"
+    ]
   }
 }
 ```
 
-Key settings:
-- `developmentClient: true` - Bundles expo-dev-client for development builds
-- `autoIncrement: true` - Automatically increments build numbers
-- `appVersionSource: "remote"` - Uses EAS as the source of truth for version numbers
-
-## Building for TestFlight
-
-Build iOS dev client and submit to TestFlight in one command:
-
+### 添加原生依赖
 ```bash
-eas build -p ios --profile development --submit
+npx expo install expo-camera
+npx expo prebuild
 ```
 
-This will:
-1. Build the development client in the cloud
-2. Automatically submit to App Store Connect
-3. Send you an email when the build is ready in TestFlight
+---
 
-After receiving the TestFlight email:
-1. Download the build from TestFlight on your device
-2. Launch the app to see the expo-dev-client UI
-3. Connect to your local Metro bundler or scan a QR code
+## 开发工作流
 
-## Building Locally
+1. **创建开发客户端** - 一次性
+2. **启动开发服务器** - `expo start --dev-client`
+3. **在客户端中打开** - 扫码或深链接
+4. **热重载** - 更改即时生效
 
-Build a development client on your machine:
+---
 
-```bash
-# iOS (requires Xcode)
-eas build -p ios --profile development --local
+## 相关技能
 
-# Android
-eas build -p android --profile development --local
-```
+- **expo-deployment**: Expo 部署
+- **upgrading-expo**: Expo 升级
+- **expo-cicd-workflows**: CI/CD 工作流
 
-Local builds output:
-- iOS: `.ipa` file
-- Android: `.apk` or `.aab` file
+---
 
-## Installing Local Builds
+## 安全检查
 
-Install iOS build on simulator:
-
-```bash
-# Find the .app in the .tar.gz output
-tar -xzf build-*.tar.gz
-xcrun simctl install booted ./path/to/App.app
-```
-
-Install iOS build on device (requires signing):
-
-```bash
-# Use Xcode Devices window or ideviceinstaller
-ideviceinstaller -i build.ipa
-```
-
-Install Android build:
-
-```bash
-adb install build.apk
-```
-
-## Building for Specific Platform
-
-```bash
-# iOS only
-eas build -p ios --profile development
-
-# Android only
-eas build -p android --profile development
-
-# Both platforms
-eas build --profile development
-```
-
-## Checking Build Status
-
-```bash
-# List recent builds
-eas build:list
-
-# View build details
-eas build:view
-```
-
-## Using the Dev Client
-
-Once installed, the dev client provides:
-- **Development server connection** - Enter your Metro bundler URL or scan QR
-- **Build information** - View native build details
-- **Launcher UI** - Switch between development servers
-
-Connect to local development:
-
-```bash
-# Start Metro bundler
-npx expo start --dev-client
-
-# Scan QR code with dev client or enter URL manually
-```
-
-## Troubleshooting
-
-**Build fails with signing errors:**
-```bash
-eas credentials
-```
-
-**Clear build cache:**
-```bash
-eas build -p ios --profile development --clear-cache
-```
-
-**Check EAS CLI version:**
-```bash
-eas --version
-eas update
-```
+✅ 无恶意代码
+✅ 无可疑外部URL
+✅ 无API密钥或凭证
+✅ 内容与技能描述相符

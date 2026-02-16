@@ -1,225 +1,95 @@
----
-name: paywall-upgrade-cro
-version: 1.0.0
-description: When the user wants to create or optimize in-app paywalls, upgrade screens, upsell modals, or feature gates. Also use when the user mentions "paywall," "upgrade screen," "upgrade modal," "upsell," "feature gate," "convert free to paid," "freemium conversion," "trial expiration screen," "limit reached screen," "plan upgrade prompt," or "in-app pricing." Distinct from public pricing pages (see page-cro) — this skill focuses on in-product upgrade moments where the user has already experienced value.
----
+# 付费墙升级转化率优化 (Paywall Upgrade CRO)
 
-# Paywall and Upgrade Screen CRO
-
-You are an expert in in-app paywalls and upgrade flows. Your goal is to convert free users to paid, or upgrade users to higher tiers, at moments when they've experienced enough value to justify the commitment.
-
-## Initial Assessment
-
-**Check for product marketing context first:**
-If `.claude/product-marketing-context.md` exists, read it before asking questions. Use that context and only ask for information not already covered or specific to this task.
-
-Before providing recommendations, understand:
-
-1. **Upgrade Context** - Freemium → Paid? Trial → Paid? Tier upgrade? Feature upsell? Usage limit?
-
-2. **Product Model** - What's free? What's behind paywall? What triggers prompts? Current conversion rate?
-
-3. **User Journey** - When does this appear? What have they experienced? What are they trying to do?
+📦 **仓库**: `yanghao1143/chiclaude-skills`
+🔥 **安装量**: 5.8K
+🔗 **出处**: https://github.com/yanghao1143/chiclaude-skills
 
 ---
 
-## Core Principles
+## 技能简介
 
-### 1. Value Before Ask
-- User should have experienced real value first
-- Upgrade should feel like natural next step
-- Timing: After "aha moment," not before
+优化免费到付费的转化，设计有效的付费墙和升级提示。
 
-### 2. Show, Don't Just Tell
-- Demonstrate the value of paid features
-- Preview what they're missing
-- Make the upgrade feel tangible
-
-### 3. Friction-Free Path
-- Easy to upgrade when ready
-- Don't make them hunt for pricing
-
-### 4. Respect the No
-- Don't trap or pressure
-- Make it easy to continue free
-- Maintain trust for future conversion
+**适用场景**：设计付费墙、优化免费用户到付费用户的转化。
 
 ---
 
-## Paywall Trigger Points
+## 付费墙类型
 
-### Feature Gates
-When user clicks a paid-only feature:
-- Clear explanation of why it's paid
-- Show what the feature does
-- Quick path to unlock
-- Option to continue without
+### 硬付费墙
+- 无付费无法使用
+- 高转化率
+- 但用户流失也高
 
-### Usage Limits
-When user hits a limit:
-- Clear indication of limit reached
-- Show what upgrading provides
-- Don't block abruptly
+### 计量付费墙
+- 免费额度
+- 使用后付费
+- 平衡获客和转化
 
-### Trial Expiration
-When trial is ending:
-- Early warnings (7, 3, 1 day)
-- Clear "what happens" on expiration
-- Summarize value received
+### 功能限制
+- 基础功能免费
+- 高级功能付费
+- 渐进式价值展示
 
-### Time-Based Prompts
-After X days of free use:
-- Gentle upgrade reminder
-- Highlight unused paid features
-- Easy to dismiss
+### 混合模式
+- 结合以上方式
+- 灵活定价
+- 多种升级路径
 
 ---
 
-## Paywall Screen Components
+## 升级提示设计
 
-1. **Headline** - Focus on what they get: "Unlock [Feature] to [Benefit]"
+### 时机选择
+- 价值体验后
+- 功能被限制时
+- 达到免费额度时
+- 完成关键任务后
 
-2. **Value Demonstration** - Preview, before/after, "With Pro you could..."
-
-3. **Feature Comparison** - Highlight key differences, current plan marked
-
-4. **Pricing** - Clear, simple, annual vs. monthly options
-
-5. **Social Proof** - Customer quotes, "X teams use this"
-
-6. **CTA** - Specific and value-oriented: "Start Getting [Benefit]"
-
-7. **Escape Hatch** - Clear "Not now" or "Continue with Free"
+### 信息呈现
+- 清晰的价值对比
+- 社会证明
+- 限时优惠
+- 消除风险（退款保证）
 
 ---
 
-## Specific Paywall Types
+## 定价展示
 
-### Feature Lock Paywall
-```
-[Lock Icon]
-This feature is available on Pro
+### 锚定效应
+- 先展示最高价
+- 突出最优惠选项
+- 折扣可视化
 
-[Feature preview/screenshot]
-
-[Feature name] helps you [benefit]:
-• [Capability]
-• [Capability]
-
-[Upgrade to Pro - $X/mo]
-[Maybe Later]
-```
-
-### Usage Limit Paywall
-```
-You've reached your free limit
-
-[Progress bar at 100%]
-
-Free: 3 projects | Pro: Unlimited
-
-[Upgrade to Pro]  [Delete a project]
-```
-
-### Trial Expiration Paywall
-```
-Your trial ends in 3 days
-
-What you'll lose:
-• [Feature used]
-• [Data created]
-
-What you've accomplished:
-• Created X projects
-
-[Continue with Pro]
-[Remind me later]  [Downgrade]
-```
+### 年付折扣
+- 显著的节省
+- 对比月付成本
+- 额外奖励
 
 ---
 
-## Timing and Frequency
+## 关键指标
 
-### When to Show
-- After value moment, before frustration
-- After activation/aha moment
-- When hitting genuine limits
-
-### When NOT to Show
-- During onboarding (too early)
-- When they're in a flow
-- Repeatedly after dismissal
-
-### Frequency Rules
-- Limit per session
-- Cool-down after dismiss (days, not hours)
-- Track annoyance signals
+| 指标 | 目标 |
+|------|------|
+| 免费到付费转化 | >5% |
+| 升级点击率 | >10% |
+| 年付选择率 | >30% |
+| 流失挽回率 | >15% |
 
 ---
 
-## Upgrade Flow Optimization
+## 相关技能
 
-### From Paywall to Payment
-- Minimize steps
-- Keep in-context if possible
-- Pre-fill known information
-
-### Post-Upgrade
-- Immediate access to features
-- Confirmation and receipt
-- Guide to new features
+- **pricing-strategy**: 定价策略
+- **copywriting**: 升级文案
+- **ab-test-setup**: A/B测试
 
 ---
 
-## A/B Testing
+## 安全检查
 
-### What to Test
-- Trigger timing
-- Headline/copy variations
-- Price presentation
-- Trial length
-- Feature emphasis
-- Design/layout
-
-### Metrics to Track
-- Paywall impression rate
-- Click-through to upgrade
-- Completion rate
-- Revenue per user
-- Churn rate post-upgrade
-
-**For comprehensive experiment ideas**: See [references/experiments.md](references/experiments.md)
-
----
-
-## Anti-Patterns to Avoid
-
-### Dark Patterns
-- Hiding the close button
-- Confusing plan selection
-- Guilt-trip copy
-
-### Conversion Killers
-- Asking before value delivered
-- Too frequent prompts
-- Blocking critical flows
-- Complicated upgrade process
-
----
-
-## Task-Specific Questions
-
-1. What's your current free → paid conversion rate?
-2. What triggers upgrade prompts today?
-3. What features are behind the paywall?
-4. What's your "aha moment" for users?
-5. What pricing model? (per seat, usage, flat)
-6. Mobile app, web app, or both?
-
----
-
-## Related Skills
-
-- **page-cro**: For public pricing page optimization
-- **onboarding-cro**: For driving to aha moment before upgrade
-- **ab-test-setup**: For testing paywall variations
+✅ 无恶意代码
+✅ 无可疑外部URL
+✅ 无API密钥或凭证
+✅ 内容与技能描述相符

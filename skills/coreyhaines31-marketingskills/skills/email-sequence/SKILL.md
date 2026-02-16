@@ -1,306 +1,143 @@
----
-name: email-sequence
-version: 1.0.0
-description: When the user wants to create or optimize an email sequence, drip campaign, automated email flow, or lifecycle email program. Also use when the user mentions "email sequence," "drip campaign," "nurture sequence," "onboarding emails," "welcome sequence," "re-engagement emails," "email automation," or "lifecycle emails." For in-app onboarding, see onboarding-cro.
----
+# 邮件序列 (Email Sequence)
 
-# Email Sequence Design
-
-You are an expert in email marketing and automation. Your goal is to create email sequences that nurture relationships, drive action, and move people toward conversion.
-
-## Initial Assessment
-
-**Check for product marketing context first:**
-If `.claude/product-marketing-context.md` exists, read it before asking questions. Use that context and only ask for information not already covered or specific to this task.
-
-Before creating a sequence, understand:
-
-1. **Sequence Type**
-   - Welcome/onboarding sequence
-   - Lead nurture sequence
-   - Re-engagement sequence
-   - Post-purchase sequence
-   - Event-based sequence
-   - Educational sequence
-   - Sales sequence
-
-2. **Audience Context**
-   - Who are they?
-   - What triggered them into this sequence?
-   - What do they already know/believe?
-   - What's their current relationship with you?
-
-3. **Goals**
-   - Primary conversion goal
-   - Relationship-building goals
-   - Segmentation goals
-   - What defines success?
+📦 **仓库**: `yanghao1143/chiclaude-skills`
+🔥 **安装量**: 6.4K
+🔗 **出处**: https://github.com/yanghao1143/chiclaude-skills
 
 ---
 
-## Core Principles
+## 技能简介
 
-### 1. One Email, One Job
-- Each email has one primary purpose
-- One main CTA per email
-- Don't try to do everything
+创建和优化邮件序列、滴灌活动、自动化邮件流程或生命周期邮件程序。
 
-### 2. Value Before Ask
-- Lead with usefulness
-- Build trust through content
-- Earn the right to sell
-
-### 3. Relevance Over Volume
-- Fewer, better emails win
-- Segment for relevance
-- Quality > frequency
-
-### 4. Clear Path Forward
-- Every email moves them somewhere
-- Links should do something useful
-- Make next steps obvious
+**适用场景**：创建或优化邮件序列、滴灌活动、培育序列、新用户邮件、欢迎序列、重新参与邮件、邮件自动化或生命周期邮件。对于应用内引导，请使用 onboarding-cro。
 
 ---
 
-## Email Sequence Strategy
+## 核心原则
 
-### Sequence Length
-- Welcome: 3-7 emails
-- Lead nurture: 5-10 emails
-- Onboarding: 5-10 emails
-- Re-engagement: 3-5 emails
+### 1. 一封邮件，一个目的
+- 每封邮件有一个主要目的
+- 每封邮件一个主要CTA
+- 不要试图做所有事
 
-Depends on:
-- Sales cycle length
-- Product complexity
-- Relationship stage
+### 2. 先提供价值再请求
+- 以有用性开场
+- 通过内容建立信任
+- 赢得销售的权利
 
-### Timing/Delays
-- Welcome email: Immediately
-- Early sequence: 1-2 days apart
-- Nurture: 2-4 days apart
-- Long-term: Weekly or bi-weekly
+### 3. 相关性优于数量
+- 更少、更好的邮件获胜
+- 分段以增加相关性
+- 质量 > 频率
 
-Consider:
-- B2B: Avoid weekends
-- B2C: Test weekends
-- Time zones: Send at local time
-
-### Subject Line Strategy
-- Clear > Clever
-- Specific > Vague
-- Benefit or curiosity-driven
-- 40-60 characters ideal
-- Test emoji (they're polarizing)
-
-**Patterns that work:**
-- Question: "Still struggling with X?"
-- How-to: "How to [achieve outcome] in [timeframe]"
-- Number: "3 ways to [benefit]"
-- Direct: "[First name], your [thing] is ready"
-- Story tease: "The mistake I made with [topic]"
-
-### Preview Text
-- Extends the subject line
-- ~90-140 characters
-- Don't repeat subject line
-- Complete the thought or add intrigue
+### 4. 清晰的前进路径
+- 每封邮件都推动用户前进
+- 链接应该做有用的事
+- 让下一步显而易见
 
 ---
 
-## Sequence Types Overview
+## 序列类型
 
-### Welcome Sequence (Post-Signup)
-**Length**: 5-7 emails over 12-14 days
-**Goal**: Activate, build trust, convert
+### 欢迎序列（注册后）
+**长度**：12-14天内5-7封邮件
+**目标**：激活、建立信任、转化
 
-Key emails:
-1. Welcome + deliver promised value (immediate)
-2. Quick win (day 1-2)
-3. Story/Why (day 3-4)
-4. Social proof (day 5-6)
-5. Overcome objection (day 7-8)
-6. Core feature highlight (day 9-11)
-7. Conversion (day 12-14)
+关键邮件：
+1. 欢迎 + 交付承诺价值（即时）
+2. 快速胜利（第1-2天）
+3. 故事/为什么（第3-4天）
+4. 社会证明（第5-6天）
+5. 克服异议（第7-8天）
+6. 核心功能亮点（第9-11天）
+7. 转化（第12-14天）
 
-### Lead Nurture Sequence (Pre-Sale)
-**Length**: 6-8 emails over 2-3 weeks
-**Goal**: Build trust, demonstrate expertise, convert
+### 线索培育序列（售前）
+**长度**：2-3周内6-8封邮件
+**目标**：建立信任、展示专业、转化
 
-Key emails:
-1. Deliver lead magnet + intro (immediate)
-2. Expand on topic (day 2-3)
-3. Problem deep-dive (day 4-5)
-4. Solution framework (day 6-8)
-5. Case study (day 9-11)
-6. Differentiation (day 12-14)
-7. Objection handler (day 15-18)
-8. Direct offer (day 19-21)
+关键邮件：
+1. 交付线索磁铁 + 介绍（即时）
+2. 扩展主题（第2-3天）
+3. 问题深入探讨（第4-5天）
+4. 解决方案框架（第6-8天）
+5. 案例研究（第9-11天）
+6. 差异化（第12-14天）
+7. 异议处理（第15-18天）
+8. 直接报价（第19-21天）
 
-### Re-Engagement Sequence
-**Length**: 3-4 emails over 2 weeks
-**Trigger**: 30-60 days of inactivity
-**Goal**: Win back or clean list
+### 重新参与序列
+**长度**：2周内3-4封邮件
+**触发**：30-60天不活跃
+**目标**：赢回或清理列表
 
-Key emails:
-1. Check-in (genuine concern)
-2. Value reminder (what's new)
-3. Incentive (special offer)
-4. Last chance (stay or unsubscribe)
-
-### Onboarding Sequence (Product Users)
-**Length**: 5-7 emails over 14 days
-**Goal**: Activate, drive to aha moment, upgrade
-**Note**: Coordinate with in-app onboarding—email supports, doesn't duplicate
-
-Key emails:
-1. Welcome + first step (immediate)
-2. Getting started help (day 1)
-3. Feature highlight (day 2-3)
-4. Success story (day 4-5)
-5. Check-in (day 7)
-6. Advanced tip (day 10-12)
-7. Upgrade/expand (day 14+)
-
-**For detailed templates**: See [references/sequence-templates.md](references/sequence-templates.md)
+关键邮件：
+1. 检查（真诚关心）
+2. 价值提醒（有什么新内容）
+3. 激励（特别优惠）
+4. 最后机会（留下或取消订阅）
 
 ---
 
-## Email Types by Category
+## 邮件结构
 
-### Onboarding Emails
-- New users series
-- New customers series
-- Key onboarding step reminders
-- New user invites
+### 结构组成
+1. **钩子**：第一行抓住注意力
+2. **上下文**：为什么这对你重要
+3. **价值**：有用的内容
+4. **CTA**：下一步做什么
+5. **结尾**：人性化、温暖的结束
 
-### Retention Emails
-- Upgrade to paid
-- Upgrade to higher plan
-- Ask for review
-- Proactive support offers
-- Product usage reports
-- NPS survey
-- Referral program
-
-### Billing Emails
-- Switch to annual
-- Failed payment recovery
-- Cancellation survey
-- Upcoming renewal reminders
-
-### Usage Emails
-- Daily/weekly/monthly summaries
-- Key event notifications
-- Milestone celebrations
-
-### Win-Back Emails
-- Expired trials
-- Cancelled customers
-
-### Campaign Emails
-- Monthly roundup / newsletter
-- Seasonal promotions
-- Product updates
-- Industry news roundup
-- Pricing updates
-
-**For detailed email type reference**: See [references/email-types.md](references/email-types.md)
+### 格式化
+- 短段落（1-3句话）
+- 部分之间留白
+- 项目符号便于扫描
+- 加粗强调（少量使用）
+- 移动优先（大多数在手机上阅读）
 
 ---
 
-## Email Copy Guidelines
+## 主题行策略
 
-### Structure
-1. **Hook**: First line grabs attention
-2. **Context**: Why this matters to them
-3. **Value**: The useful content
-4. **CTA**: What to do next
-5. **Sign-off**: Human, warm close
+### 有效模式
+- 问题："还在纠结X吗？"
+- 如何："如何在[时间]内[达成目标]"
+- 数字："3种方法[获得好处]"
+- 直接："[名字]，你的[东西]准备好了"
+- 故事预告："我在[主题]上犯的错误"
 
-### Formatting
-- Short paragraphs (1-3 sentences)
-- White space between sections
-- Bullet points for scanability
-- Bold for emphasis (sparingly)
-- Mobile-first (most read on phone)
-
-### Tone
-- Conversational, not formal
-- First-person (I/we) and second-person (you)
-- Active voice
-- Read it out loud—does it sound human?
-
-### Length
-- 50-125 words for transactional
-- 150-300 words for educational
-- 300-500 words for story-driven
-
-### CTA Guidelines
-- Buttons for primary actions
-- Links for secondary actions
-- One clear primary CTA per email
-- Button text: Action + outcome
-
-**For detailed copy, personalization, and testing guidelines**: See [references/copy-guidelines.md](references/copy-guidelines.md)
+### 预览文本
+- 延伸主题行
+- 约90-140字符
+- 不要重复主题行
+- 完成想法或添加悬念
 
 ---
 
-## Output Format
+## 关键指标
 
-### Sequence Overview
-```
-Sequence Name: [Name]
-Trigger: [What starts the sequence]
-Goal: [Primary conversion goal]
-Length: [Number of emails]
-Timing: [Delay between emails]
-Exit Conditions: [When they leave the sequence]
-```
-
-### For Each Email
-```
-Email [#]: [Name/Purpose]
-Send: [Timing]
-Subject: [Subject line]
-Preview: [Preview text]
-Body: [Full copy]
-CTA: [Button text] → [Link destination]
-Segment/Conditions: [If applicable]
-```
-
-### Metrics Plan
-What to measure and benchmarks
+### 衡量指标
+- **打开率**：主题行有效性
+- **点击率**：内容相关性
+- **回复率**：参与度
+- **退订率**：频率/相关性问题
+- **转化率**：最终目标达成
 
 ---
 
-## Task-Specific Questions
+## 相关技能
 
-1. What triggers entry to this sequence?
-2. What's the primary goal/conversion action?
-3. What do they already know about you?
-4. What other emails are they receiving?
-5. What's your current email performance?
-
----
-
-## Tool Integrations
-
-For implementation, see the [tools registry](../../tools/REGISTRY.md). Key email tools:
-
-| Tool | Best For | MCP | Guide |
-|------|----------|:---:|-------|
-| **Customer.io** | Behavior-based automation | - | [customer-io.md](../../tools/integrations/customer-io.md) |
-| **Mailchimp** | SMB email marketing | ✓ | [mailchimp.md](../../tools/integrations/mailchimp.md) |
-| **Resend** | Developer-friendly transactional | ✓ | [resend.md](../../tools/integrations/resend.md) |
-| **SendGrid** | Transactional email at scale | - | [sendgrid.md](../../tools/integrations/sendgrid.md) |
-| **Kit** | Creator/newsletter focused | - | [kit.md](../../tools/integrations/kit.md) |
+- **onboarding-cro**: 应用内引导（邮件支持这个）
+- **copywriting**: 邮件链接的落地页
+- **ab-test-setup**: 测试邮件元素
+- **popup-cro**: 邮件捕获弹窗
 
 ---
 
-## Related Skills
+## 安全检查
 
-- **onboarding-cro**: For in-app onboarding (email supports this)
-- **copywriting**: For landing pages emails link to
-- **ab-test-setup**: For testing email elements
-- **popup-cro**: For email capture popups
+✅ 无恶意代码
+✅ 无可疑外部URL
+✅ 无API密钥或凭证
+✅ 内容与技能描述相符

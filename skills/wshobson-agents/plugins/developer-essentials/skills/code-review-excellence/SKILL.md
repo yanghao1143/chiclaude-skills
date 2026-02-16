@@ -1,538 +1,167 @@
+# 代码审查卓越实践 - Code Review Excellence
+
+> **原始仓库**: `wshobson/agents/code-review-excellence`
+> **安装量**: 3.5K
+> **翻译日期**: 2026-02-15
+> **原文链接**: https://github.com/yanghao1143/chiclaude-skills
+
 ---
-name: code-review-excellence
-description: Master effective code review practices to provide constructive feedback, catch bugs early, and foster knowledge sharing while maintaining team morale. Use when reviewing pull requests, establishing review standards, or mentoring developers.
+
+## 📖 技能简介
+
+系统化的代码审查最佳实践，包括审查清单、常见问题识别、建设性反馈技巧和代码质量改进策略。
+
 ---
 
-# Code Review Excellence
+## 🎯 何时使用此技能
 
-Transform code reviews from gatekeeping to knowledge sharing through constructive feedback, systematic analysis, and collaborative improvement.
+当用户进行以下工作时使用：
 
-## When to Use This Skill
+- 进行代码审查
+- 提供代码反馈
+- 改进代码质量
+- 建立审查流程
 
-- Reviewing pull requests and code changes
-- Establishing code review standards for teams
-- Mentoring junior developers through reviews
-- Conducting architecture reviews
-- Creating review checklists and guidelines
-- Improving team collaboration
-- Reducing code review cycle time
-- Maintaining code quality standards
+---
 
-## Core Principles
+## 📋 代码审查清单
 
-### 1. The Review Mindset
+### 功能正确性
 
-**Goals of Code Review:**
+- [ ] 代码是否实现了预期功能？
+- [ ] 边界情况是否处理？
+- [ ] 错误处理是否完善？
+- [ ] 是否有测试覆盖？
 
-- Catch bugs and edge cases
-- Ensure code maintainability
-- Share knowledge across team
-- Enforce coding standards
-- Improve design and architecture
-- Build team culture
+### 代码质量
 
-**Not the Goals:**
+- [ ] 代码是否易读？
+- [ ] 命名是否清晰？
+- [ ] 是否有重复代码？
+- [ ] 函数是否过长？
 
-- Show off knowledge
-- Nitpick formatting (use linters)
-- Block progress unnecessarily
-- Rewrite to your preference
+### 性能
 
-### 2. Effective Feedback
+- [ ] 是否有性能问题？
+- [ ] 是否有不必要的计算？
+- [ ] 数据结构选择是否合适？
 
-**Good Feedback is:**
+### 安全性
 
-- Specific and actionable
-- Educational, not judgmental
-- Focused on the code, not the person
-- Balanced (praise good work too)
-- Prioritized (critical vs nice-to-have)
+- [ ] 是否有安全漏洞？
+- [ ] 敏感数据是否加密？
+- [ ] 输入是否验证？
 
-```markdown
-❌ Bad: "This is wrong."
-✅ Good: "This could cause a race condition when multiple users
-access simultaneously. Consider using a mutex here."
+---
 
-❌ Bad: "Why didn't you use X pattern?"
-✅ Good: "Have you considered the Repository pattern? It would
-make this easier to test. Here's an example: [link]"
+## 🔍 常见问题识别
 
-❌ Bad: "Rename this variable."
-✅ Good: "[nit] Consider `userCount` instead of `uc` for
-clarity. Not blocking if you prefer to keep it."
-```
+### 1. 代码异味
 
-### 3. Review Scope
+| 问题 | 示例 | 改进 |
+|------|------|------|
+| 过长函数 | 函数超过 50 行 | 拆分为小函数 |
+| 过深嵌套 | 4 层以上 if | 提前返回，使用守卫语句 |
+| 魔法数字 | `if (x > 86400)` | 使用常量 `SECONDS_PER_DAY` |
+| 重复代码 | 多处相似逻辑 | 提取公共方法 |
 
-**What to Review:**
-
-- Logic correctness and edge cases
-- Security vulnerabilities
-- Performance implications
-- Test coverage and quality
-- Error handling
-- Documentation and comments
-- API design and naming
-- Architectural fit
-
-**What Not to Review Manually:**
-
-- Code formatting (use Prettier, Black, etc.)
-- Import organization
-- Linting violations
-- Simple typos
-
-## Review Process
-
-### Phase 1: Context Gathering (2-3 minutes)
-
-```markdown
-Before diving into code, understand:
-
-1. Read PR description and linked issue
-2. Check PR size (>400 lines? Ask to split)
-3. Review CI/CD status (tests passing?)
-4. Understand the business requirement
-5. Note any relevant architectural decisions
-```
-
-### Phase 2: High-Level Review (5-10 minutes)
-
-```markdown
-1. **Architecture & Design**
-   - Does the solution fit the problem?
-   - Are there simpler approaches?
-   - Is it consistent with existing patterns?
-   - Will it scale?
-
-2. **File Organization**
-   - Are new files in the right places?
-   - Is code grouped logically?
-   - Are there duplicate files?
-
-3. **Testing Strategy**
-   - Are there tests?
-   - Do tests cover edge cases?
-   - Are tests readable?
-```
-
-### Phase 3: Line-by-Line Review (10-20 minutes)
-
-```markdown
-For each file:
-
-1. **Logic & Correctness**
-   - Edge cases handled?
-   - Off-by-one errors?
-   - Null/undefined checks?
-   - Race conditions?
-
-2. **Security**
-   - Input validation?
-   - SQL injection risks?
-   - XSS vulnerabilities?
-   - Sensitive data exposure?
-
-3. **Performance**
-   - N+1 queries?
-   - Unnecessary loops?
-   - Memory leaks?
-   - Blocking operations?
-
-4. **Maintainability**
-   - Clear variable names?
-   - Functions doing one thing?
-   - Complex code commented?
-   - Magic numbers extracted?
-```
-
-### Phase 4: Summary & Decision (2-3 minutes)
-
-```markdown
-1. Summarize key concerns
-2. Highlight what you liked
-3. Make clear decision:
-   - ✅ Approve
-   - 💬 Comment (minor suggestions)
-   - 🔄 Request Changes (must address)
-4. Offer to pair if complex
-```
-
-## Review Techniques
-
-### Technique 1: The Checklist Method
-
-```markdown
-## Security Checklist
-
-- [ ] User input validated and sanitized
-- [ ] SQL queries use parameterization
-- [ ] Authentication/authorization checked
-- [ ] Secrets not hardcoded
-- [ ] Error messages don't leak info
-
-## Performance Checklist
-
-- [ ] No N+1 queries
-- [ ] Database queries indexed
-- [ ] Large lists paginated
-- [ ] Expensive operations cached
-- [ ] No blocking I/O in hot paths
-
-## Testing Checklist
-
-- [ ] Happy path tested
-- [ ] Edge cases covered
-- [ ] Error cases tested
-- [ ] Test names are descriptive
-- [ ] Tests are deterministic
-```
-
-### Technique 2: The Question Approach
-
-Instead of stating problems, ask questions to encourage thinking:
-
-```markdown
-❌ "This will fail if the list is empty."
-✅ "What happens if `items` is an empty array?"
-
-❌ "You need error handling here."
-✅ "How should this behave if the API call fails?"
-
-❌ "This is inefficient."
-✅ "I see this loops through all users. Have we considered
-the performance impact with 100k users?"
-```
-
-### Technique 3: Suggest, Don't Command
-
-````markdown
-## Use Collaborative Language
-
-❌ "You must change this to use async/await"
-✅ "Suggestion: async/await might make this more readable:
-`typescript
-    async function fetchUser(id: string) {
-        const user = await db.query('SELECT * FROM users WHERE id = ?', id);
-        return user;
-    }
-    `
-What do you think?"
-
-❌ "Extract this into a function"
-✅ "This logic appears in 3 places. Would it make sense to
-extract it into a shared utility function?"
-````
-
-### Technique 4: Differentiate Severity
-
-```markdown
-Use labels to indicate priority:
-
-🔴 [blocking] - Must fix before merge
-🟡 [important] - Should fix, discuss if disagree
-🟢 [nit] - Nice to have, not blocking
-💡 [suggestion] - Alternative approach to consider
-📚 [learning] - Educational comment, no action needed
-🎉 [praise] - Good work, keep it up!
-
-Example:
-"🔴 [blocking] This SQL query is vulnerable to injection.
-Please use parameterized queries."
-
-"🟢 [nit] Consider renaming `data` to `userData` for clarity."
-
-"🎉 [praise] Excellent test coverage! This will catch edge cases."
-```
-
-## Language-Specific Patterns
-
-### Python Code Review
+### 2. 性能问题
 
 ```python
-# Check for Python-specific issues
+# 问题：在循环中进行数据库查询
+for user in users:
+    data = db.query(f"SELECT * FROM orders WHERE user_id = {user.id}")
 
-# ❌ Mutable default arguments
-def add_item(item, items=[]):  # Bug! Shared across calls
-    items.append(item)
-    return items
-
-# ✅ Use None as default
-def add_item(item, items=None):
-    if items is None:
-        items = []
-    items.append(item)
-    return items
-
-# ❌ Catching too broad
-try:
-    result = risky_operation()
-except:  # Catches everything, even KeyboardInterrupt!
-    pass
-
-# ✅ Catch specific exceptions
-try:
-    result = risky_operation()
-except ValueError as e:
-    logger.error(f"Invalid value: {e}")
-    raise
-
-# ❌ Using mutable class attributes
-class User:
-    permissions = []  # Shared across all instances!
-
-# ✅ Initialize in __init__
-class User:
-    def __init__(self):
-        self.permissions = []
+# 改进：批量查询
+user_ids = [u.id for u in users]
+data = db.query(f"SELECT * FROM orders WHERE user_id IN {user_ids}")
 ```
 
-### TypeScript/JavaScript Code Review
+### 3. 安全问题
 
-```typescript
-// Check for TypeScript-specific issues
+```python
+# 问题：SQL 注入风险
+cursor.execute(f"SELECT * FROM users WHERE id = {user_input}")
 
-// ❌ Using any defeats type safety
-function processData(data: any) {  // Avoid any
-    return data.value;
-}
-
-// ✅ Use proper types
-interface DataPayload {
-    value: string;
-}
-function processData(data: DataPayload) {
-    return data.value;
-}
-
-// ❌ Not handling async errors
-async function fetchUser(id: string) {
-    const response = await fetch(`/api/users/${id}`);
-    return response.json();  // What if network fails?
-}
-
-// ✅ Handle errors properly
-async function fetchUser(id: string): Promise<User> {
-    try {
-        const response = await fetch(`/api/users/${id}`);
-        if (!response.ok) {
-            throw new Error(`HTTP ${response.status}`);
-        }
-        return await response.json();
-    } catch (error) {
-        console.error('Failed to fetch user:', error);
-        throw error;
-    }
-}
-
-// ❌ Mutation of props
-function UserProfile({ user }: Props) {
-    user.lastViewed = new Date();  // Mutating prop!
-    return <div>{user.name}</div>;
-}
-
-// ✅ Don't mutate props
-function UserProfile({ user, onView }: Props) {
-    useEffect(() => {
-        onView(user.id);  // Notify parent to update
-    }, [user.id]);
-    return <div>{user.name}</div>;
-}
+# 改进：参数化查询
+cursor.execute("SELECT * FROM users WHERE id = ?", (user_input,))
 ```
 
-## Advanced Review Patterns
+---
 
-### Pattern 1: Architectural Review
+## 💬 建设性反馈技巧
 
-```markdown
-When reviewing significant changes:
+### 反馈格式
 
-1. **Design Document First**
-   - For large features, request design doc before code
-   - Review design with team before implementation
-   - Agree on approach to avoid rework
+```
+【位置】文件:行号
 
-2. **Review in Stages**
-   - First PR: Core abstractions and interfaces
-   - Second PR: Implementation
-   - Third PR: Integration and tests
-   - Easier to review, faster to iterate
+【问题】描述发现的问题
 
-3. **Consider Alternatives**
-   - "Have we considered using [pattern/library]?"
-   - "What's the tradeoff vs. the simpler approach?"
-   - "How will this evolve as requirements change?"
+【建议】提供具体的改进建议
+
+【原因】解释为什么这是个问题
 ```
 
-### Pattern 2: Test Quality Review
+### 示例
 
-```typescript
-// ❌ Poor test: Implementation detail testing
-test('increments counter variable', () => {
-    const component = render(<Counter />);
-    const button = component.getByRole('button');
-    fireEvent.click(button);
-    expect(component.state.counter).toBe(1);  // Testing internal state
-});
+```
+【位置】src/utils.ts:45
 
-// ✅ Good test: Behavior testing
-test('displays incremented count when clicked', () => {
-    render(<Counter />);
-    const button = screen.getByRole('button', { name: /increment/i });
-    fireEvent.click(button);
-    expect(screen.getByText('Count: 1')).toBeInTheDocument();
-});
+【问题】函数 `processData` 有 80 行，逻辑较复杂
 
-// Review questions for tests:
-// - Do tests describe behavior, not implementation?
-// - Are test names clear and descriptive?
-// - Do tests cover edge cases?
-// - Are tests independent (no shared state)?
-// - Can tests run in any order?
+【建议】考虑拆分为：
+- `validateInput` - 验证输入
+- `transformData` - 数据转换
+- `saveResult` - 保存结果
+
+【原因】提高可读性和可测试性
 ```
 
-### Pattern 3: Security Review
+### 反馈原则
 
-```markdown
-## Security Review Checklist
+1. **对事不对人** - 评论代码，不评论人
+2. **具体明确** - 给出具体的改进建议
+3. **解释原因** - 说明为什么需要改进
+4. **提出问题** - 有时提问比直接指出更好
 
-### Authentication & Authorization
+---
 
-- [ ] Is authentication required where needed?
-- [ ] Are authorization checks before every action?
-- [ ] Is JWT validation proper (signature, expiry)?
-- [ ] Are API keys/secrets properly secured?
+## 🏆 审查最佳实践
 
-### Input Validation
+### 审查者
 
-- [ ] All user inputs validated?
-- [ ] File uploads restricted (size, type)?
-- [ ] SQL queries parameterized?
-- [ ] XSS protection (escape output)?
+1. **及时响应** - 24 小时内开始审查
+2. **专注审查** - 每次不超过 60 分钟
+3. **区分重要程度** - 标注 [必须] / [建议] / [讨论]
+4. **认可好的代码** - 不只是找问题
 
-### Data Protection
+### 被审查者
 
-- [ ] Passwords hashed (bcrypt/argon2)?
-- [ ] Sensitive data encrypted at rest?
-- [ ] HTTPS enforced for sensitive data?
-- [ ] PII handled according to regulations?
+1. **自审先行** - 提交前自己审查
+2. **描述清晰** - 说明改动原因和影响
+3. **保持开放** - 接受建设性意见
+4. **及时响应** - 快速处理审查意见
 
-### Common Vulnerabilities
+---
 
-- [ ] No eval() or similar dynamic execution?
-- [ ] No hardcoded secrets?
-- [ ] CSRF protection for state-changing operations?
-- [ ] Rate limiting on public endpoints?
-```
+## 📊 审查指标
 
-## Giving Difficult Feedback
+| 指标 | 建议值 |
+|------|--------|
+| 首次响应时间 | < 24 小时 |
+| 审查时间 | < 60 分钟/次 |
+| 每次审查行数 | < 400 行 |
+| 发现问题数 | 5-15 个/审查 |
 
-### Pattern: The Sandwich Method (Modified)
+---
 
-```markdown
-Traditional: Praise + Criticism + Praise (feels fake)
+## 🔗 相关链接
 
-Better: Context + Specific Issue + Helpful Solution
+- [原文链接](https://github.com/yanghao1143/chiclaude-skills)
+- [GitHub 仓库](https://github.com/wshobson/agents)
+- [OpenClaw AI 社区](https://chiclaude.com)
 
-Example:
-"I noticed the payment processing logic is inline in the
-controller. This makes it harder to test and reuse.
+---
 
-[Specific Issue]
-The calculateTotal() function mixes tax calculation,
-discount logic, and database queries, making it difficult
-to unit test and reason about.
-
-[Helpful Solution]
-Could we extract this into a PaymentService class? That
-would make it testable and reusable. I can pair with you
-on this if helpful."
-```
-
-### Handling Disagreements
-
-```markdown
-When author disagrees with your feedback:
-
-1. **Seek to Understand**
-   "Help me understand your approach. What led you to
-   choose this pattern?"
-
-2. **Acknowledge Valid Points**
-   "That's a good point about X. I hadn't considered that."
-
-3. **Provide Data**
-   "I'm concerned about performance. Can we add a benchmark
-   to validate the approach?"
-
-4. **Escalate if Needed**
-   "Let's get [architect/senior dev] to weigh in on this."
-
-5. **Know When to Let Go**
-   If it's working and not a critical issue, approve it.
-   Perfection is the enemy of progress.
-```
-
-## Best Practices
-
-1. **Review Promptly**: Within 24 hours, ideally same day
-2. **Limit PR Size**: 200-400 lines max for effective review
-3. **Review in Time Blocks**: 60 minutes max, take breaks
-4. **Use Review Tools**: GitHub, GitLab, or dedicated tools
-5. **Automate What You Can**: Linters, formatters, security scans
-6. **Build Rapport**: Emoji, praise, and empathy matter
-7. **Be Available**: Offer to pair on complex issues
-8. **Learn from Others**: Review others' review comments
-
-## Common Pitfalls
-
-- **Perfectionism**: Blocking PRs for minor style preferences
-- **Scope Creep**: "While you're at it, can you also..."
-- **Inconsistency**: Different standards for different people
-- **Delayed Reviews**: Letting PRs sit for days
-- **Ghosting**: Requesting changes then disappearing
-- **Rubber Stamping**: Approving without actually reviewing
-- **Bike Shedding**: Debating trivial details extensively
-
-## Templates
-
-### PR Review Comment Template
-
-```markdown
-## Summary
-
-[Brief overview of what was reviewed]
-
-## Strengths
-
-- [What was done well]
-- [Good patterns or approaches]
-
-## Required Changes
-
-🔴 [Blocking issue 1]
-🔴 [Blocking issue 2]
-
-## Suggestions
-
-💡 [Improvement 1]
-💡 [Improvement 2]
-
-## Questions
-
-❓ [Clarification needed on X]
-❓ [Alternative approach consideration]
-
-## Verdict
-
-✅ Approve after addressing required changes
-```
-
-## Resources
-
-- **references/code-review-best-practices.md**: Comprehensive review guidelines
-- **references/common-bugs-checklist.md**: Language-specific bugs to watch for
-- **references/security-review-guide.md**: Security-focused review checklist
-- **assets/pr-review-template.md**: Standard review comment template
-- **assets/review-checklist.md**: Quick reference checklist
-- **scripts/pr-analyzer.py**: Analyze PR complexity and suggest reviewers
+*翻译搬运自 [skills.sh](https://skills.sh)*

@@ -1,96 +1,118 @@
+# 🔥 [No.013] 头脑风暴设计
+
+📦 **仓库**: `yanghao1143/chiclaude-skills`
+🔥 **安装量**: 20.1K
+🔗 **出处**: https://github.com/yanghao1143/chiclaude-skills
+
 ---
-name: brainstorming
-description: "You MUST use this before any creative work - creating features, building components, adding functionality, or modifying behavior. Explores user intent, requirements and design before implementation."
+
+## 技能简介
+
+通过自然的协作对话，帮助将想法转化为完整的设计和规格。
+
+从理解当前项目背景开始，然后逐一提问来完善想法。一旦理解了要构建的内容，展示设计并获得用户批准。
+
 ---
 
-# Brainstorming Ideas Into Designs
+## 反模式：「这太简单了不需要设计」
 
-## Overview
+**每个项目都要经过这个流程。** 待办事项列表、单功能工具、配置更改——所有这些。「简单」项目恰恰是未经验证的假设导致最多浪费工作的地方。设计可以很短（对于真正简单的项目只需几句话），但你**必须**展示并获得批准。
 
-Help turn ideas into fully formed designs and specs through natural collaborative dialogue.
+---
 
-Start by understanding the current project context, then ask questions one at a time to refine the idea. Once you understand what you're building, present the design and get user approval.
+## 检查清单
 
-<HARD-GATE>
-Do NOT invoke any implementation skill, write any code, scaffold any project, or take any implementation action until you have presented a design and the user has approved it. This applies to EVERY project regardless of perceived simplicity.
-</HARD-GATE>
+**必须为以下每项创建任务并按顺序完成：**
 
-## Anti-Pattern: "This Is Too Simple To Need A Design"
+- [ ] 探索项目背景 — 检查文件、文档、最近提交
+- [ ] 提出澄清问题 — 一次一个，理解目的/约束/成功标准
+- [ ] 提出 2-3 种方法 — 包含权衡和你的建议
+- [ ] 展示设计 — 按复杂度分段，每段后获得用户批准
+- [ ] 编写设计文档 — 保存到 `docs/plans/YYYY-MM-DD--design.md` 并提交
+- [ ] 转入实现 — 调用 writing-plans 技能创建实现计划
 
-Every project goes through this process. A todo list, a single-function utility, a config change — all of them. "Simple" projects are where unexamined assumptions cause the most wasted work. The design can be short (a few sentences for truly simple projects), but you MUST present it and get approval.
+---
 
-## Checklist
+## 流程图
 
-You MUST create a task for each of these items and complete them in order:
-
-1. **Explore project context** — check files, docs, recent commits
-2. **Ask clarifying questions** — one at a time, understand purpose/constraints/success criteria
-3. **Propose 2-3 approaches** — with trade-offs and your recommendation
-4. **Present design** — in sections scaled to their complexity, get user approval after each section
-5. **Write design doc** — save to `docs/plans/YYYY-MM-DD-<topic>-design.md` and commit
-6. **Transition to implementation** — invoke writing-plans skill to create implementation plan
-
-## Process Flow
-
-```dot
-digraph brainstorming {
-    "Explore project context" [shape=box];
-    "Ask clarifying questions" [shape=box];
-    "Propose 2-3 approaches" [shape=box];
-    "Present design sections" [shape=box];
-    "User approves design?" [shape=diamond];
-    "Write design doc" [shape=box];
-    "Invoke writing-plans skill" [shape=doublecircle];
-
-    "Explore project context" -> "Ask clarifying questions";
-    "Ask clarifying questions" -> "Propose 2-3 approaches";
-    "Propose 2-3 approaches" -> "Present design sections";
-    "Present design sections" -> "User approves design?";
-    "User approves design?" -> "Present design sections" [label="no, revise"];
-    "User approves design?" -> "Write design doc" [label="yes"];
-    "Write design doc" -> "Invoke writing-plans skill";
-}
+```
+探索项目背景 → 提出澄清问题 → 提出 2-3 种方法 → 展示设计段落
+                                                          ↓
+                                              用户批准设计？ ─否→ 修改 → 展示设计段落
+                                                          ↓是
+                                              编写设计文档
+                                                          ↓
+                                          调用 writing-plans 技能
 ```
 
-**The terminal state is invoking writing-plans.** Do NOT invoke frontend-design, mcp-builder, or any other implementation skill. The ONLY skill you invoke after brainstorming is writing-plans.
+**终止状态是调用 writing-plans。不要调用 frontend-design、mcp-builder 或任何其他实现技能。头脑风暴后唯一调用的技能是 writing-plans。**
 
-## The Process
+---
 
-**Understanding the idea:**
-- Check out the current project state first (files, docs, recent commits)
-- Ask questions one at a time to refine the idea
-- Prefer multiple choice questions when possible, but open-ended is fine too
-- Only one question per message - if a topic needs more exploration, break it into multiple questions
-- Focus on understanding: purpose, constraints, success criteria
+## 详细流程
 
-**Exploring approaches:**
-- Propose 2-3 different approaches with trade-offs
-- Present options conversationally with your recommendation and reasoning
-- Lead with your recommended option and explain why
+### 理解想法
 
-**Presenting the design:**
-- Once you believe you understand what you're building, present the design
-- Scale each section to its complexity: a few sentences if straightforward, up to 200-300 words if nuanced
-- Ask after each section whether it looks right so far
-- Cover: architecture, components, data flow, error handling, testing
-- Be ready to go back and clarify if something doesn't make sense
+- 首先检查当前项目状态（文件、文档、最近提交）
+- 一次问一个问题来完善想法
+- 可能时优先使用多选题，但开放式问题也可以
+- 每条消息只问一个问题 — 如果话题需要更多探索，分成多个问题
+- 专注于理解：目的、约束、成功标准
 
-## After the Design
+### 探索方法
 
-**Documentation:**
-- Write the validated design to `docs/plans/YYYY-MM-DD-<topic>-design.md`
-- Use elements-of-style:writing-clearly-and-concisely skill if available
-- Commit the design document to git
+- 提出 2-3 种不同的方法及其权衡
+- 以对话方式展示选项，给出你的建议和理由
+- 首先展示你推荐的选项并解释原因
 
-**Implementation:**
-- Invoke the writing-plans skill to create a detailed implementation plan
-- Do NOT invoke any other skill. writing-plans is the next step.
+### 展示设计
 
-## Key Principles
+- 一旦你认为理解了要构建的内容，展示设计
+- 每段按复杂度缩放：如果简单就用几句话，如果复杂则最多 200-300 字
+- 每段后询问目前看起来是否正确
+- 涵盖：架构、组件、数据流、错误处理、测试
+- 准备好回过头澄清任何不合理的地方
 
-- **One question at a time** - Don't overwhelm with multiple questions
-- **Multiple choice preferred** - Easier to answer than open-ended when possible
-- **YAGNI ruthlessly** - Remove unnecessary features from all designs
-- **Explore alternatives** - Always propose 2-3 approaches before settling
-- **Incremental validation** - Present design, get approval before moving on
-- **Be flexible** - Go back and clarify when something doesn't make sense
+---
+
+## 设计完成后
+
+### 文档化
+
+- 将验证通过的设计写入 `docs/plans/YYYY-MM-DD--design.md`
+- 如果可用，使用 elements-of-style:writing-clearly-and-concisely 技能
+- 将设计文档提交到 git
+
+### 实现
+
+- 调用 writing-plans 技能创建详细的实现计划
+- **不要调用任何其他技能**。writing-plans 是下一步。
+
+---
+
+## 关键原则
+
+| 原则 | 说明 |
+|------|------|
+| 一次一个问题 | 不要用多个问题让人不知所措 |
+| 优先多选题 | 比开放式问题更容易回答 |
+| 无情地 YAGNI | 从所有设计中删除不必要的功能 |
+| 探索替代方案 | 在确定前始终提出 2-3 种方法 |
+| 增量验证 | 展示设计，继续前获得批准 |
+| 保持灵活 | 当某些内容不合理时回过头澄清 |
+
+---
+
+## 典型应用场景
+
+- 💡 新功能设计讨论
+- 📋 项目规划阶段
+- 🔄 重构决策讨论
+- 🎯 需求澄清和细化
+- 📐 架构设计评审
+
+---
+
+*翻译搬运自 [skills.sh](https://github.com/yanghao1143/chiclaude-skills)*
+
+📌 *Skills市场搬运计划 - 热门技能系列 - No.013*

@@ -1,177 +1,117 @@
----
-name: free-tool-strategy
-version: 1.0.0
-description: When the user wants to plan, evaluate, or build a free tool for marketing purposes — lead generation, SEO value, or brand awareness. Also use when the user mentions "engineering as marketing," "free tool," "marketing tool," "calculator," "generator," "interactive tool," "lead gen tool," "build a tool for leads," or "free resource." This skill bridges engineering and marketing — useful for founders and technical marketers.
----
+# 免费工具策略 (Free Tool Strategy)
 
-# Free Tool Strategy (Engineering as Marketing)
-
-You are an expert in engineering-as-marketing strategy. Your goal is to help plan and evaluate free tools that generate leads, attract organic traffic, and build brand awareness.
-
-## Initial Assessment
-
-**Check for product marketing context first:**
-If `.claude/product-marketing-context.md` exists, read it before asking questions. Use that context and only ask for information not already covered or specific to this task.
-
-Before designing a tool strategy, understand:
-
-1. **Business Context** - What's the core product? Who is the target audience? What problems do they have?
-
-2. **Goals** - Lead generation? SEO/traffic? Brand awareness? Product education?
-
-3. **Resources** - Technical capacity to build? Ongoing maintenance bandwidth? Budget for promotion?
+📦 **仓库**: `yanghao1143/chiclaude-skills`
+🔥 **安装量**: 6.0K
+🔗 **出处**: https://github.com/yanghao1143/chiclaude-skills
 
 ---
 
-## Core Principles
+## 技能简介
 
-### 1. Solve a Real Problem
-- Tool must provide genuine value
-- Solves a problem your audience actually has
-- Useful even without your main product
+创建免费工具作为获客策略，通过提供价值吸引潜在客户。
 
-### 2. Adjacent to Core Product
-- Related to what you sell
-- Natural path from tool to product
-- Educates on problem you solve
-
-### 3. Simple and Focused
-- Does one thing well
-- Low friction to use
-- Immediate value
-
-### 4. Worth the Investment
-- Lead value × expected leads > build cost + maintenance
+**适用场景**：设计免费工具、计算器、检查器或实用程序作为营销策略的一部分。
 
 ---
 
-## Tool Types Overview
+## 核心原则
 
-| Type | Examples | Best For |
-|------|----------|----------|
-| Calculators | ROI, savings, pricing estimators | Decisions involving numbers |
-| Generators | Templates, policies, names | Creating something quickly |
-| Analyzers | Website graders, SEO auditors | Evaluating existing work |
-| Testers | Meta tag preview, speed tests | Checking if something works |
-| Libraries | Icon sets, templates, snippets | Reference material |
-| Interactive | Tutorials, playgrounds, quizzes | Learning/understanding |
+### 1. 真正的价值
+- 解决实际问题
+- 不只是营销噱头
+- 用户愿意付费也可以
 
-**For detailed tool types and examples**: See [references/tool-types.md](references/tool-types.md)
+### 2. 自然引导到产品
+- 工具与产品相关
+- 展示你的专业能力
+- 有升级路径
 
----
-
-## Ideation Framework
-
-### Start with Pain Points
-
-1. **What problems does your audience Google?** - Search query research, common questions
-
-2. **What manual processes are tedious?** - Spreadsheet tasks, repetitive calculations
-
-3. **What do they need before buying your product?** - Assessments, planning, comparisons
-
-4. **What information do they wish they had?** - Data they can't easily access, benchmarks
-
-### Validate the Idea
-
-- **Search demand**: Is there search volume? How competitive?
-- **Uniqueness**: What exists? How can you be 10x better?
-- **Lead quality**: Does this audience match buyers?
-- **Build feasibility**: How complex? Can you scope an MVP?
+### 3. 易于分享
+- 有链接价值
+- 可嵌入
+- 社交友好
 
 ---
 
-## Lead Capture Strategy
+## 免费工具类型
 
-### Gating Options
+### 计算器
+- ROI 计算器
+- 定价估算器
+- 储蓄计算器
 
-| Approach | Pros | Cons |
-|----------|------|------|
-| Fully gated | Maximum capture | Lower usage |
-| Partially gated | Balance of both | Common pattern |
-| Ungated + optional | Maximum reach | Lower capture |
-| Ungated entirely | Pure SEO/brand | No direct leads |
+### 检查器/审计
+- SEO 检查器
+- 安全扫描
+- 性能测试
 
-### Lead Capture Best Practices
-- Value exchange clear: "Get your full report"
-- Minimal friction: Email only
-- Show preview of what they'll get
-- Optional: Segment by asking one qualifying question
+### 生成器
+- 模板生成器
+- 代码生成器
+- 内容创建器
 
----
-
-## SEO Considerations
-
-### Keyword Strategy
-**Tool landing page**: "[thing] calculator", "[thing] generator", "free [tool type]"
-
-**Supporting content**: "How to [use case]", "What is [concept]"
-
-### Link Building
-Free tools attract links because:
-- Genuinely useful (people reference them)
-- Unique (can't link to just any page)
-- Shareable (social amplification)
+### 转换器
+- 格式转换
+- 单位换算
+- 数据迁移
 
 ---
 
-## Build vs. Buy
+## 设计要素
 
-### Build Custom
-When: Unique concept, core to brand, high strategic value, have dev capacity
+### 低摩擦
+- 无需注册即可使用
+- 即时结果
+- 简单输入
 
-### Use No-Code Tools
-Options: Outgrow, Involve.me, Typeform, Tally, Bubble, Webflow
-When: Speed to market, limited dev resources, testing concept
+### 可分享结果
+- 可下载报告
+- 分享链接
+- 嵌入代码
 
-### Embed Existing
-When: Something good exists, white-label available, not core differentiator
-
----
-
-## MVP Scope
-
-### Minimum Viable Tool
-1. Core functionality only—does the one thing, works reliably
-2. Essential UX—clear input, obvious output, mobile works
-3. Basic lead capture—email collection, leads go somewhere useful
-
-### What to Skip Initially
-Account creation, saving results, advanced features, perfect design, every edge case
+### 升级路径
+- "获取更多"按钮
+- 保存/导出功能需要账户
+- 高级功能锁定
 
 ---
 
-## Evaluation Scorecard
+## SEO 优化
 
-Rate each factor 1-5:
+### 关键词策略
+- "[动作] calculator"
+- "free [工具类型]"
+- "[问题] checker"
 
-| Factor | Score |
-|--------|-------|
-| Search demand exists | ___ |
-| Audience match to buyers | ___ |
-| Uniqueness vs. existing | ___ |
-| Natural path to product | ___ |
-| Build feasibility | ___ |
-| Maintenance burden (inverse) | ___ |
-| Link-building potential | ___ |
-| Share-worthiness | ___ |
-
-**25+**: Strong candidate | **15-24**: Promising | **<15**: Reconsider
+### 内容优化
+- 描述性标题
+- 使用说明
+- FAQ 部分
 
 ---
 
-## Task-Specific Questions
+## 衡量指标
 
-1. What existing tools does your audience use for workarounds?
-2. How do you currently generate leads?
-3. What technical resources are available?
-4. What's the timeline and budget?
+| 指标 | 目标 |
+|------|------|
+| 工具使用量 | 高频使用 |
+| 完成率 | >70% |
+| 分享率 | >10% |
+| 注册转化 | >5% |
 
 ---
 
-## Related Skills
+## 相关技能
 
-- **page-cro**: For optimizing the tool's landing page
-- **seo-audit**: For SEO-optimizing the tool
-- **analytics-tracking**: For measuring tool usage
-- **email-sequence**: For nurturing leads from the tool
+- **copywriting**: 工具页面文案
+- **seo-audit**: SEO 优化
+- **content-strategy**: 内容策略
+
+---
+
+## 安全检查
+
+✅ 无恶意代码
+✅ 无可疑外部URL
+✅ 无API密钥或凭证
+✅ 内容与技能描述相符

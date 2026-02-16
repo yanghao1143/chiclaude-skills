@@ -1,13 +1,30 @@
+# Next.js 缓存组件 - Cache Components
+
+> **原始仓库**: `vercel-labs/next-skills/next-cache-components`
+> **安装量**: 3.7K
+> **翻译日期**: 2026-02-15
+> **原文链接**: https://github.com/yanghao1143/chiclaude-skills
+
 ---
-name: next-cache-components
-description: Next.js 16 Cache Components - PPR, use cache directive, cacheLife, cacheTag, updateTag
+
+## 📖 技能简介
+
+缓存组件支持部分预渲染（PPR）- 在单个路由中混合静态、缓存和动态内容。
+
 ---
 
-# Cache Components (Next.js 16+)
+## 🎯 何时使用此技能
 
-Cache Components enable Partial Prerendering (PPR) - mix static, cached, and dynamic content in a single route.
+当用户进行以下工作时使用：
 
-## Enable Cache Components
+- Next.js 16+ 应用开发
+- 实现部分预渲染（PPR）
+- 优化页面性能
+- 缓存策略配置
+
+---
+
+## ⚙️ 启用缓存组件
 
 ```ts
 // next.config.ts
@@ -20,32 +37,28 @@ const nextConfig: NextConfig = {
 export default nextConfig
 ```
 
-This replaces the old `experimental.ppr` flag.
-
 ---
 
-## Three Content Types
+## 📦 三种内容类型
 
-With Cache Components enabled, content falls into three categories:
+### 1. 静态（自动预渲染）
 
-### 1. Static (Auto-Prerendered)
-
-Synchronous code, imports, pure computations - prerendered at build time:
+同步代码、导入、纯计算 - 在构建时预渲染：
 
 ```tsx
 export default function Page() {
   return (
     <header>
-      <h1>Our Blog</h1>  {/* Static - instant */}
+      <h1>我们的博客</h1>  {/* 静态 - 即时显示 */}
       <nav>...</nav>
     </header>
   )
 }
 ```
 
-### 2. Cached (`use cache`)
+### 2. 缓存（`use cache`）
 
-Async data that doesn't need fresh fetches every request:
+不需要每次请求都刷新的异步数据：
 
 ```tsx
 async function BlogPosts() {
@@ -57,9 +70,9 @@ async function BlogPosts() {
 }
 ```
 
-### 3. Dynamic (Suspense)
+### 3. 动态（Suspense）
 
-Runtime data that must be fresh - wrap in Suspense:
+必须保持新鲜的运行时数据 - 包装在 Suspense 中：
 
 ```tsx
 import { Suspense } from 'react'
@@ -67,38 +80,33 @@ import { Suspense } from 'react'
 export default function Page() {
   return (
     <>
-      <BlogPosts />  {/* Cached */}
+      <BlogPosts />  {/* 缓存 */}
 
-      <Suspense fallback={<p>Loading...</p>}>
-        <UserPreferences />  {/* Dynamic - streams in */}
+      <Suspense fallback={<p>加载中...</p>}>
+        <UserPreferences />  {/* 动态 - 流式加载 */}
       </Suspense>
     </>
   )
-}
-
-async function UserPreferences() {
-  const theme = (await cookies()).get('theme')?.value
-  return <p>Theme: {theme}</p>
 }
 ```
 
 ---
 
-## `use cache` Directive
+## 🔧 `use cache` 指令
 
-### File Level
+### 文件级别
 
 ```tsx
 'use cache'
 
 export default async function Page() {
-  // Entire page is cached
+  // 整个页面被缓存
   const data = await fetchData()
   return <div>{data}</div>
 }
 ```
 
-### Component Level
+### 组件级别
 
 ```tsx
 export async function CachedComponent() {
@@ -108,7 +116,7 @@ export async function CachedComponent() {
 }
 ```
 
-### Function Level
+### 函数级别
 
 ```tsx
 export async function getData() {
@@ -119,45 +127,31 @@ export async function getData() {
 
 ---
 
-## Cache Profiles
+## ⏱️ 缓存配置
 
-### Built-in Profiles
-
-```tsx
-'use cache'                    // Default: 5m stale, 15m revalidate
-```
-
-```tsx
-'use cache: remote'           // Platform-provided cache (Redis, KV)
-```
-
-```tsx
-'use cache: private'          // For compliance, allows runtime APIs
-```
-
-### `cacheLife()` - Custom Lifetime
+### cacheLife()
 
 ```tsx
 import { cacheLife } from 'next/cache'
 
 async function getData() {
   'use cache'
-  cacheLife('hours')  // Built-in profile
+  cacheLife('hours')  // 内置配置
   return fetch('/api/data')
 }
 ```
 
-Built-in profiles: `'default'`, `'minutes'`, `'hours'`, `'days'`, `'weeks'`, `'max'`
+内置配置：`'default'`、`'minutes'`、`'hours'`、`'days'`、`'weeks'`、`'max'`
 
-### Inline Configuration
+### 内联配置
 
 ```tsx
 async function getData() {
   'use cache'
   cacheLife({
-    stale: 3600,      // 1 hour - serve stale while revalidating
-    revalidate: 7200, // 2 hours - background revalidation interval
-    expire: 86400,    // 1 day - hard expiration
+    stale: 3600,      // 1 小时 - 过期期间提供旧数据
+    revalidate: 7200, // 2 小时 - 后台重新验证间隔
+    expire: 86400,    // 1 天 - 硬过期
   })
   return fetch('/api/data')
 }
@@ -165,9 +159,9 @@ async function getData() {
 
 ---
 
-## Cache Invalidation
+## 🏷️ 缓存标签
 
-### `cacheTag()` - Tag Cached Content
+### cacheTag()
 
 ```tsx
 import { cacheTag } from 'next/cache'
@@ -177,17 +171,9 @@ async function getProducts() {
   cacheTag('products')
   return db.products.findMany()
 }
-
-async function getProduct(id: string) {
-  'use cache'
-  cacheTag('products', `product-${id}`)
-  return db.products.findUnique({ where: { id } })
-}
 ```
 
-### `updateTag()` - Immediate Invalidation
-
-Use when you need the cache refreshed within the same request:
+### updateTag() - 立即失效
 
 ```tsx
 'use server'
@@ -196,13 +182,11 @@ import { updateTag } from 'next/cache'
 
 export async function updateProduct(id: string, data: FormData) {
   await db.products.update({ where: { id }, data })
-  updateTag(`product-${id}`)  // Immediate - same request sees fresh data
+  updateTag(`product-${id}`)  // 立即 - 同一请求看到新数据
 }
 ```
 
-### `revalidateTag()` - Background Revalidation
-
-Use for stale-while-revalidate behavior:
+### revalidateTag() - 后台重新验证
 
 ```tsx
 'use server'
@@ -211,27 +195,20 @@ import { revalidateTag } from 'next/cache'
 
 export async function createPost(data: FormData) {
   await db.posts.create({ data })
-  revalidateTag('posts')  // Background - next request sees fresh data
+  revalidateTag('posts')  // 后台 - 下次请求看到新数据
 }
 ```
 
 ---
 
-## Runtime Data Constraint
+## ⚠️ 运行时数据约束
 
-**Cannot** access `cookies()`, `headers()`, or `searchParams` inside `use cache`.
+**不能**在 `use cache` 内访问 `cookies()`、`headers()` 或 `searchParams`。
 
-### Solution: Pass as Arguments
+### 解决方案：作为参数传递
 
 ```tsx
-// Wrong - runtime API inside use cache
-async function CachedProfile() {
-  'use cache'
-  const session = (await cookies()).get('session')?.value  // Error!
-  return <div>{session}</div>
-}
-
-// Correct - extract outside, pass as argument
+// 正确 - 在外部提取，作为参数传递
 async function ProfilePage() {
   const session = (await cookies()).get('session')?.value
   return <CachedProfile sessionId={session} />
@@ -239,48 +216,15 @@ async function ProfilePage() {
 
 async function CachedProfile({ sessionId }: { sessionId: string }) {
   'use cache'
-  // sessionId becomes part of cache key automatically
+  // sessionId 自动成为缓存键的一部分
   const data = await fetchUserData(sessionId)
   return <div>{data.name}</div>
 }
 ```
 
-### Exception: `use cache: private`
-
-For compliance requirements when you can't refactor:
-
-```tsx
-async function getData() {
-  'use cache: private'
-  const session = (await cookies()).get('session')?.value  // Allowed
-  return fetchData(session)
-}
-```
-
 ---
 
-## Cache Key Generation
-
-Cache keys are automatic based on:
-- **Build ID** - invalidates all caches on deploy
-- **Function ID** - hash of function location
-- **Serializable arguments** - props become part of key
-- **Closure variables** - outer scope values included
-
-```tsx
-async function Component({ userId }: { userId: string }) {
-  const getData = async (filter: string) => {
-    'use cache'
-    // Cache key = userId (closure) + filter (argument)
-    return fetch(`/api/users/${userId}?filter=${filter}`)
-  }
-  return getData('active')
-}
-```
-
----
-
-## Complete Example
+## 📋 完整示例
 
 ```tsx
 import { Suspense } from 'react'
@@ -290,14 +234,13 @@ import { cacheLife, cacheTag } from 'next/cache'
 export default function DashboardPage() {
   return (
     <>
-      {/* Static shell - instant from CDN */}
-      <header><h1>Dashboard</h1></header>
-      <nav>...</nav>
+      {/* 静态外壳 - CDN 即时显示 */}
+      <header><h1>仪表盘</h1></header>
 
-      {/* Cached - fast, revalidates hourly */}
+      {/* 缓存 - 快速，每小时重新验证 */}
       <Stats />
 
-      {/* Dynamic - streams in with fresh data */}
+      {/* 动态 - 流式加载新鲜数据 */}
       <Suspense fallback={<NotificationsSkeleton />}>
         <Notifications />
       </Suspense>
@@ -313,48 +256,16 @@ async function Stats() {
   const stats = await db.stats.aggregate()
   return <StatsDisplay stats={stats} />
 }
-
-async function Notifications() {
-  const userId = (await cookies()).get('userId')?.value
-  const notifications = await db.notifications.findMany({
-    where: { userId, read: false }
-  })
-  return <NotificationList items={notifications} />
-}
 ```
 
 ---
 
-## Migration from Previous Versions
+## 🔗 相关链接
 
-| Old Config | Replacement |
-|-----------|-------------|
-| `experimental.ppr` | `cacheComponents: true` |
-| `dynamic = 'force-dynamic'` | Remove (default behavior) |
-| `dynamic = 'force-static'` | `'use cache'` + `cacheLife('max')` |
-| `revalidate = N` | `cacheLife({ revalidate: N })` |
-| `unstable_cache()` | `'use cache'` directive |
+- [原文链接](https://github.com/yanghao1143/chiclaude-skills)
+- [Next.js 官方文档](https://nextjs.org/docs)
+- [OpenClaw AI 社区](https://chiclaude.com)
 
 ---
 
-## Limitations
-
-- **Edge runtime not supported** - requires Node.js
-- **Static export not supported** - needs server
-- **Non-deterministic values** (`Math.random()`, `Date.now()`) execute once at build time inside `use cache`
-
-For request-time randomness outside cache:
-
-```tsx
-import { connection } from 'next/server'
-
-async function DynamicContent() {
-  await connection()  // Defer to request time
-  const id = crypto.randomUUID()  // Different per request
-  return <div>{id}</div>
-}
-```
-
-Sources:
-- [Cache Components Guide](https://nextjs.org/docs/app/getting-started/cache-components)
-- [use cache Directive](https://nextjs.org/docs/app/api-reference/directives/use-cache)
+*翻译搬运自 [skills.sh](https://skills.sh)*

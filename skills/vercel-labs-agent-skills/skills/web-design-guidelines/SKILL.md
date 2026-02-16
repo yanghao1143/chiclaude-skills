@@ -1,39 +1,67 @@
+# Web Interface Guidelines（Web界面指南）
+
+📦 **仓库**: `yanghao1143/chiclaude-skills`
+🔥 **安装量**: 100.9K
+🔗 **出处**: https://github.com/yanghao1143/chiclaude-skills
+
 ---
-name: web-design-guidelines
-description: Review UI code for Web Interface Guidelines compliance. Use when asked to "review my UI", "check accessibility", "audit design", "review UX", or "check my site against best practices".
-metadata:
-  author: vercel
-  version: "1.0.0"
-  argument-hint: <file-or-pattern>
+
+## 技能简介
+
+审查文件是否符合 Web Interface Guidelines（Web界面指南）。
+
 ---
 
-# Web Interface Guidelines
+## 工作原理
 
-Review files for compliance with Web Interface Guidelines.
+- 从下方源URL获取最新指南
+- 读取指定文件（或提示用户提供文件/模式）
+- 对照获取的指南中的所有规则进行检查
+- 以简洁的 `文件:行号` 格式输出发现的问题
 
-## How It Works
+---
 
-1. Fetch the latest guidelines from the source URL below
-2. Read the specified files (or prompt user for files/pattern)
-3. Check against all rules in the fetched guidelines
-4. Output findings in the terse `file:line` format
+## 指南来源
 
-## Guidelines Source
-
-Fetch fresh guidelines before each review:
+每次审查前获取最新指南：
 
 ```
 https://raw.githubusercontent.com/vercel-labs/web-interface-guidelines/main/command.md
 ```
 
-Use WebFetch to retrieve the latest rules. The fetched content contains all the rules and output format instructions.
+使用 WebFetch 检索最新规则。获取的内容包含所有规则和输出格式说明。
 
-## Usage
+---
 
-When a user provides a file or pattern argument:
-1. Fetch guidelines from the source URL above
-2. Read the specified files
-3. Apply all rules from the fetched guidelines
-4. Output findings using the format specified in the guidelines
+## 使用方法
 
-If no files specified, ask the user which files to review.
+当用户提供文件或模式参数时：
+- 从上述源URL获取指南
+- 读取指定文件
+- 应用获取的指南中的所有规则
+- 使用指南中指定的格式输出发现的问题
+
+如果未指定文件，询问用户要审查哪些文件。
+
+---
+
+## 审查流程
+
+1. **获取指南** - 从GitHub获取最新的Web界面指南
+2. **读取文件** - 加载用户指定的源代码文件
+3. **应用规则** - 对照所有指南规则检查代码
+4. **输出结果** - 以标准格式报告问题和建议
+
+---
+
+## 典型应用场景
+
+- 代码审查（Code Review）
+- 设计系统一致性检查
+- Web组件合规性验证
+- 前端开发质量保证
+- UI/UX标准审核
+
+---
+
+*翻译搬运自 [skills.sh](https://github.com/yanghao1143/chiclaude-skills)*

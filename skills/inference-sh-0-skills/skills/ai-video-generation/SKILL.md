@@ -1,74 +1,82 @@
+# 🔥 [No.012] AI Video Generation - AI 视频生成
+
+📦 **仓库**: `yanghao1143/chiclaude-skills`
+🔥 **安装量**: 5.2K (24h)
+🔗 **出处**: https://github.com/yanghao1143/chiclaude-skills
+
 ---
-name: ai-video-generation
-description: "Generate AI videos with Google Veo, Seedance, Wan, Grok and 40+ models via inference.sh CLI. Models: Veo 3.1, Veo 3, Seedance 1.5 Pro, Wan 2.5, Grok Imagine Video, OmniHuman, Fabric, HunyuanVideo. Capabilities: text-to-video, image-to-video, lipsync, avatar animation, video upscaling, foley sound. Use for: social media videos, marketing content, explainer videos, product demos, AI avatars. Triggers: video generation, ai video, text to video, image to video, veo, animate image, video from image, ai animation, video generator, generate video, t2v, i2v, ai video maker, create video with ai, runway alternative, pika alternative, sora alternative, kling alternative"
-allowed-tools: Bash(infsh *)
+
+## 技能简介
+
+通过 [inference.sh](https://inference.sh) CLI 使用 40+ AI 模型生成视频。
+
 ---
 
-# AI Video Generation
-
-Generate videos with 40+ AI models via [inference.sh](https://inference.sh) CLI.
-
-![AI Video Generation](https://cloud.inference.sh/app/files/u/4mg21r6ta37mpaz6ktzwtt8krr/01kg2c0egyg243mnyth4y6g51q.jpeg)
-
-## Quick Start
+## 快速开始
 
 ```bash
-# Install CLI
+# 安装 CLI
 curl -fsSL https://cli.inference.sh | sh && infsh login
 
-# Generate a video with Veo
+# 使用 Veo 生成视频
 infsh app run google/veo-3-1-fast --input '{"prompt": "drone shot flying over a forest"}'
 ```
 
-## Available Models
+---
 
-### Text-to-Video
+## 可用模型
 
-| Model | App ID | Best For |
-|-------|--------|----------|
-| Veo 3.1 Fast | `google/veo-3-1-fast` | Fast, with optional audio |
-| Veo 3.1 | `google/veo-3-1` | Best quality, frame interpolation |
-| Veo 3 | `google/veo-3` | High quality with audio |
-| Veo 3 Fast | `google/veo-3-fast` | Fast with audio |
-| Veo 2 | `google/veo-2` | Realistic videos |
-| Grok Video | `xai/grok-imagine-video` | xAI, configurable duration |
-| Seedance 1.5 Pro | `bytedance/seedance-1-5-pro` | With first-frame control |
-| Seedance 1.0 Pro | `bytedance/seedance-1-0-pro` | Up to 1080p |
+### 文字生成视频
 
-### Image-to-Video
+| 模型 | App ID | 最佳用途 |
+|------|--------|----------|
+| **Veo 3.1 Fast** | `google/veo-3-1-fast` | 快速生成，可选音频 |
+| **Veo 3.1** | `google/veo-3-1` | 最佳质量，帧插值 |
+| **Veo 3** | `google/veo-3` | 高质量带音频 |
+| **Veo 3 Fast** | `google/veo-3-fast` | 快速带音频 |
+| **Veo 2** | `google/veo-2` | 逼真视频 |
+| **Grok Video** | `xai/grok-imagine-video` | xAI，可配置时长 |
+| **Seedance 1.5 Pro** | `bytedance/seedance-1-5-pro` | 带首帧控制 |
+| **Seedance 1.0 Pro** | `bytedance/seedance-1-0-pro` | 最高 1080p |
 
-| Model | App ID | Best For |
-|-------|--------|----------|
-| Wan 2.5 | `falai/wan-2-5` | Animate any image |
-| Wan 2.5 I2V | `falai/wan-2-5-i2v` | High quality i2v |
-| Seedance Lite | `bytedance/seedance-1-0-lite` | Lightweight 720p |
+### 图片生成视频
 
-### Avatar / Lipsync
+| 模型 | App ID | 最佳用途 |
+|------|--------|----------|
+| **Wan 2.5** | `falai/wan-2-5` | 让任何图片动起来 |
+| **Wan 2.5 I2V** | `falai/wan-2-5-i2v` | 高质量图生视频 |
+| **Seedance Lite** | `bytedance/seedance-1-0-lite` | 轻量级 720p |
 
-| Model | App ID | Best For |
-|-------|--------|----------|
-| OmniHuman 1.5 | `bytedance/omnihuman-1-5` | Multi-character |
-| OmniHuman 1.0 | `bytedance/omnihuman-1-0` | Single character |
-| Fabric 1.0 | `falai/fabric-1-0` | Image talks with lipsync |
-| PixVerse Lipsync | `falai/pixverse-lipsync` | Realistic lipsync |
+### 头像 / 口型同步
 
-### Utilities
+| 模型 | App ID | 最佳用途 |
+|------|--------|----------|
+| **OmniHuman 1.5** | `bytedance/omnihuman-1-5` | 多角色 |
+| **OmniHuman 1.0** | `bytedance/omnihuman-1-0` | 单角色 |
+| **Fabric 1.0** | `falai/fabric-1-0` | 图片说话口型同步 |
+| **PixVerse Lipsync** | `falai/pixverse-lipsync` | 逼真口型同步 |
 
-| Tool | App ID | Description |
-|------|--------|-------------|
-| HunyuanVideo Foley | `infsh/hunyuanvideo-foley` | Add sound effects to video |
-| Topaz Upscaler | `falai/topaz-video-upscaler` | Upscale video quality |
-| Media Merger | `infsh/media-merger` | Merge videos with transitions |
+### 工具
 
-## Browse All Video Apps
+| 工具 | App ID | 描述 |
+|------|--------|------|
+| **HunyuanVideo Foley** | `infsh/hunyuanvideo-foley` | 为视频添加音效 |
+| **Topaz Upscaler** | `falai/topaz-video-upscaler` | 提升视频质量 |
+| **Media Merger** | `infsh/media-merger` | 合并视频带转场 |
+
+---
+
+## 浏览所有视频应用
 
 ```bash
 infsh app list --category video
 ```
 
-## Examples
+---
 
-### Text-to-Video with Veo
+## 示例
+
+### 文字生成视频 (Veo)
 
 ```bash
 infsh app run google/veo-3-1-fast --input '{
@@ -85,7 +93,7 @@ infsh app run xai/grok-imagine-video --input '{
 }'
 ```
 
-### Image-to-Video with Wan 2.5
+### 图片生成视频 (Wan 2.5)
 
 ```bash
 infsh app run falai/wan-2-5 --input '{
@@ -93,7 +101,7 @@ infsh app run falai/wan-2-5 --input '{
 }'
 ```
 
-### AI Avatar / Talking Head
+### AI 头像 / 说话头像
 
 ```bash
 infsh app run bytedance/omnihuman-1-5 --input '{
@@ -102,7 +110,7 @@ infsh app run bytedance/omnihuman-1-5 --input '{
 }'
 ```
 
-### Fabric Lipsync
+### Fabric 口型同步
 
 ```bash
 infsh app run falai/fabric-1-0 --input '{
@@ -111,7 +119,7 @@ infsh app run falai/fabric-1-0 --input '{
 }'
 ```
 
-### PixVerse Lipsync
+### PixVerse 口型同步
 
 ```bash
 infsh app run falai/pixverse-lipsync --input '{
@@ -120,13 +128,13 @@ infsh app run falai/pixverse-lipsync --input '{
 }'
 ```
 
-### Video Upscaling
+### 视频放大
 
 ```bash
 infsh app run falai/topaz-video-upscaler --input '{"video_url": "https://..."}'
 ```
 
-### Add Sound Effects (Foley)
+### 添加音效 (Foley)
 
 ```bash
 infsh app run infsh/hunyuanvideo-foley --input '{
@@ -135,7 +143,7 @@ infsh app run infsh/hunyuanvideo-foley --input '{
 }'
 ```
 
-### Merge Videos
+### 合并视频
 
 ```bash
 infsh app run infsh/media-merger --input '{
@@ -144,32 +152,40 @@ infsh app run infsh/media-merger --input '{
 }'
 ```
 
-## Related Skills
+---
+
+## 相关技能
 
 ```bash
-# Full platform skill (all 150+ apps)
+# 完整平台技能 (150+ 应用)
 npx skills add inference-sh/skills@inference-sh
 
-# Google Veo specific
+# Google Veo 专用
 npx skills add inference-sh/skills@google-veo
 
-# AI avatars & lipsync
+# AI 头像与口型同步
 npx skills add inference-sh/skills@ai-avatar-video
 
-# Text-to-speech (for video narration)
+# 文字转语音 (视频旁白)
 npx skills add inference-sh/skills@text-to-speech
 
-# Image generation (for image-to-video)
+# 图片生成 (图生视频)
 npx skills add inference-sh/skills@ai-image-generation
 
-# Twitter (post videos)
+# Twitter (发布视频)
 npx skills add inference-sh/skills@twitter-automation
 ```
 
-Browse all apps: `infsh app list`
+---
 
-## Documentation
+## 文档
 
-- [Running Apps](https://inference.sh/docs/apps/running) - How to run apps via CLI
-- [Streaming Results](https://inference.sh/docs/api/sdk/streaming) - Real-time progress updates
-- [Content Pipeline Example](https://inference.sh/docs/examples/content-pipeline) - Building media workflows
+- [运行应用](https://inference.sh/docs/apps/running) - 如何通过 CLI 运行应用
+- [流式结果](https://inference.sh/docs/api/sdk/streaming) - 实时进度更新
+- [内容管道示例](https://inference.sh/docs/examples/content-pipeline) - 构建媒体工作流
+
+---
+
+*翻译搬运自 [skills.sh](https://github.com/yanghao1143/chiclaude-skills)*
+
+📌 *Skills市场搬运计划 - 热门技能系列 - No.012*
